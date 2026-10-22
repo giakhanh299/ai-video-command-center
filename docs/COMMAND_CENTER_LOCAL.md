@@ -75,6 +75,19 @@ Kết nối Agent remote yêu cầu HTTPS; localhost HTTP chỉ dành phát tri�
 Heartbeat 15s theo mục tiêu contract; one-shot gửi khi bắt đầu, heartbeat và renew task mỗi 10s khi đang xử lý.
 API tính Agent offline sau 45s không heartbeat. Chưa có heartbeat nền khi Agent idle.
 
+### Agent chờ lệnh qua 443 (mô hình mới, 2026-10-22)
+
+Từ đợt này Agent có chế độ vòng lặp chờ lệnh (`--loop`): PC không mở cổng vào,
+Agent tự gọi ra tới API bằng HTTPS cổng 443, mỗi vòng đều gửi heartbeat rồi claim việc,
+nghỉ `CC_AGENT_POLL_SECONDS` (mặc định 5 giây) khi rảnh và backoff khi lỗi.
+URL API từ xa khác cổng 443 hoặc dùng http sẽ bị từ chối (`OUTBOUND_443_ONLY` / `TLS_REQUIRED`);
+loopback vẫn giữ cho dev local như trên.
+
+Trên PC chạy bằng `CHAY_AGENT_443.bat` ở thư mục gốc, với biến môi trường
+`CC_API_URL=https://<api-host>`, `CC_AGENT_ID`, `CC_AGENT_TOKEN` (chỉ lưu tại PC)
+và `CC_STORAGE_ROOT`. API + PostgreSQL production phải đặt trên máy chủ ngoài PC
+sau HTTPS 443; xem `DEPLOY_CLOUDFLARE.md`. Chưa tạo Windows service/lịch chạy tự khởi động cho vòng lặp này.
+
 ## Tạo input/job để frontend thử
 
 1. POST `/api/v1/projects` với owner Bearer + `Idempotency-Key`, body `{ "name": "Dự án" }`.

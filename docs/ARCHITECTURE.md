@@ -6,6 +6,11 @@ Document revision 0.1.1-draft: CPU pilot đã có trong command_center/, Postgre
 API local cổng 8016, Agent outbound one-shot. Đây vẫn là mục tiêu mở rộng cho các preset AI chưa tích hợp.
 Xem COMMAND_CENTER_LOCAL.md và COMMAND_CENTER_TEST_REPORT.md để biết phần thực sự đã kiểm chứng.
 
+Cập nhật 2026-10-22 (quyết định người dùng): PC chỉ gọi ra HTTPS cổng 443 và chờ nhận lệnh —
+Agent chạy vòng lặp claim (`run_forever`, `--loop`), PC không mở cổng vào nào và không nhận
+kết nối đẩy vào qua Tunnel. URL API từ xa bị khóa ở https cổng 443 (`OUTBOUND_443_ONLY`).
+API/PostgreSQL production phải đặt ngoài PC; bản local cổng 8016 chỉ còn là môi trường dev.
+
 ```mermaid
 flowchart LR
   UI[Web do Claude phụ trách] --> API[API xác thực /api/v1]
@@ -27,7 +32,8 @@ flowchart LR
 - Giữ renderer cũ qua facade; chọn đúng nhánh bằng registry và preset snapshot.
 - Windows Agent không gọi nguyên Telegram handler; các connector thông báo/giao file là bước riêng.
 - Cloudflare chỉ là lựa chọn ingress/hosting sau kiểm chứng Access/Tunnel/domain/quyền;
-  không chọn D1 làm database, không giả định R2/Queues đã có.
+  không chọn D1 làm database, không giả định R2/Queues đã có. Trong mô hình outbound 443,
+  ingress (nếu có) đặt tại máy chủ API ngoài PC, không trỏ vào PC.
 - File lớn ở workspace hoặc object storage được duyệt. PostgreSQL lưu metadata/reference,
   không lưu bytes MP4/WAV trong job JSON hay cột dữ liệu video.
 

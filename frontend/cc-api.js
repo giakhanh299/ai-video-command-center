@@ -25,7 +25,9 @@ const savedConfig = (() => {
 const CC_CONFIG = {
   /** "mock" | "real" */
   mode: (savedConfig && savedConfig.mode) || (window.__CC_CONFIG && window.__CC_CONFIG.mode) || 'mock',
-  /** Base URL của API mới — chỉ dùng khi mode=real */
+  /** Base URL của API mới — chỉ dùng khi mode=real.
+   *  Production: API đặt ngoài PC sau HTTPS cổng 443 (PC Agent chỉ gọi ra nhận lệnh);
+   *  địa chỉ 127.0.0.1:8016 bên dưới chỉ còn dùng khi phát triển local. */
   apiBase: (savedConfig && savedConfig.apiBase) || (window.__CC_CONFIG && window.__CC_CONFIG.apiBase) || 'http://127.0.0.1:8016/api/v1',
   /** Opaque Bearer token cho local owner */
   authToken: (savedConfig && savedConfig.authToken) || (window.__CC_CONFIG && window.__CC_CONFIG.authToken) || '',
