@@ -93,6 +93,17 @@ const CHANNELS_8 = [
     schedule: '10:30 · 17:30 · 20:00',
   },
   {
+    id: 'ch_chuyen_hai_dua',
+    name: 'Chuyện Hai Đứa (@ChuyenHaiDua)',
+    niche: 'Tình yêu nam nữ · Đa giọng Character-Lock + 5.1 Smart SFX (Thử nghiệm)',
+    preset_id: 'chuyen_hai_dua',
+    voice_id: 'omnivoice_auto',
+    banner_text: 'CHUYỆN HAI ĐỨA',
+    marquee_text: '@ChuyenHaiDua · Lồng tiếng Đa nhân vật Nam/Nữ giữ nền 5.1',
+    blur_box: { x: 6, y: 73, w: 88, h: 16 },
+    schedule: 'RENDER-ONLY · Chờ duyệt Output & Voice',
+  },
+  {
     id: 'ch_custom_studio',
     name: 'Studio Tự Do (Tự Render)',
     niche: 'Tuỳ biến 100% thông số',
@@ -622,68 +633,80 @@ async function renderNewJob() {
                       || state.presets[0];
 
   main.innerHTML = `
-    <div class="page-header">
+    <div class="page-header" style="margin-bottom:12px">
       <div>
-        <h1 class="page-title">🎬 Studio Hợp Nhất Đa Cấu Hình &amp; Custom Blur Trên Video Thật</h1>
-        <p class="page-subtitle">Chọn kênh Fanpage, tải video MP4 lên hoặc chọn file sẵn có, kéo thả khung Blur trực tiếp trên hình ảnh thực tế và đẩy vào hàng đợi HTTPS :443.</p>
+        <h1 class="page-title" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span>✨ Seedance / BytePlus Lumina AI Canvas Studio</span>
+          <span class="tag" style="color:var(--teal);border-color:rgba(45,212,191,0.4)">Dot-Grid Node Workspace</span>
+        </h1>
+        <p class="page-subtitle">Bố cục 3 cột trực quan kiểu Lumina AI Canvas: Chọn Kênh / Nguồn bên trái · Kéo thả khung Blur 2D trên video thật ở giữa · Chỉnh 4 Tab thông số bên phải không cần cuộn trang.</p>
       </div>
       <div class="page-actions">
-        <button class="btn btn-secondary btn-sm" id="btn-go-channels-view">📊 Ma trận 8 Kênh</button>
+        <button class="btn btn-secondary btn-sm" id="btn-go-channels-view">📊 Ma trận Kênh</button>
         <button class="btn btn-ghost btn-sm" id="btn-cancel-job">← Tổng quan</button>
       </div>
     </div>
 
-    <!-- Thanh chọn nhanh 8 Kênh Fanpage -->
-    <div class="card mb-3">
-      <div class="card-header">
-        <span class="card-title">📺 Bước 1: Chọn Kênh Fanpage Đích (Tự động nạp Preset, Giọng đọc AI, Chạy chữ &amp; Tọa độ Blur mẫu)</span>
-        <span class="tag" id="selected-channel-tag" style="color:var(--teal);border-color:rgba(45,212,191,0.35)">${activeChannel.name}</span>
+    <div class="lumina-canvas-shell">
+      <!-- TOP FLOATING DOCK: Chọn Kênh + Auto-Route + Chuỗi Node Pipeline -->
+      <div class="lumina-top-dock">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
+          <div class="lumina-node-chain" id="lumina-pipeline-nodes">
+            <span class="lumina-node active" data-goto-tab="tab-blur"><span class="lumina-node-dot"></span> 1. Nguồn &amp; Kênh Đích</span>
+            <span class="lumina-node-arrow">──●──►</span>
+            <span class="lumina-node" data-goto-tab="tab-blur"><span class="lumina-node-dot"></span> 2. Vùng Blur 2D Trên Video</span>
+            <span class="lumina-node-arrow">──●──►</span>
+            <span class="lumina-node" data-goto-tab="tab-voice"><span class="lumina-node-dot"></span> 3. Giọng Đọc AI &amp; 5.1 SFX</span>
+            <span class="lumina-node-arrow">──●──►</span>
+            <span class="lumina-node" data-goto-tab="tab-text"><span class="lumina-node-dot"></span> 4. Chạy Chữ &amp; Khung 9:16</span>
+          </div>
+          <span class="tag" id="selected-channel-tag" style="color:var(--teal);border-color:rgba(45,212,191,0.4)">${activeChannel.name}</span>
+        </div>
+
+        <!-- Thanh Kênh Fanpage (Gồm 6 Kênh Douyin + Chuyện Hai Đứa + Studio Tự Do) -->
+        <div class="channel-strip" id="studio-channel-strip" style="margin:0">
+          ${CHANNELS_8.map(ch => `
+            <button type="button" class="channel-pill-card ${ch.id === activeChannel.id ? 'active' : ''}" data-channel-id="${ch.id}">
+              <div class="channel-pill-top">
+                <span class="truncate">${ch.name}</span>
+                <span class="tag" style="font-size:9px;padding:1px 5px;color:var(--teal)">${ch.preset_id}</span>
+              </div>
+              <div class="channel-pill-sub truncate">${ch.niche}</div>
+            </button>
+          `).join('')}
+        </div>
+
+        <!-- Thanh Dán Link TikTok / Douyin Auto-Route gọn trên Top Dock -->
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:6px;border-top:1px solid rgba(148,163,184,0.12)">
+          <span style="font-size:11px;font-weight:700;color:var(--teal);white-space:nowrap">🔗 Auto-Route Kênh:</span>
+          <input class="form-input font-mono" id="studio-source-url-input" type="text" style="flex:1;min-width:220px;padding:5px 10px;font-size:11px"
+            placeholder="Dán link Douyin/TikTok hoặc tên kênh (vd: 乖巧宝宝Quby, 女钓手豆豆, Chuyện Hai Đứa...)" />
+          <button type="button" class="btn btn-primary btn-sm" id="btn-ingest-source" style="white-space:nowrap;padding:5px 12px">
+            ⚡ Tự Nhận Diện
+          </button>
+          <div class="blur-preset-bar" style="margin:0">
+            <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAUewX30vrd2sxQV9Bpkt2rbQTl5e7ILBUSVAuMQOea0u7uHDq-8oeAzMEdHSAmVvT 阿刚速看">🎬 阿刚速看</button>
+            <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAN-1fM0RHuDRh5s783UTZPUyOSn7yxIglA5LjqCfAXI6MWnxXZ7d_jiPrfEPLGWNt 诡诡漫">👻 诡诡漫</button>
+            <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAzjF0uYCtXbf928SK2W0jgEBC7idgE2RT9VHipW7UEF8 奋斗的希瓜皮">🍿 奋斗的希瓜皮</button>
+            <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAfAuPSkhuWIAv7Yx56Y1sI52BoJc0teeXWA2soSCeook 乖巧宝宝Quby">🐰 Quby</button>
+            <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAD3g0DECFFzLHG8GLkd0-ESvyOkYCCpHtC4OKhG4yadPVPxi5bGiguqui1fERASD0 迷人的歪姐">🌙 迷人的歪姐</button>
+            <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAA-YcErrxgnoO9Drrannm8IFMQAN8vzYAjCNqHFMOzLUg 女钓手豆豆">🎣 女钓手豆豆</button>
+            <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/chuyen_hai_dua Chuyện Hai Đứa tình yêu">💑 Chuyện Hai Đứa</button>
+          </div>
+        </div>
+        <div id="source-detect-banner" class="info-state hidden" style="border-color:rgba(45,212,191,0.45);color:var(--txt-1);padding:6px 10px;font-size:11px"></div>
       </div>
-      <div class="channel-strip" id="studio-channel-strip">
-        ${CHANNELS_8.map(ch => `
-          <button type="button" class="channel-pill-card ${ch.id === activeChannel.id ? 'active' : ''}" data-channel-id="${ch.id}">
-            <div class="channel-pill-top">
-              <span class="truncate">${ch.name}</span>
-              <span class="tag" style="font-size:9px;padding:1px 5px;color:var(--teal)">${ch.preset_id}</span>
+
+      <!-- 3-COLUMN SEEDANCE / LUMINA WORKSPACE -->
+      <form id="new-job-form" novalidate>
+        <div class="lumina-workspace-grid">
+          <!-- CỘT 1 (TRÁI): NODE NGUỒN VIDEO & BỘ CẤU HÌNH PRESET -->
+          <div class="lumina-panel">
+            <div class="lumina-panel-header">
+              <span class="lumina-panel-title">${I.folder} 1. Nguồn Video &amp; Preset Gốc</span>
+              <span class="tag" style="font-size:9px;color:var(--teal)">SHA-256</span>
             </div>
-            <div class="channel-pill-sub truncate">${ch.niche} · Blur (${ch.blur_box.x}%,${ch.blur_box.y}%)</div>
-          </button>
-        `).join('')}
-      </div>
-
-      <!-- Khung Dán Link TikTok / Douyin Đầu Vào & Tự Động Phân Biệt Kênh -->
-      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;flex-wrap:wrap">
-          <span style="font-size:12px;font-weight:700;color:var(--teal)">🔗 Tự Động Phân Biệt Kênh Đầu Vào TikTok / Douyin (Auto-Route 8 Kênh)</span>
-          <span style="font-size:10px;color:var(--txt-3)">Dán link video/profile Douyin/TikTok hoặc bấm nguồn mẫu để tự động nhận diện kênh đích &amp; tọa độ Blur</span>
-        </div>
-        <div style="display:flex;gap:8px;margin-bottom:8px">
-          <input class="form-input font-mono" id="studio-source-url-input" type="text"
-            placeholder="Dán link Douyin/TikTok (vd: https://www.douyin.com/user/... hoặc tên kênh 乖巧宝宝Quby, 女钓手豆豆...)" />
-          <button type="button" class="btn btn-primary btn-sm" id="btn-ingest-source" style="white-space:nowrap">
-            ⚡ Tự Nhận Diện &amp; Nạp
-          </button>
-        </div>
-        <div class="blur-preset-bar" style="justify-content:flex-start">
-          <span style="font-size:10px;color:var(--txt-3);align-self:center">6 Nguồn Douyin tự động:</span>
-          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAUewX30vrd2sxQV9Bpkt2rbQTl5e7ILBUSVAuMQOea0u7uHDq-8oeAzMEdHSAmVvT 阿刚速看">🎬 阿刚速看 (KENH_002)</button>
-          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAN-1fM0RHuDRh5s783UTZPUyOSn7yxIglA5LjqCfAXI6MWnxXZ7d_jiPrfEPLGWNt 诡诡漫">👻 诡诡漫 (KENH_004)</button>
-          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAzjF0uYCtXbf928SK2W0jgEBC7idgE2RT9VHipW7UEF8 奋斗的希瓜皮">🍿 奋斗的希瓜皮 (KENH_005)</button>
-          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAfAuPSkhuWIAv7Yx56Y1sI52BoJc0teeXWA2soSCeook 乖巧宝宝Quby">🐰 乖巧宝宝Quby (KENH_006)</button>
-          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAD3g0DECFFzLHG8GLkd0-ESvyOkYCCpHtC4OKhG4yadPVPxi5bGiguqui1fERASD0 迷人的歪姐">🌙 迷人的歪姐 (KENH_007)</button>
-          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAA-YcErrxgnoO9Drrannm8IFMQAN8vzYAjCNqHFMOzLUg 女钓手豆豆">🎣 女钓手豆豆 (KENH_008)</button>
-        </div>
-        <div id="source-detect-banner" class="info-state hidden mt-2" style="border-color:rgba(45,212,191,0.45);color:var(--txt-1)"></div>
-      </div>
-    </div>
-
-    <form id="new-job-form" novalidate>
-      <div class="grid-2" style="gap:20px">
-        <!-- Cột Trái: Dự án + Upload/Chọn Video + Đa Cấu Hình (A, B, C, D) -->
-        <div class="flex-col" style="gap:16px">
-          <div class="card">
-            <div class="card-header"><span class="card-title">${I.folder} Bước 2: Dự Án &amp; Tải Lên / Chọn Video Thực Tế</span></div>
-            <div class="flex-col" style="gap:12px">
+            <div class="lumina-panel-body">
               <div class="form-group">
                 <label class="form-label" for="new-job-project">Dự án lưu trữ <span class="required">*</span></label>
                 <select class="form-select" id="new-job-project" required aria-required="true">
@@ -692,145 +715,139 @@ async function renderNewJob() {
                 </select>
               </div>
 
-              <!-- Khu vực kéo thả hoặc chọn file .mp4 từ máy tính -->
+              <!-- Dropzone tải file .mp4 -->
               <div>
-                <label class="form-label mb-2" style="display:block">Tải Video MP4 mới từ máy tính (Qua cổng HTTPS :443) hoặc chọn Video bên dưới</label>
-                <div class="upload-dropzone" id="studio-upload-dropzone">
+                <label class="form-label mb-1" style="display:block">Tải Video MP4 từ máy tính (:443)</label>
+                <div class="upload-dropzone" id="studio-upload-dropzone" style="padding:10px 12px">
                   <div>
-                    <div style="font-size:12px;font-weight:700;color:var(--teal)">📤 Nhấn để chọn file .MP4 hoặc kéo thả video vào đây</div>
-                    <div style="font-size:11px;color:var(--txt-3);margin-top:2px" id="upload-status-text">Video tải lên sẽ hiển thị ngay vào khung Preview bên phải để bạn kéo chọn vùng Blur.</div>
+                    <div style="font-size:11px;font-weight:700;color:var(--teal)">📤 Kéo thả hoặc chọn file .MP4</div>
+                    <div style="font-size:10px;color:var(--txt-3);margin-top:2px" id="upload-status-text">Hiển thị ngay lên Sân khấu giữa để kéo Blur</div>
                   </div>
-                  <span class="btn btn-secondary btn-sm">Chọn MP4…</span>
+                  <span class="btn btn-secondary btn-sm" style="padding:4px 8px;font-size:10px">Chọn…</span>
                   <input type="file" id="studio-file-input" accept="video/mp4,video/*" class="hidden" />
                 </div>
               </div>
 
+              <!-- UUID + Danh sách file đã xác minh -->
               <div class="form-group">
-                <label class="form-label" for="new-job-input">File Video Đầu Vào (UUID Đã Xác Minh SHA-256) <span class="required">*</span></label>
-                <input class="form-input font-mono" id="new-job-input" type="text"
-                  placeholder="Ví dụ: 35326dd1-1211-41bf-937a-dca209c6c897"
-                  value="${state.isMock ? 'f5d34973-487e-4794-be6b-ff927eb83218' : ''}"
-                  aria-describedby="input-hint" />
-                <div id="verified-files-picker" class="file-pick-grid"></div>
-                <div class="form-error hidden" id="input-error">${I.alert} Cần ít nhất 1 UUID hợp lệ (36 ký tự).</div>
+                <label class="form-label" for="new-job-input">UUID Video Đã Xác Minh <span class="required">*</span></label>
+                <input class="form-input font-mono" id="new-job-input" type="text" style="font-size:11px;padding:6px 9px"
+                  placeholder="UUID 36 ký tự..."
+                  value="${state.isMock ? 'f5d34973-487e-4794-be6b-ff927eb83218' : ''}" />
+                <div id="verified-files-picker" class="file-pick-grid" style="max-height:155px;overflow-y:auto"></div>
+                <div class="form-error hidden" id="input-error">${I.alert} Cần 1 UUID hợp lệ (36 ký tự).</div>
+              </div>
+
+              <!-- Danh sách Preset Pipeline -->
+              <div>
+                <label class="form-label mb-1" style="display:block">${I.cpu} Bộ Cấu Hình Preset (Registry 1.0.0)</label>
+                <div id="preset-list" class="flex-col" style="gap:6px">
+                  ${state.presets.map(p => `
+                    <label class="preset-option ${p.id === defaultPreset?.id ? 'selected-card' : ''}" style="cursor:pointer;border:1px solid var(--border);border-radius:9px;padding:8px 10px;display:flex;align-items:flex-start;gap:8px;transition:all .16s;${!p.available ? 'opacity:.55;' : ''}">
+                      <input type="radio" name="preset" value="${p.id}" data-version="${p.version}"
+                        ${p.id === defaultPreset?.id ? 'checked' : ''}
+                        ${!p.available ? 'disabled' : ''}
+                        style="margin-top:3px;accent-color:var(--teal)">
+                      <div style="flex:1;min-width:0">
+                        <div style="font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:4px">
+                          <span class="truncate">${p.label}</span>
+                          ${p.available ? `<span class="chip succeeded" style="font-size:8px;padding:1px 5px">Sẵn sàng</span>` : `<span class="chip disabled" style="font-size:8px">Chờ GPU</span>`}
+                        </div>
+                        <div style="font-size:9.5px;color:var(--txt-3);margin-top:2px">
+                          <code style="color:var(--teal)">${p.id}</code> · ${(p.modules || []).join(' → ')}
+                        </div>
+                      </div>
+                    </label>
+                  `).join('')}
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-header"><span class="card-title">${I.cog} Bước 3: Đa Cấu Hình Chi Tiết (Khung Hình · Giọng Đọc · Tọa Độ Blur · Chạy Chữ)</span></div>
-            <div id="dynamic-override-container"></div>
-          </div>
-        </div>
-
-        <!-- Cột Phải: KHUNG VIDEO THẬT + VÙNG CHỌN BLUR KÉO THẢ THỦ CÔNG + PRESET + JSON -->
-        <div class="flex-col" style="gap:16px">
-          <div class="card">
-            <div class="card-header">
-              <span class="card-title">${I.film} Khung Video Thực Tế &amp; Kéo Thả Vùng Blur Thủ Công (2D ROI)</span>
-              <span class="tag" id="studio-preview-res-badge" style="color:var(--teal)">720×1280</span>
+          <!-- CỘT 2 (GIỮA): SÂN KHẤU VIDEO 9:16 THỰC TẾ & KÉO THẢ VÙNG BLUR 2D -->
+          <div class="lumina-panel" style="background:radial-gradient(circle at 50% 25%, rgba(45,212,191,0.08), rgba(9,13,22,0.92))">
+            <div class="lumina-panel-header">
+              <span class="lumina-panel-title">${I.film} 2. Sân Khấu Video Thực Tế &amp; Kéo Thả Khung Blur 2D</span>
+              <span class="tag" id="studio-preview-res-badge" style="color:var(--teal)">720×1280 · contain</span>
             </div>
-
-            <div class="studio-stage-outer">
-              <!-- Khung 9:16 chứa thẻ <video> thật + Hộp Blur kéo thả 8 hướng -->
-              <div class="studio-phone-interactive" id="studio-live-phone">
-                <div class="real-frame-fallback" id="studio-video-fallback">
-                  <div>🎬 Đang tải khung hình video thực tế...</div>
-                  <small style="color:rgba(255,255,255,0.65);margin-top:4px">Kéo thả khung viền xanh bên dưới để che chính xác phụ đề hoặc logo</small>
-                </div>
-                <video id="studio-real-video" class="real-frame-video" playsinline muted loop preload="metadata"></video>
-
-                <!-- Banner Hook cố định phía trên -->
-                <div class="studio-phone-banner hidden" id="studio-phone-banner" style="position:absolute;top:10px;left:10px;right:10px;margin:0;z-index:5">REVIEW PHIM HAY</div>
-
-                <!-- Badge hiển thị Voice / BGM / Flip -->
-                <div class="studio-phone-badges" id="studio-phone-badges" style="z-index:5"></div>
-
-                <!-- HỘP CHỌN VÙNG BLUR THỦ CÔNG TRÊN ẢNH THỰC TẾ (KÉO & ĐỔI KÍCH THƯỚC 8 ĐIỂM) -->
-                <div class="custom-blur-rect" id="custom-blur-rect" title="Kéo để di chuyển vùng làm mờ, kéo các góc/cạnh để thay đổi kích thước">
-                  <span class="custom-blur-label" id="custom-blur-label">BLUR: X:6% Y:72% (88×16%)</span>
-                  <div class="blur-handle nw" data-handle="nw"></div>
-                  <div class="blur-handle ne" data-handle="ne"></div>
-                  <div class="blur-handle sw" data-handle="sw"></div>
-                  <div class="blur-handle se" data-handle="se"></div>
-                  <div class="blur-handle n"  data-handle="n"></div>
-                  <div class="blur-handle s"  data-handle="s"></div>
-                  <div class="blur-handle w"  data-handle="w"></div>
-                  <div class="blur-handle e"  data-handle="e"></div>
-                </div>
-
-                <!-- Phụ đề chạy chữ đè lên trên -->
-                <div class="studio-phone-sub hidden" id="studio-phone-sub" style="position:absolute;left:8px;right:8px;bottom:14px;margin:0;z-index:7">
-                  <span class="marquee-inner" id="studio-phone-sub-text">Phụ đề chạy chữ tự động...</span>
-                </div>
-              </div>
-
-              <!-- Thanh tua khung hình video thực tế (Scrubber) để tìm đúng đoạn có chữ/logo -->
-              <div class="frame-scrubber-bar">
-                <button type="button" class="btn btn-secondary btn-sm" id="btn-toggle-preview-play" style="padding:3px 8px;font-size:11px">▶ Phát</button>
-                <input type="range" id="studio-video-scrubber" min="0" max="100" step="0.1" value="0" style="flex:1;accent-color:var(--teal)" title="Tua đến khung hình có phụ đề/logo để căn chỉnh vùng Blur" />
-                <span class="font-mono text-muted" id="studio-video-time" style="font-size:10px;min-width:68px;text-align:right">0.0s / 0.0s</span>
-              </div>
-
-              <!-- Nút chọn nhanh vị trí Blur mẫu -->
-              <div class="blur-preset-bar">
-                <button type="button" class="blur-preset-btn" data-box-preset="sub_bottom">🎯 Phụ đề đáy (6%, 72%, 88×16%)</button>
-                <button type="button" class="blur-preset-btn" data-box-preset="sub_high">🔼 Phụ đề cao (8%, 62%, 84×16%)</button>
-                <button type="button" class="blur-preset-btn" data-box-preset="logo_tr">🏷 Logo phải trên (66%, 4%, 28×12%)</button>
-                <button type="button" class="blur-preset-btn" data-box-preset="logo_tl">🏷 Logo trái trên (6%, 4%, 28×12%)</button>
-                <button type="button" class="blur-preset-btn" data-box-preset="center_watermark">💧 Giữa khung (15%, 42%, 70×16%)</button>
-              </div>
-            </div>
-            <p class="form-hint mt-2" style="text-align:center">
-              💡 <b>Mẹo:</b> Dùng thanh trượt tua video đến đúng cảnh có phụ đề tiếng Trung hoặc logo, sau đó <b>dùng chuột kéo trực tiếp khung viền xanh</b> trên video để che khít 100%.
-            </p>
-          </div>
-
-          <div class="card">
-            <div class="card-header"><span class="card-title">${I.cpu} Bước 4: Bộ Cấu Hình Preset Gốc (Registry 1.0.0)</span></div>
-            <div id="preset-list" class="flex-col" style="gap:8px">
-              ${state.presets.map(p => `
-                <label class="preset-option ${p.id === defaultPreset?.id ? 'selected-card' : ''}" style="cursor:pointer;border:1px solid var(--border);border-radius:10px;padding:10px 12px;display:flex;align-items:flex-start;gap:10px;transition:all .18s;${!p.available ? 'opacity:.55;' : ''}">
-                  <input type="radio" name="preset" value="${p.id}" data-version="${p.version}"
-                    ${p.id === defaultPreset?.id ? 'checked' : ''}
-                    ${!p.available ? 'disabled' : ''}
-                    style="margin-top:3px;accent-color:var(--teal)">
-                  <div style="flex:1">
-                    <div style="font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:6px">
-                      <span>${p.label}</span>
-                      ${p.available ? `<span class="chip succeeded" style="font-size:9px">Sẵn sàng</span>` : `<span class="chip disabled" style="font-size:9px">Chờ GPU</span>`}
-                    </div>
-                    <div style="font-size:10px;color:var(--txt-3);margin-top:2px">
-                      ID: <code style="color:var(--teal)">${p.id}</code> · Pipeline: ${(p.modules || []).join(' → ')}
-                    </div>
+            <div class="lumina-panel-body" style="display:flex;flex-direction:column;align-items:center;justify-content:center">
+              <div class="studio-stage-outer" style="width:100%;padding:12px">
+                <!-- Khung 9:16 chứa thẻ <video> thật + Hộp Blur kéo thả 8 hướng -->
+                <div class="studio-phone-interactive" id="studio-live-phone">
+                  <div class="real-frame-fallback" id="studio-video-fallback">
+                    <div>🎬 Đang tải khung hình video thực tế...</div>
+                    <small style="color:rgba(255,255,255,0.65);margin-top:4px">Kéo thả khung viền xanh bên dưới để che chính xác phụ đề hoặc logo</small>
                   </div>
-                </label>
-              `).join('')}
+                  <video id="studio-real-video" class="real-frame-video" playsinline muted loop preload="metadata"></video>
+
+                  <!-- Banner Hook cố định phía trên -->
+                  <div class="studio-phone-banner hidden" id="studio-phone-banner" style="position:absolute;top:10px;left:10px;right:10px;margin:0;z-index:5">REVIEW PHIM HAY</div>
+
+                  <!-- Badge hiển thị Voice / BGM / Flip -->
+                  <div class="studio-phone-badges" id="studio-phone-badges" style="z-index:5"></div>
+
+                  <!-- HỘP CHỌN VÙNG BLUR THỦ CÔNG TRÊN ẢNH THỰC TẾ (KÉO & ĐỔI KÍCH THƯỚC 8 ĐIỂM) -->
+                  <div class="custom-blur-rect" id="custom-blur-rect" title="Kéo để di chuyển vùng làm mờ, kéo các góc/cạnh để thay đổi kích thước">
+                    <span class="custom-blur-label" id="custom-blur-label">BLUR: X:6% Y:72% (88×16%)</span>
+                    <div class="blur-handle nw" data-handle="nw"></div>
+                    <div class="blur-handle ne" data-handle="ne"></div>
+                    <div class="blur-handle sw" data-handle="sw"></div>
+                    <div class="blur-handle se" data-handle="se"></div>
+                    <div class="blur-handle n"  data-handle="n"></div>
+                    <div class="blur-handle s"  data-handle="s"></div>
+                    <div class="blur-handle w"  data-handle="w"></div>
+                    <div class="blur-handle e"  data-handle="e"></div>
+                  </div>
+
+                  <!-- Phụ đề chạy chữ đè lên trên -->
+                  <div class="studio-phone-sub hidden" id="studio-phone-sub" style="position:absolute;left:8px;right:8px;bottom:14px;margin:0;z-index:7">
+                    <span class="marquee-inner" id="studio-phone-sub-text">Phụ đề chạy chữ tự động...</span>
+                  </div>
+                </div>
+
+                <!-- Thanh tua khung hình video thực tế (Scrubber) -->
+                <div class="frame-scrubber-bar">
+                  <button type="button" class="btn btn-secondary btn-sm" id="btn-toggle-preview-play" style="padding:3px 8px;font-size:11px">▶ Phát</button>
+                  <input type="range" id="studio-video-scrubber" min="0" max="100" step="0.1" value="0" style="flex:1;accent-color:var(--teal)" title="Tua đến khung hình có phụ đề/logo để căn chỉnh vùng Blur" />
+                  <span class="font-mono text-muted" id="studio-video-time" style="font-size:10px;min-width:68px;text-align:right">0.0s / 0.0s</span>
+                </div>
+
+                <!-- Nút chọn nhanh vị trí Blur mẫu -->
+                <div class="blur-preset-bar">
+                  <button type="button" class="blur-preset-btn" data-box-preset="sub_bottom">🎯 Sub đáy (6%,72%)</button>
+                  <button type="button" class="blur-preset-btn" data-box-preset="sub_high">🔼 Sub cao (8%,62%)</button>
+                  <button type="button" class="blur-preset-btn" data-box-preset="logo_tr">🏷 Logo phải (66%,4%)</button>
+                  <button type="button" class="blur-preset-btn" data-box-preset="logo_tl">🏷 Logo trái (6%,4%)</button>
+                  <button type="button" class="blur-preset-btn" data-box-preset="center_watermark">💧 Giữa (15%,42%)</button>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-header">
-              <span class="card-title">${I.log} Gói Tin JSON Gửi Hàng Đợi (Bao gồm tọa độ Custom Blur 2D)</span>
-              <span class="tag" style="color:var(--teal);border-color:rgba(45,212,191,0.3)">POST /api/v1/jobs</span>
+          <!-- CỘT 3 (PHẢI): INSPECTOR 4 TAB KHÔNG CẦN CUỘN TRANG -->
+          <div class="lumina-panel">
+            <div class="lumina-panel-header">
+              <span class="lumina-panel-title">${I.cog} 3. Inspector Đa Cấu Hình (4 Tab)</span>
+              <span class="tag" style="font-size:9px;color:var(--teal)">Seedance UI</span>
             </div>
-            <pre id="live-job-payload-json" class="json-code-box"></pre>
+            <div class="lumina-panel-body">
+              <div id="dynamic-override-container"></div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- Summary + submit -->
-      <div class="card mt-4" id="job-summary">
-        <div class="card-header"><span class="card-title">${I.check} Bước 5: Xác Nhận Đa Cấu Hình &amp; Đẩy Vào Hàng Đợi Render</span></div>
-        <div id="summary-body" class="dl-grid"></div>
-        <div id="form-submit-error" class="form-error hidden mt-3"></div>
-        <div class="modal-footer" style="padding:14px 0 0">
-          <button type="submit" class="btn btn-primary btn-lg" id="btn-submit-job" aria-describedby="form-submit-error">
-            ${I.play} Xếp vào hàng đợi &amp; Render Vùng Blur Đã Chọn
-          </button>
+        <!-- THANH DOCK NỔI PHÍA DƯỚI KIỂU SEEDANCE / LUMINA -->
+        <div class="seedance-bottom-dock mt-3" id="job-summary">
+          <div id="summary-body" class="seedance-summary-pills"></div>
+          <div id="form-submit-error" class="form-error hidden" style="margin:0"></div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <button type="submit" class="btn btn-primary btn-lg" id="btn-submit-job" aria-describedby="form-submit-error" style="white-space:nowrap;box-shadow:0 6px 20px rgba(45,212,191,0.28)">
+              ${I.play} Xếp vào hàng đợi &amp; Render Vùng Blur Đã Chọn
+            </button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   `;
 
   $('btn-cancel-job')?.addEventListener('click', () =>
@@ -1045,159 +1062,212 @@ async function renderNewJob() {
     ];
 
     container.innerHTML = `
-      <!-- C. VÙNG CHỌN BLUR 2D THỦ CÔNG TRÊN ẢNH THỰC TẾ (ĐẶT LÊN ĐẦU ĐỂ TIỆN THAO TÁC) -->
-      <div class="cfg-section-box" style="border-color:rgba(45,212,191,0.45)">
-        <div class="cfg-section-title">
-          <span>🎯 A. Vùng Chọn Làm Mờ Thủ Công Trên Video Thật (Custom 2D Blur Box)</span>
-          <span class="tag" style="color:var(--teal)">Kéo thả trực tiếp</span>
+      <!-- THANH CHUYỂN 4 TAB KIỂU SEEDANCE / LUMINA INSPECTOR (KHÔNG CẦN CUỘN TRANG) -->
+      <div class="lumina-tabs" id="lumina-inspector-tabs">
+        <button type="button" class="lumina-tab-btn active" data-tab="tab-blur">🎯 Blur 2D</button>
+        <button type="button" class="lumina-tab-btn" data-tab="tab-voice">🎙 Giọng AI</button>
+        <button type="button" class="lumina-tab-btn" data-tab="tab-text">💬 Chạy Chữ</button>
+        <button type="button" class="lumina-tab-btn" data-tab="tab-frame">📐 Khung &amp; JSON</button>
+      </div>
+
+      <!-- TAB 1: VÙNG CHỌN BLUR 2D THỦ CÔNG TRÊN ẢNH THỰC TẾ -->
+      <div class="lumina-tab-pane active" id="tab-blur">
+        <div class="cfg-section-box" style="border-color:rgba(45,212,191,0.45);margin-bottom:0">
+          <div class="cfg-section-title">
+            <span>🎯 Vùng Làm Mờ 2D (Custom Blur ROI)</span>
+            <span class="tag" style="color:var(--teal)">Kéo thả 8 điểm</span>
+          </div>
+          <label class="toggle-row mb-2">
+            <span>Bật làm mờ vùng chọn 2D (Che Sub Trung / Logo)</span>
+            <input type="checkbox" id="override-blur-sub" ${d.blur_subtitle ? 'checked' : ''} />
+          </label>
+          <div class="grid-2" style="gap:10px;margin-bottom:10px">
+            <div class="form-group">
+              <label class="form-label" for="override-blur-mode">Thuật toán xử lý vùng chọn</label>
+              <select class="form-select" id="override-blur-mode">
+                ${Object.entries(BLUR_LABELS).map(([k, lbl]) => `<option value="${k}" ${k === (d.blur_mode || 'gaussian_box') ? 'selected' : ''}>${lbl}</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="override-blur-strength">Độ mờ Gaussian (Sigma): <b id="lbl-blur-s">${d.blur_strength || 20}</b></label>
+              <input type="range" id="override-blur-strength" min="5" max="40" step="1" value="${d.blur_strength || 20}" style="accent-color:var(--teal);width:100%" />
+            </div>
+          </div>
+          <div class="grid-2" style="gap:10px">
+            <div class="form-group">
+              <label class="form-label" for="override-blur-x">Toạ độ ngang X (Trái → Phải): <b id="lbl-blur-x">${d.blur_x_pct}%</b></label>
+              <input type="range" id="override-blur-x" min="0" max="90" step="1" value="${d.blur_x_pct}" style="accent-color:var(--teal);width:100%" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="override-blur-y">Toạ độ dọc Y (Trên → Dưới): <b id="lbl-blur-y">${d.blur_y_pct}%</b></label>
+              <input type="range" id="override-blur-y" min="0" max="90" step="1" value="${d.blur_y_pct}" style="accent-color:var(--teal);width:100%" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="override-blur-w">Chiều rộng vùng Blur (Width): <b id="lbl-blur-w">${d.blur_w_pct}%</b></label>
+              <input type="range" id="override-blur-w" min="5" max="100" step="1" value="${d.blur_w_pct}" style="accent-color:var(--teal);width:100%" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="override-blur-h">Chiều cao vùng Blur (Height): <b id="lbl-blur-h">${d.blur_h_pct}%</b></label>
+              <input type="range" id="override-blur-h" min="5" max="60" step="1" value="${d.blur_h_pct}" style="accent-color:var(--teal);width:100%" />
+            </div>
+          </div>
+          <p class="form-hint mt-2">
+            💡 Kéo trực tiếp khung viền xanh trên video ở cột giữa hoặc chỉnh 4 thanh trượt X/Y/W/H.
+          </p>
         </div>
-        <label class="toggle-row mb-2">
-          <span>Bật làm mờ vùng chọn 2D trên khung hình (Che phụ đề gốc / Logo / Watermark)</span>
-          <input type="checkbox" id="override-blur-sub" ${d.blur_subtitle ? 'checked' : ''} />
-        </label>
-        <div class="grid-2" style="gap:10px;margin-bottom:10px">
-          <div class="form-group">
-            <label class="form-label" for="override-blur-mode">Thuật toán xử lý vùng chọn</label>
-            <select class="form-select" id="override-blur-mode">
-              ${Object.entries(BLUR_LABELS).map(([k, lbl]) => `<option value="${k}" ${k === (d.blur_mode || 'gaussian_box') ? 'selected' : ''}>${lbl}</option>`).join('')}
+      </div>
+
+      <!-- TAB 2: GIỌNG ĐỌC AI & ÂM THANH 5.1 SMART -->
+      <div class="lumina-tab-pane" id="tab-voice">
+        <div class="cfg-section-box" style="margin-bottom:0">
+          <div class="cfg-section-title">
+            <span>🎙 Giọng Đọc AI (TTS / Character-Lock) &amp; Nhạc Nền</span>
+            <span class="tag" style="color:var(--teal)">5.1 Smart SFX</span>
+          </div>
+          ${preset?.id === 'chuyen_hai_dua' || state.selectedChannelId === 'ch_chuyen_hai_dua' ? `
+            <div style="background:rgba(45,212,191,0.09);border:1px solid rgba(45,212,191,0.35);border-radius:8px;padding:8px 10px;margin-bottom:10px;font-size:11px;line-height:1.45">
+              <div style="font-weight:700;color:var(--teal);margin-bottom:3px">💑 Chế Độ Đặc Biệt: Chuyện Hai Đứa (Character-Lock Đa Giọng + 5.1 Smart)</div>
+              <div class="text-muted">• <b>Voice Bank 3 nhân vật:</b> Nam cuốn hút (<code>130.1Hz</code>) · Nữ cảm xúc (<code>225.4Hz</code>) · Nữ dịu dàng (<code>217.7Hz</code>)</div>
+              <div class="text-muted">• <b>Tách nền:</b> <code>surround_center_remove</code> + <code>htdemucs</code> giữ tiếng cười/SFX · <code>WeSpeaker + Light-ASD</code> khóa giọng theo nhân vật.</div>
+              <div style="color:#fde047;margin-top:3px">⚠ Trạng thái: <code>THU_NGHIEM_ChuyenHaiDua/02_MOI_RENDER_CHO_XAC_NHAN</code> (Render-Only chờ duyệt giọng).</div>
+            </div>
+          ` : ''}
+          <div class="form-group mb-2">
+            <label class="form-label" for="override-voice-id">Chọn Giọng Đọc Thuyết Minh / Lồng Tiếng</label>
+            <select class="form-select" id="override-voice-id">
+              ${Object.entries(VOICE_LABELS).map(([k, lbl]) => `<option value="${k}" ${k === (d.voice_id || 'original') ? 'selected' : ''}>${lbl}</option>`).join('')}
             </select>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="override-blur-strength">Độ mờ Gaussian (Sigma): <b id="lbl-blur-s">${d.blur_strength || 20}</b></label>
-            <input type="range" id="override-blur-strength" min="5" max="40" step="1" value="${d.blur_strength || 20}" style="accent-color:var(--teal);width:100%" />
+          <div class="grid-2" style="gap:10px;margin-bottom:10px">
+            <div class="form-group">
+              <label class="form-label" for="override-voice-speed">Tốc độ giọng đọc: <b id="lbl-voice-speed">${d.voice_speed || 1.0}x</b></label>
+              <input type="range" id="override-voice-speed" min="0.8" max="1.4" step="0.05" value="${d.voice_speed || 1.0}" style="accent-color:var(--teal);width:100%" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="override-bgm-style">Nhạc nền trộn tự động (BGM)</label>
+              <select class="form-select" id="override-bgm-style">
+                <option value="none" ${d.bgm_style === 'none' ? 'selected' : ''}>Không chèn nhạc nền</option>
+                <option value="cinematic_tension" ${d.bgm_style === 'cinematic_tension' ? 'selected' : ''}>Kịch tính Review Phim (Tension)</option>
+                <option value="chill_lofi" ${d.bgm_style === 'chill_lofi' ? 'selected' : ''}>Chill Lo-Fi nhẹ nhàng</option>
+                <option value="upbeat_viral" ${d.bgm_style === 'upbeat_viral' ? 'selected' : ''}>Sôi động Xu hướng (Upbeat Viral)</option>
+                <option value="emotional_piano" ${d.bgm_style === 'emotional_piano' ? 'selected' : ''}>Piano cảm xúc sâu lắng</option>
+              </select>
+            </div>
           </div>
+          <label class="toggle-row">
+            <span>🔊 Giữ âm thanh môi trường &amp; SFX gốc (Auto-Ducking / 5.1 Smart)</span>
+            <input type="checkbox" id="override-keep-audio" ${d.keep_original_audio !== false ? 'checked' : ''} />
+          </label>
         </div>
-        <div class="grid-2" style="gap:10px">
-          <div class="form-group">
-            <label class="form-label" for="override-blur-x">Toạ độ ngang X (Trái → Phải): <b id="lbl-blur-x">${d.blur_x_pct}%</b></label>
-            <input type="range" id="override-blur-x" min="0" max="90" step="1" value="${d.blur_x_pct}" style="accent-color:var(--teal);width:100%" />
+      </div>
+
+      <!-- TAB 3: CHẠY CHỮ KARAOKE & BANNER HOOK -->
+      <div class="lumina-tab-pane" id="tab-text">
+        <div class="cfg-section-box" style="margin-bottom:0">
+          <div class="cfg-section-title"><span>💬 Chạy Chữ Phụ Đề Động &amp; Tiêu Đề Banner Hook</span></div>
+          <div class="grid-2" style="gap:10px;margin-bottom:10px">
+            <div class="form-group">
+              <label class="form-label" for="override-sub-style">Kiểu chạy chữ / Phụ đề</label>
+              <select class="form-select" id="override-sub-style">
+                ${Object.entries(SUB_STYLE_LABELS).map(([k, lbl]) => `<option value="${k}" ${k === (d.subtitle_style || 'none') ? 'selected' : ''}>${lbl}</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="override-text-pos">Vị trí hiển thị phụ đề</label>
+              <select class="form-select" id="override-text-pos">
+                <option value="bottom" ${d.text_position === 'bottom' ? 'selected' : ''}>Phía dưới (Đè lên vùng Blur Sub)</option>
+                <option value="middle" ${d.text_position === 'middle' ? 'selected' : ''}>Chính giữa khung hình</option>
+                <option value="top" ${d.text_position === 'top' ? 'selected' : ''}>Phía trên</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group mb-2">
+            <label class="form-label" for="override-banner-text">Tiêu đề Hook cố định trên đầu video (Banner Text)</label>
+            <input class="form-input" id="override-banner-text" type="text" maxlength="120" value="${d.banner_text || ''}" placeholder="Ví dụ: CHUYỆN HAI ĐỨA / REVIEW PHIM..." />
           </div>
           <div class="form-group">
-            <label class="form-label" for="override-blur-y">Toạ độ dọc Y (Trên → Dưới): <b id="lbl-blur-y">${d.blur_y_pct}%</b></label>
-            <input type="range" id="override-blur-y" min="0" max="90" step="1" value="${d.blur_y_pct}" style="accent-color:var(--teal);width:100%" />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="override-blur-w">Chiều rộng vùng Blur (Width): <b id="lbl-blur-w">${d.blur_w_pct}%</b></label>
-            <input type="range" id="override-blur-w" min="5" max="100" step="1" value="${d.blur_w_pct}" style="accent-color:var(--teal);width:100%" />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="override-blur-h">Chiều cao vùng Blur (Height): <b id="lbl-blur-h">${d.blur_h_pct}%</b></label>
-            <input type="range" id="override-blur-h" min="5" max="60" step="1" value="${d.blur_h_pct}" style="accent-color:var(--teal);width:100%" />
+            <label class="form-label" for="override-marquee-text">Nội dung chữ chạy ngang / Phụ đề nổi bật (Marquee / Sub Text)</label>
+            <input class="form-input" id="override-marquee-text" type="text" maxlength="200" value="${d.marquee_text || ''}" placeholder="Nhập dòng chữ chạy hoặc tag kênh @ChuyenHaiDua..." />
           </div>
         </div>
       </div>
 
-      <!-- B. GIỌNG ĐỌC AI & ÂM THANH -->
-      <div class="cfg-section-box">
-        <div class="cfg-section-title"><span>🎙 B. Giọng Đọc AI (TTS Voice) &amp; Nhạc Nền</span></div>
-        <div class="form-group mb-2">
-          <label class="form-label" for="override-voice-id">Chọn Giọng Đọc Thuyết Minh / Lồng Tiếng</label>
-          <select class="form-select" id="override-voice-id">
-            ${Object.entries(VOICE_LABELS).map(([k, lbl]) => `<option value="${k}" ${k === (d.voice_id || 'original') ? 'selected' : ''}>${lbl}</option>`).join('')}
-          </select>
-        </div>
-        <div class="grid-2" style="gap:10px;margin-bottom:10px">
-          <div class="form-group">
-            <label class="form-label" for="override-voice-speed">Tốc độ giọng đọc: <b id="lbl-voice-speed">${d.voice_speed || 1.0}x</b></label>
-            <input type="range" id="override-voice-speed" min="0.8" max="1.4" step="0.05" value="${d.voice_speed || 1.0}" style="accent-color:var(--teal);width:100%" />
+      <!-- TAB 4: KHUNG HÌNH 9:16, MÀU SẮC & GÓI TIN JSON -->
+      <div class="lumina-tab-pane" id="tab-frame">
+        <div class="cfg-section-box">
+          <div class="cfg-section-title"><span>📐 Độ Phân Giải, Bố Cục 9:16 &amp; Màu Sắc</span></div>
+          <div class="res-grid">
+            ${profiles.map(pr => `
+              <button type="button" class="res-card ${(d.width || 720) === pr.w && (d.height || 1280) === pr.h ? 'active' : ''}" data-res-w="${pr.w}" data-res-h="${pr.h}">
+                <div class="res-card-title">${pr.title}</div>
+                <div class="res-card-sub">${pr.sub}</div>
+              </button>
+            `).join('')}
           </div>
-          <div class="form-group">
-            <label class="form-label" for="override-bgm-style">Nhạc nền trộn tự động (BGM)</label>
-            <select class="form-select" id="override-bgm-style">
-              <option value="none" ${d.bgm_style === 'none' ? 'selected' : ''}>Không chèn nhạc nền</option>
-              <option value="cinematic_tension" ${d.bgm_style === 'cinematic_tension' ? 'selected' : ''}>Kịch tính Review Phim (Tension)</option>
-              <option value="chill_lofi" ${d.bgm_style === 'chill_lofi' ? 'selected' : ''}>Chill Lo-Fi nhẹ nhàng</option>
-              <option value="upbeat_viral" ${d.bgm_style === 'upbeat_viral' ? 'selected' : ''}>Sôi động Xu hướng (Upbeat Viral)</option>
-              <option value="emotional_piano" ${d.bgm_style === 'emotional_piano' ? 'selected' : ''}>Piano cảm xúc sâu lắng</option>
-            </select>
+          <div class="grid-2" style="gap:10px;margin-bottom:10px">
+            <div class="form-group">
+              <label class="form-label" for="override-width">Chiều rộng (Width)</label>
+              <select class="form-select" id="override-width">
+                ${[360, 720, 1080].map(w => `<option value="${w}" ${w === (d.width || 720) ? 'selected' : ''}>${w} px</option>`).join('')}
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="override-height">Chiều cao (Height)</label>
+              <select class="form-select" id="override-height">
+                ${[640, 1280, 1920].map(h => `<option value="${h}" ${h === (d.height || 1280) ? 'selected' : ''}>${h} px (Dọc 9:16)</option>`).join('')}
+              </select>
+            </div>
           </div>
+          <div class="grid-2" style="gap:10px;margin-bottom:10px">
+            <div class="form-group">
+              <label class="form-label" for="override-fit-mode">Chế độ khung hình (Fit Mode)</label>
+              <select class="form-select" id="override-fit-mode">
+                <option value="contain" ${d.fit_mode === 'contain' ? 'selected' : ''}>Viền đen chuẩn (Contain)</option>
+                <option value="blur_bg" ${d.fit_mode === 'blur_bg' ? 'selected' : ''}>Nền mờ Gaussian 9:16 (Blur BG)</option>
+                <option value="cover" ${d.fit_mode === 'cover' ? 'selected' : ''}>Cắt tràn viền 9:16 (Cover Crop)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="override-color-grade">Bộ lọc màu (Color Grade)</label>
+              <select class="form-select" id="override-color-grade">
+                <option value="natural" ${d.color_grade === 'natural' ? 'selected' : ''}>Màu gốc tự nhiên (Natural)</option>
+                <option value="cinematic_warm" ${d.color_grade === 'cinematic_warm' ? 'selected' : ''}>Cinematic Ấm (Warm Film)</option>
+                <option value="film_contrast" ${d.color_grade === 'film_contrast' ? 'selected' : ''}>Tương phản điện ảnh (Review Black)</option>
+                <option value="vibrant_tiktok" ${d.color_grade === 'vibrant_tiktok' ? 'selected' : ''}>Rực rỡ TikTok/Reels (Vibrant)</option>
+                <option value="noir_bw" ${d.color_grade === 'noir_bw' ? 'selected' : ''}>Đen trắng nghệ thuật (Noir B&amp;W)</option>
+              </select>
+            </div>
+          </div>
+          <label class="toggle-row">
+            <span>🪞 Lật gương ngang video (Mirror Flip chống bản quyền)</span>
+            <input type="checkbox" id="override-mirror" ${d.mirror_flip ? 'checked' : ''} />
+          </label>
         </div>
-        <label class="toggle-row">
-          <span>🔊 Giữ âm thanh môi trường gốc (Tự động giảm âm khi có giọng đọc)</span>
-          <input type="checkbox" id="override-keep-audio" ${d.keep_original_audio !== false ? 'checked' : ''} />
-        </label>
-      </div>
 
-      <!-- C. CHẠY CHỮ KARAOKE & BANNER HOOK -->
-      <div class="cfg-section-box">
-        <div class="cfg-section-title"><span>💬 C. Chạy Chữ Phụ Đề Động &amp; Tiêu Đề Banner Hook</span></div>
-        <div class="grid-2" style="gap:10px;margin-bottom:10px">
-          <div class="form-group">
-            <label class="form-label" for="override-sub-style">Kiểu chạy chữ / Phụ đề</label>
-            <select class="form-select" id="override-sub-style">
-              ${Object.entries(SUB_STYLE_LABELS).map(([k, lbl]) => `<option value="${k}" ${k === (d.subtitle_style || 'none') ? 'selected' : ''}>${lbl}</option>`).join('')}
-            </select>
+        <div class="cfg-section-box" style="margin-bottom:0">
+          <div class="cfg-section-title">
+            <span>${I.log} Gói Tin JSON Gửi Hàng Đợi</span>
+            <span class="tag" style="color:var(--teal)">POST /api/v1/jobs</span>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="override-text-pos">Vị trí hiển thị phụ đề</label>
-            <select class="form-select" id="override-text-pos">
-              <option value="bottom" ${d.text_position === 'bottom' ? 'selected' : ''}>Phía dưới (Đè lên vùng Blur Sub)</option>
-              <option value="middle" ${d.text_position === 'middle' ? 'selected' : ''}>Chính giữa khung hình</option>
-              <option value="top" ${d.text_position === 'top' ? 'selected' : ''}>Phía trên</option>
-            </select>
-          </div>
+          <pre id="live-job-payload-json" class="json-code-box" style="max-height:140px;overflow-y:auto"></pre>
         </div>
-        <div class="form-group mb-2">
-          <label class="form-label" for="override-banner-text">Tiêu đề Hook cố định trên đầu video (Banner Text)</label>
-          <input class="form-input" id="override-banner-text" type="text" maxlength="120" value="${d.banner_text || ''}" placeholder="Ví dụ: TẬP CUỐI: CÁI KẾT KHÔNG NGỜ..." />
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="override-marquee-text">Nội dung chữ chạy ngang / Phụ đề nổi bật (Marquee / Sub Text)</label>
-          <input class="form-input" id="override-marquee-text" type="text" maxlength="200" value="${d.marquee_text || ''}" placeholder="Nhập dòng chữ chạy hoặc lời bình hiển thị trên video..." />
-        </div>
-      </div>
-
-      <!-- D. KHUNG HÌNH & BỐ CỤC -->
-      <div class="cfg-section-box" style="margin-bottom:0">
-        <div class="cfg-section-title"><span>📐 D. Độ Phân Giải, Bố Cục 9:16 &amp; Màu Sắc</span></div>
-        <div class="res-grid">
-          ${profiles.map(pr => `
-            <button type="button" class="res-card ${(d.width || 720) === pr.w && (d.height || 1280) === pr.h ? 'active' : ''}" data-res-w="${pr.w}" data-res-h="${pr.h}">
-              <div class="res-card-title">${pr.title}</div>
-              <div class="res-card-sub">${pr.sub}</div>
-            </button>
-          `).join('')}
-        </div>
-        <div class="grid-2" style="gap:10px;margin-bottom:10px">
-          <div class="form-group">
-            <label class="form-label" for="override-width">Chiều rộng (Width)</label>
-            <select class="form-select" id="override-width">
-              ${[360, 720, 1080].map(w => `<option value="${w}" ${w === (d.width || 720) ? 'selected' : ''}>${w} px</option>`).join('')}
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="override-height">Chiều cao (Height)</label>
-            <select class="form-select" id="override-height">
-              ${[640, 1280, 1920].map(h => `<option value="${h}" ${h === (d.height || 1280) ? 'selected' : ''}>${h} px (Dọc 9:16)</option>`).join('')}
-            </select>
-          </div>
-        </div>
-        <div class="grid-2" style="gap:10px;margin-bottom:10px">
-          <div class="form-group">
-            <label class="form-label" for="override-fit-mode">Chế độ khung hình (Fit Mode)</label>
-            <select class="form-select" id="override-fit-mode">
-              <option value="contain" ${d.fit_mode === 'contain' ? 'selected' : ''}>Viền đen chuẩn (Contain)</option>
-              <option value="blur_bg" ${d.fit_mode === 'blur_bg' ? 'selected' : ''}>Nền mờ Gaussian 9:16 (Blur BG)</option>
-              <option value="cover" ${d.fit_mode === 'cover' ? 'selected' : ''}>Cắt tràn viền 9:16 (Cover Crop)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="override-color-grade">Bộ lọc màu (Color Grade)</label>
-            <select class="form-select" id="override-color-grade">
-              <option value="natural" ${d.color_grade === 'natural' ? 'selected' : ''}>Màu gốc tự nhiên (Natural)</option>
-              <option value="cinematic_warm" ${d.color_grade === 'cinematic_warm' ? 'selected' : ''}>Cinematic Ấm (Warm Film)</option>
-              <option value="film_contrast" ${d.color_grade === 'film_contrast' ? 'selected' : ''}>Tương phản điện ảnh (Review Black)</option>
-              <option value="vibrant_tiktok" ${d.color_grade === 'vibrant_tiktok' ? 'selected' : ''}>Rực rỡ TikTok/Reels (Vibrant)</option>
-              <option value="noir_bw" ${d.color_grade === 'noir_bw' ? 'selected' : ''}>Đen trắng nghệ thuật (Noir B&amp;W)</option>
-            </select>
-          </div>
-        </div>
-        <label class="toggle-row">
-          <span>🪞 Lật gương ngang video (Mirror Flip chống bản quyền)</span>
-          <input type="checkbox" id="override-mirror" ${d.mirror_flip ? 'checked' : ''} />
-        </label>
       </div>
     `;
+
+    // Chuyển tab trong Inspector 4 Tab + đồng bộ Node Pipeline trên Top Dock
+    const switchInspectorTab = (tabId) => {
+      container.querySelectorAll('.lumina-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tabId));
+      container.querySelectorAll('.lumina-tab-pane').forEach(p => p.classList.toggle('active', p.id === tabId));
+      document.querySelectorAll('#lumina-pipeline-nodes .lumina-node').forEach(n => {
+        n.classList.toggle('active', n.dataset.gotoTab === tabId);
+      });
+    };
+    container.querySelectorAll('.lumina-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchInspectorTab(btn.dataset.tab));
+    });
+    document.querySelectorAll('#lumina-pipeline-nodes [data-goto-tab]').forEach(node => {
+      node.addEventListener('click', () => switchInspectorTab(node.dataset.gotoTab));
+    });
 
     const syncAllControls = () => {
       const w = parseInt($('override-width')?.value || 720, 10);
@@ -1438,11 +1508,11 @@ async function renderNewJob() {
     const chObj = CHANNELS_8.find(c => c.id === state.selectedChannelId);
 
     $('summary-body').innerHTML = `
-      <span class="dl-label">Kênh Fanpage Đích</span><span class="dl-value"><b style="color:var(--teal)">${chObj ? chObj.name : 'Tự do'}</b></span>
-      <span class="dl-label">Dự án lưu trữ</span><span class="dl-value">${projName}</span>
-      <span class="dl-label">Preset Pipeline</span><span class="dl-value"><span class="tag" style="color:var(--teal)">${presetId}</span> (v${presetVer})</span>
-      <span class="dl-label">Input Video UUID</span><span class="dl-value mono">${inputVal || '<em>Chưa chọn UUID</em>'}</span>
-      <span class="dl-label">Vùng Blur &amp; Cấu hình</span><span class="dl-value mono" style="color:var(--teal)">${summaryText}</span>
+      <span class="seedance-pill">📺 Kênh: <b>${chObj ? chObj.name : 'Tự do'}</b></span>
+      <span class="seedance-pill">📁 Dự án: <b>${projName}</b></span>
+      <span class="seedance-pill">⚙️ Preset: <b>${presetId} (v${presetVer})</b></span>
+      <span class="seedance-pill">🎬 Input: <b>${inputVal ? window.ccUtil.shortId(inputVal) : 'Chưa chọn'}</b></span>
+      <span class="seedance-pill">🎯 Cấu hình: <b>${summaryText}</b></span>
     `;
 
     const previewEl = $('live-job-payload-json');

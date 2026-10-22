@@ -262,6 +262,27 @@ const FIXTURES = {
         },
       },
       {
+        id: 'chuyen_hai_dua',
+        version: '1.0.0',
+        label: 'Chuyện Hai Đứa (@ChuyenHaiDua) — Đa Giọng Nam/Nữ Character-Lock + 5.1 Smart',
+        available: true,
+        modules: ['media.probe', 'render.basic'],
+        default_config: {
+          width: 720, height: 1280, fit_mode: 'blur_bg',
+          voice_id: 'omnivoice_auto', voice_speed: 1.0, keep_original_audio: true, bgm_style: 'emotional_piano',
+          blur_subtitle: true, blur_mode: 'ai_inpaint', blur_height_pct: 18, blur_strength: 18,
+          blur_x_pct: 6, blur_y_pct: 72, blur_w_pct: 88, blur_h_pct: 18,
+          subtitle_style: 'karaoke_pop', banner_text: 'CHUYỆN HAI ĐỨA', marquee_text: '@ChuyenHaiDua · Thuyết minh đa giọng Nam/Nữ giữ nền 5.1', text_position: 'bottom',
+          mirror_flip: false, color_grade: 'cinematic_warm',
+        },
+        override_schema: {
+          width: { type: 'integer', enum: [360, 720, 1080], default: 720 },
+          height: { type: 'integer', enum: [640, 1280, 1920], default: 1280 },
+          fit_mode: { type: 'string', enum: ['contain', 'cover', 'blur_bg'] },
+          voice_id: { type: 'string' },
+        },
+      },
+      {
         id: 'inspect_media',
         version: '1.0.0',
         label: 'Kiểm tra thông số video (Probe JSON)',
@@ -651,6 +672,9 @@ class MockApiClient {
     } else if (s.includes('诡诡漫') || s.includes('n-1fm0rh')) {
       chId = 'ch_guiguiman'; author = '诡诡漫'; presetId = 'cauhinh2';
       reason = 'Khớp kênh nguồn Hoạt hình Kỳ bí 诡诡漫 (KENH_004)';
+    } else if (s.includes('hai đứa') || s.includes('chuyen_hai_dua') || s.includes('couple')) {
+      chId = 'ch_chuyen_hai_dua'; author = 'Chuyện Hai Đứa (@ChuyenHaiDua)'; presetId = 'chuyen_hai_dua';
+      reason = 'Khớp dự án thử nghiệm Chuyện Hai Đứa (Đa giọng Nam/Nữ Character-Lock + 5.1 Smart)';
     }
     return {
       detected_channel_id: chId,

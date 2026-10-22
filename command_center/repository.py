@@ -314,6 +314,15 @@ class Repository:
                 "reason": "Khớp kênh nguồn Vlog Đời Sống / Chill (迷人的歪姐 - KENH_007)",
                 "blur_box": {"x": 10, "y": 75, "w": 80, "h": 14},
             },
+            {
+                "keywords": ["chuyen_hai_dua", "chuyện hai đứa", "chuyenhaidua", "tình yêu", "couple", "恋爱", "情侣"],
+                "channel_id": "ch_chuyen_hai_dua",
+                "channel_name": "Chuyện Hai Đứa (@ChuyenHaiDua — Thử nghiệm Đa giọng Nam/Nữ)",
+                "source_author": "Chuyện Hai Đứa (Couple/Wuby)",
+                "preset_id": "chuyen_hai_dua",
+                "reason": "Khớp dự án thử nghiệm Chuyện Hai Đứa (WeSpeaker Character-Lock Nam/Nữ + 5.1 Smart)",
+                "blur_box": {"x": 6, "y": 72, "w": 88, "h": 18},
+            },
         ]
 
         lower_text = text.lower()

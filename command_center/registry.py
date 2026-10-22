@@ -96,6 +96,14 @@ PRESET_DEFAULTS = {
         "subtitle_style": "minimal_white", "banner_text": "SỐNG MỘT MÌNH CÓ GÌ VUI", "marquee_text": "Nhật ký chill mỗi tối một mình", "text_position": "bottom",
         "mirror_flip": False, "color_grade": "cinematic_warm",
     },
+    "chuyen_hai_dua": {
+        "width": 720, "height": 1280, "fit_mode": "blur_bg",
+        "voice_id": "omnivoice_auto", "voice_speed": 1.0, "keep_original_audio": True, "bgm_style": "emotional_piano",
+        "blur_subtitle": True, "blur_mode": "ai_inpaint", "blur_height_pct": 18, "blur_strength": 18,
+        "blur_x_pct": 6, "blur_y_pct": 72, "blur_w_pct": 88, "blur_h_pct": 18,
+        "subtitle_style": "karaoke_pop", "banner_text": "CHUYỆN HAI ĐỨA", "marquee_text": "@ChuyenHaiDua · Thuyết minh đa giọng Nam/Nữ giữ nền 5.1", "text_position": "bottom",
+        "mirror_flip": False, "color_grade": "cinematic_warm",
+    },
 }
 PRESETS = {
     "inspect_media": {"label": "Kiểm tra thông số video (Probe JSON)", "modules": ["media.probe"], "available": True},
@@ -103,6 +111,7 @@ PRESETS = {
     "cauhinh2": {"label": "Cấu hình 2 — Review Phim Viền Đen + Blur Sub + Voice Trầm", "modules": ["media.probe", "render.basic"], "available": True},
     "cauhinh3": {"label": "Cấu hình 3 — Movie Clone Nền Mờ 9:16 + Karaoke + Lật Gương", "modules": ["media.probe", "render.basic"], "available": True},
     "cauhinh3_wuby": {"label": "Cấu hình 3 Wuby — Giọng Wuby Clone + Xoá Sub Giữ Nền", "modules": ["media.probe", "render.basic"], "available": True},
+    "chuyen_hai_dua": {"label": "Chuyện Hai Đứa (@ChuyenHaiDua) — Đa Giọng Nam/Nữ Character-Lock + 5.1 Smart", "modules": ["media.probe", "render.basic"], "available": True},
     "chidepdicau": {"label": "Kênh Chị Đẹp Đi Câu — Voice Nữ Bắc + Banner Hook + Blur Sub", "modules": ["media.probe", "render.basic"], "available": True},
     "song1minhcogivui": {"label": "Kênh Sống Một Mình — Voice Nữ Nam + Chill Lo-Fi + Sub Tối Giản", "modules": ["media.probe", "render.basic"], "available": True},
     "wuby": {"label": "Wuby GPU Legacy — chỉ chạy trên cụm GPU nội bộ", "modules": ["render.compose"], "available": False},
