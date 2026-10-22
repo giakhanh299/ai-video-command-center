@@ -5,22 +5,8 @@
   "lookback_hours": 72,
   "max_new_per_channel": 3,
   "publish": false,
-  "mapping_basis": "Followed authors observed in signed-in Douyin plus public topic sources authorized by user on 2026-10-18",
+  "mapping_basis": "Followed authors observed in signed-in Douyin plus public topic sources authorized by user (KENH_001 and KENH_003 removed as self-rendered)",
   "channels": {
-    "KENH_001": {
-      "sources": [
-        {
-          "name": "财商研习社",
-          "sec_user_id": "MS4wLjABAAAAzR1IUu5xvEwqB5x5WnUJGI6WZTiaKQzXAyxm7Ts43_dvx0la6IrYLlH3SLlrvy60",
-          "url": "https://www.douyin.com/user/MS4wLjABAAAAzR1IUu5xvEwqB5x5WnUJGI6WZTiaKQzXAyxm7Ts43_dvx0la6IrYLlH3SLlrvy60",
-          "evidence_url": "https://www.douyin.com/video/7697568844546088703",
-          "origin": "PUBLIC_TOPIC_SEARCH_IN_SIGNED_IN_DOUYIN",
-          "verified_date": "2026-10-18",
-          "topic": "Financial literacy, money psychology and economics"
-        }
-      ],
-      "status": "SOURCE_CONFIGURED"
-    },
     "KENH_002": {
       "sources": [
         {
@@ -29,19 +15,6 @@
           "url": "https://www.douyin.com/user/MS4wLjABAAAAUewX30vrd2sxQV9Bpkt2rbQTl5e7ILBUSVAuMQOea0u7uHDq-8oeAzMEdHSAmVvT"
         }
       ]
-    },
-    "KENH_003": {
-      "sources": [
-        {
-          "name": "达叔的财智日记",
-          "sec_user_id": "MS4wLjABAAAA1vdy4dTY1Ksgmw4D_7spVIaFnSD9wgQ3kwaknB79SlQ",
-          "url": "https://www.douyin.com/user/MS4wLjABAAAA1vdy4dTY1Ksgmw4D_7spVIaFnSD9wgQ3kwaknB79SlQ",
-          "evidence_url": "https://jingxuan.douyin.com/m/video/7568332009655815443",
-          "origin": "PUBLIC_TOPIC_SEARCH",
-          "verified_date": "2026-10-18"
-        }
-      ],
-      "status": "SOURCE_CONFIGURED"
     },
     "KENH_004": {
       "sources": [

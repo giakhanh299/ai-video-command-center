@@ -24,22 +24,11 @@ const I = {
   cog:     `<svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>`,
 };
 
-/* ─── 8 Fanpage Channel Profiles (Hợp nhất toàn hệ thống) ── */
+/* ─── Danh sách Kênh Fanpage Tự Động Render (Đã xoá KENH_001 & KENH_003 tự sản xuất) ── */
 const CHANNELS_8 = [
   {
-    id: 'ch_wuby_main',
-    name: 'Kênh 1: Wuby Thuyết Minh',
-    niche: 'Thuyết minh AI giữ nền',
-    preset_id: 'cauhinh3_wuby',
-    voice_id: 'wuby_clone_v2',
-    banner_text: 'WUBY AI STUDIO',
-    marquee_text: 'Bản thuyết minh AI độc quyền giữ âm thanh gốc',
-    blur_box: { x: 6, y: 74, w: 88, h: 16 },
-    schedule: '11:30 · 19:30 · 21:00',
-  },
-  {
     id: 'ch_review_black',
-    name: 'Kênh 2: Review Phim Black',
+    name: 'KENH_002: Review Phim (阿刚速看)',
     niche: 'Review kịch tính viền đen',
     preset_id: 'cauhinh2',
     voice_id: 'vi_male_review_tram',
@@ -49,31 +38,42 @@ const CHANNELS_8 = [
     schedule: '12:00 · 18:00 · 22:00',
   },
   {
+    id: 'ch_guiguiman',
+    name: 'KENH_004: Truyện Kỳ Bí (诡诡漫)',
+    niche: 'Hoạt hình kỳ bí + Tách thoại AI',
+    preset_id: 'cauhinh2',
+    voice_id: 'vi_male_north_minhquang',
+    banner_text: 'TRUYỆN KỲ BÍ HẤP DẪN',
+    marquee_text: 'Bấm theo dõi kênh để xem phần tiếp theo!',
+    blur_box: { x: 6, y: 71, w: 88, h: 18 },
+    schedule: '11:00 · 16:00 · 21:30',
+  },
+  {
     id: 'ch_movie_clone',
-    name: 'Kênh 3: Phim Ngắn 9:16',
-    niche: 'Nền mờ Gaussian + Lật gương',
+    name: 'KENH_005: Vũ Trụ Cày Phim (奋斗的希瓜皮)',
+    niche: 'Clone Phim 1 Nữ + Nền mờ 9:16',
     preset_id: 'cauhinh3',
     voice_id: 'vi_female_north_ngochuyen',
-    banner_text: 'PHIM NGẮN HOT',
+    banner_text: 'VŨ TRỤ CÀY PHIM',
     marquee_text: 'Đừng quên thả tim và bấm theo dõi kênh nhé!',
     blur_box: { x: 6, y: 70, w: 88, h: 18 },
     schedule: '09:00 · 15:00 · 20:30',
   },
   {
-    id: 'ch_chidepdicau',
-    name: 'Kênh 4: Chị Đẹp Đi Câu',
-    niche: 'Outdoor / Câu cá giải trí',
-    preset_id: 'chidepdicau',
-    voice_id: 'vi_female_north_ngochuyen',
-    banner_text: 'CHỊ ĐẸP ĐI CÂU',
-    marquee_text: 'Hành trình săn cá khủng mỗi ngày!',
-    blur_box: { x: 5, y: 73, w: 90, h: 17 },
-    schedule: '10:30 · 17:30 · 20:00',
+    id: 'ch_wuby_main',
+    name: 'KENH_006: Wuby Hoạt Hình (乖巧宝宝Quby)',
+    niche: 'Thuyết minh Wuby AI giữ nền',
+    preset_id: 'cauhinh3_wuby',
+    voice_id: 'wuby_clone_v2',
+    banner_text: 'WUBY AI STUDIO',
+    marquee_text: 'Bản thuyết minh AI độc quyền giữ âm thanh gốc',
+    blur_box: { x: 6, y: 74, w: 88, h: 16 },
+    schedule: '11:30 · 19:30 · 21:00',
   },
   {
     id: 'ch_song1minh',
-    name: 'Kênh 5: Sống Một Mình',
-    niche: 'Vlog Chill Lo-Fi / Healing',
+    name: 'KENH_007: Sống Một Mình (迷人的歪姐)',
+    niche: 'Vlog Chill Lo-Fi / Đời sống',
     preset_id: 'song1minhcogivui',
     voice_id: 'vi_female_south_thaovy',
     banner_text: 'SỐNG MỘT MÌNH CÓ GÌ VUI',
@@ -82,30 +82,19 @@ const CHANNELS_8 = [
     schedule: '20:00 · 22:30',
   },
   {
-    id: 'ch_hoc_tieng_trung',
-    name: 'Kênh 6: Học Tiếng Trung',
-    niche: 'Edutainment / Song ngữ',
-    preset_id: 'cauhinh3',
+    id: 'ch_chidepdicau',
+    name: 'KENH_008: Chị Đẹp Đi Câu (女钓手豆豆)',
+    niche: 'Outdoor / Nữ cần thủ câu cá',
+    preset_id: 'chidepdicau',
     voice_id: 'vi_female_north_ngochuyen',
-    banner_text: 'HỌC TIẾNG TRUNG QUA PHIM',
-    marquee_text: 'Lưu lại ngay mẫu câu giao tiếp cực chuẩn này!',
-    blur_box: { x: 6, y: 76, w: 88, h: 14 },
-    schedule: '08:00 · 12:30 · 19:00',
-  },
-  {
-    id: 'ch_drama_reels',
-    name: 'Kênh 7: Drama Tổng Tài',
-    niche: 'Series ngôn tình ngắn tập',
-    preset_id: 'cauhinh2',
-    voice_id: 'vi_male_north_minhquang',
-    banner_text: 'TẬP CUỐI: CÁI KẾT BẤT NGỜ',
-    marquee_text: 'Bấm vào trang cá nhân để xem trọn bộ Full HD!',
-    blur_box: { x: 6, y: 71, w: 88, h: 18 },
-    schedule: '11:00 · 16:00 · 21:30',
+    banner_text: 'CHỊ ĐẸP ĐI CÂU',
+    marquee_text: 'Hành trình săn cá khủng mỗi ngày!',
+    blur_box: { x: 5, y: 73, w: 90, h: 17 },
+    schedule: '10:30 · 17:30 · 20:00',
   },
   {
     id: 'ch_custom_studio',
-    name: 'Kênh 8: Studio Tự Do',
+    name: 'Studio Tự Do (Tự Render)',
     niche: 'Tuỳ biến 100% thông số',
     preset_id: 'basic_render',
     voice_id: 'original',
@@ -676,13 +665,13 @@ async function renderNewJob() {
           </button>
         </div>
         <div class="blur-preset-bar" style="justify-content:flex-start">
-          <span style="font-size:10px;color:var(--txt-3);align-self:center">Nguồn Douyin mẫu:</span>
-          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAfAuPSkhuWIAv7Yx56Y1sI52BoJc0teeXWA2soSCeook 乖巧宝宝Quby">🐰 乖巧宝宝Quby (KENH_006)</button>
+          <span style="font-size:10px;color:var(--txt-3);align-self:center">6 Nguồn Douyin tự động:</span>
           <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAUewX30vrd2sxQV9Bpkt2rbQTl5e7ILBUSVAuMQOea0u7uHDq-8oeAzMEdHSAmVvT 阿刚速看">🎬 阿刚速看 (KENH_002)</button>
-          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAA-YcErrxgnoO9Drrannm8IFMQAN8vzYAjCNqHFMOzLUg 女钓手豆豆">🎣 女钓手豆豆 (KENH_008)</button>
+          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAN-1fM0RHuDRh5s783UTZPUyOSn7yxIglA5LjqCfAXI6MWnxXZ7d_jiPrfEPLGWNt 诡诡漫">👻 诡诡漫 (KENH_004)</button>
           <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAzjF0uYCtXbf928SK2W0jgEBC7idgE2RT9VHipW7UEF8 奋斗的希瓜皮">🍿 奋斗的希瓜皮 (KENH_005)</button>
+          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAfAuPSkhuWIAv7Yx56Y1sI52BoJc0teeXWA2soSCeook 乖巧宝宝Quby">🐰 乖巧宝宝Quby (KENH_006)</button>
           <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAD3g0DECFFzLHG8GLkd0-ESvyOkYCCpHtC4OKhG4yadPVPxi5bGiguqui1fERASD0 迷人的歪姐">🌙 迷人的歪姐 (KENH_007)</button>
-          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAzR1IUu5xvEwqB5x5WnUJGI6WZTiaKQzXAyxm7Ts43_dvx0la6IrYLlH3SLlrvy60 财商研习社">📚 财商研习社 (KENH_001)</button>
+          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAA-YcErrxgnoO9Drrannm8IFMQAN8vzYAjCNqHFMOzLUg 女钓手豆豆">🎣 女钓手豆豆 (KENH_008)</button>
         </div>
         <div id="source-detect-banner" class="info-state hidden mt-2" style="border-color:rgba(45,212,191,0.45);color:var(--txt-1)"></div>
       </div>

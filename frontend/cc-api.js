@@ -648,9 +648,9 @@ class MockApiClient {
     } else if (s.includes('歪姐') || s.includes('chill')) {
       chId = 'ch_song1minh'; author = '迷人的歪姐'; presetId = 'song1minhcogivui';
       reason = 'Khớp kênh nguồn Vlog Chill (KENH_007)';
-    } else if (s.includes('财商') || s.includes('财智')) {
-      chId = 'ch_hoc_tieng_trung'; author = '财商研习社'; presetId = 'cauhinh3';
-      reason = 'Khớp kênh nguồn Tư duy Tài chính & Tiếng Trung (KENH_001)';
+    } else if (s.includes('诡诡漫') || s.includes('n-1fm0rh')) {
+      chId = 'ch_guiguiman'; author = '诡诡漫'; presetId = 'cauhinh2';
+      reason = 'Khớp kênh nguồn Hoạt hình Kỳ bí 诡诡漫 (KENH_004)';
     }
     return {
       detected_channel_id: chId,
