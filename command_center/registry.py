@@ -90,6 +90,10 @@ def make_manifest(request: CreateJob, job_id, created_at):
         raise DomainError("SINGLE_VIDEO_REQUIRED", 422)
     if request.overrides.title:
         raise DomainError("OVERRIDE_NOT_SUPPORTED", 422)
+    if request.preset_id != "basic_render" and (request.overrides.width is not None or request.overrides.height is not None):
+        raise DomainError("OVERRIDE_NOT_SUPPORTED", 422)
+    width = request.overrides.width or 720
+    height = request.overrides.height or 1280
     tasks = []
     for index, module in enumerate(preset["modules"]):
         task_id = uuid4()
@@ -97,7 +101,7 @@ def make_manifest(request: CreateJob, job_id, created_at):
             "task_id": str(task_id), "task_key": "probe" if index == 0 else "compose",
             "module": module, "action": "run", "module_version": MODULE_VERSION,
             "depends_on": [tasks[-1]["task_id"]] if tasks else [],
-            "config": {"width": 720, "height": 1280} if module == "render.basic" else {},
+            "config": {"width": width, "height": height} if module == "render.basic" else {},
             "input_refs": [str(v) for v in request.input_refs], "output_refs": [],
             "status": "queued", "attempt": 0,
         })
@@ -108,7 +112,7 @@ def make_manifest(request: CreateJob, job_id, created_at):
 
 
 def module_dtos():
-    return [{"id": k, "version": MODULE_VERSION, "actions": ["run"],
+    return [{"id": k, "version": MODULE_VERSION, "actions": ["run"], "resource": v["resource"],
              "config_schema": v["config_schema"], "available": v["available"],
              "unavailable_reason": None if v["available"] else "ADAPTER_NOT_INTEGRATED"}
             for k, v in MODULES.items()]
@@ -116,5 +120,6 @@ def module_dtos():
 
 def preset_dtos():
     return [{"id": k, "version": MODULE_VERSION, "label": v["label"], "available": v["available"],
-             "modules": v["modules"], "override_schema": EMPTY_CONFIG if v["available"] else CreateJob.model_json_schema()["$defs"]["Overrides"]}
+             "modules": v["modules"],
+             "override_schema": (BASIC_CONFIG if k == "basic_render" else EMPTY_CONFIG) if v["available"] else CreateJob.model_json_schema()["$defs"]["Overrides"]}
             for k, v in PRESETS.items()]

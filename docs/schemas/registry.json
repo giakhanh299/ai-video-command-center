@@ -6,6 +6,7 @@
       "actions": [
         "run"
       ],
+      "resource": "cpu:0",
       "config_schema": {
         "type": "object",
         "properties": {},
@@ -20,6 +21,7 @@
       "actions": [
         "run"
       ],
+      "resource": "cpu:0",
       "config_schema": {
         "type": "object",
         "additionalProperties": false,
@@ -55,6 +57,7 @@
       "actions": [
         "run"
       ],
+      "resource": "gpu:0",
       "config_schema": {
         "type": "object",
         "properties": {},
@@ -69,6 +72,7 @@
       "actions": [
         "run"
       ],
+      "resource": "gpu:0",
       "config_schema": {
         "type": "object",
         "properties": {},
@@ -104,8 +108,29 @@
       ],
       "override_schema": {
         "type": "object",
-        "properties": {},
-        "additionalProperties": false
+        "additionalProperties": false,
+        "properties": {
+          "width": {
+            "type": "integer",
+            "enum": [
+              360,
+              720,
+              1080
+            ]
+          },
+          "height": {
+            "type": "integer",
+            "enum": [
+              640,
+              1280,
+              1920
+            ]
+          }
+        },
+        "required": [
+          "width",
+          "height"
+        ]
       }
     },
     {
@@ -124,6 +149,40 @@
             "maxLength": 200,
             "title": "Title",
             "type": "string"
+          },
+          "width": {
+            "anyOf": [
+              {
+                "enum": [
+                  360,
+                  720,
+                  1080
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Width"
+          },
+          "height": {
+            "anyOf": [
+              {
+                "enum": [
+                  640,
+                  1280,
+                  1920
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Height"
           }
         },
         "title": "Overrides",
@@ -146,6 +205,40 @@
             "maxLength": 200,
             "title": "Title",
             "type": "string"
+          },
+          "width": {
+            "anyOf": [
+              {
+                "enum": [
+                  360,
+                  720,
+                  1080
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Width"
+          },
+          "height": {
+            "anyOf": [
+              {
+                "enum": [
+                  640,
+                  1280,
+                  1920
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Height"
           }
         },
         "title": "Overrides",
@@ -168,6 +261,40 @@
             "maxLength": 200,
             "title": "Title",
             "type": "string"
+          },
+          "width": {
+            "anyOf": [
+              {
+                "enum": [
+                  360,
+                  720,
+                  1080
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Width"
+          },
+          "height": {
+            "anyOf": [
+              {
+                "enum": [
+                  640,
+                  1280,
+                  1920
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Height"
           }
         },
         "title": "Overrides",
@@ -190,6 +317,40 @@
             "maxLength": 200,
             "title": "Title",
             "type": "string"
+          },
+          "width": {
+            "anyOf": [
+              {
+                "enum": [
+                  360,
+                  720,
+                  1080
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Width"
+          },
+          "height": {
+            "anyOf": [
+              {
+                "enum": [
+                  640,
+                  1280,
+                  1920
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Height"
           }
         },
         "title": "Overrides",
@@ -212,6 +373,40 @@
             "maxLength": 200,
             "title": "Title",
             "type": "string"
+          },
+          "width": {
+            "anyOf": [
+              {
+                "enum": [
+                  360,
+                  720,
+                  1080
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Width"
+          },
+          "height": {
+            "anyOf": [
+              {
+                "enum": [
+                  640,
+                  1280,
+                  1920
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Height"
           }
         },
         "title": "Overrides",
@@ -234,6 +429,40 @@
             "maxLength": 200,
             "title": "Title",
             "type": "string"
+          },
+          "width": {
+            "anyOf": [
+              {
+                "enum": [
+                  360,
+                  720,
+                  1080
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Width"
+          },
+          "height": {
+            "anyOf": [
+              {
+                "enum": [
+                  640,
+                  1280,
+                  1920
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Height"
           }
         },
         "title": "Overrides",

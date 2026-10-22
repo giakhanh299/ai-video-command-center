@@ -8,6 +8,40 @@
           "maxLength": 200,
           "title": "Title",
           "type": "string"
+        },
+        "width": {
+          "anyOf": [
+            {
+              "enum": [
+                360,
+                720,
+                1080
+              ],
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Width"
+        },
+        "height": {
+          "anyOf": [
+            {
+              "enum": [
+                640,
+                1280,
+                1920
+              ],
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Height"
         }
       },
       "title": "Overrides",

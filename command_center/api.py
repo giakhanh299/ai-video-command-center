@@ -137,9 +137,17 @@ def create_app(settings: Settings | None = None):
     def create_job(body: CreateJob, principal=Depends(owner), idempotency=Depends(key)):
         return repo.create_job(principal, body, idempotency)
 
+    @app.get("/api/v1/jobs", response_model=Page[JobDTO])
+    def all_jobs(cursor: str | None = None, limit: int = Query(25, ge=1, le=100), status: str | None = None, principal=Depends(owner)):
+        return repo.all_jobs(principal, cursor, limit, status)
+
     @app.get("/api/v1/projects/{pid}/jobs", response_model=Page[JobDTO])
     def jobs(pid: UUID, cursor: str | None = None, limit: int = Query(25, ge=1, le=100), status: str | None = None, principal=Depends(owner)):
         return repo.jobs(principal, pid, cursor, limit, status)
+
+    @app.get("/api/v1/projects/{pid}/files", response_model=Items[FileDTO])
+    def project_files(pid: UUID, principal=Depends(owner)):
+        return repo.project_files(principal, pid)
 
     @app.get("/api/v1/jobs/{jid}", response_model=JobDTO)
     def job(jid: UUID, principal=Depends(owner)):

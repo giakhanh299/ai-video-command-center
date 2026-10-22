@@ -534,9 +534,29 @@ class MockApiClient {
     const j = this._allMockJobs().find(x => x.id === id);
     return { _mock: true, items: j?.outputs || FIXTURES.jobPilotComplete.outputs || [] };
   }
+  async getProjectFiles(projectId) {
+    await this._delay();
+    return {
+      _mock: true,
+      items: [
+        {
+          id: 'f5d34973-487e-4794-be6b-ff927eb83218',
+          kind: 'video',
+          media_type: 'video/mp4',
+          size_bytes: 1842900,
+          sha256: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+          verification: 'verified',
+        },
+      ],
+    };
+  }
 
   getFileContentUrl(fileId) {
     return null; // Mock mode không stream binary thật
+  }
+
+  async fetchFileBlobUrl(fileId) {
+    return null;
   }
 }
 
@@ -615,10 +635,19 @@ class RealApiClient {
     return this._fetch('GET', `/projects/${projectId}/jobs${qs}`);
   }
 
-  async getAllJobs({ status } = {}) {
-    // Contract 0.1.0-draft không có endpoint GET /api/v1/jobs global.
-    // Frontend tổng hợp từ tất cả dự án thuộc quyền owner:
+  async getAllJobs({ status, cursor, limit = 25 } = {}) {
     try {
+      const params = new URLSearchParams();
+      if (status) params.set('status', status);
+      if (cursor) params.set('cursor', cursor);
+      if (limit) params.set('limit', limit);
+      const qs = params.toString() ? `?${params.toString()}` : '';
+      const res = await this._fetch('GET', `/jobs${qs}`);
+      const items = (res.items || []).slice();
+      items.sort((a, b) => new Date(b.updated_at || 0) - new Date(a.updated_at || 0));
+      return { items, next_cursor: res.next_cursor || null };
+    } catch (err) {
+      if (err && err.status && err.status !== 404 && err.status !== 405) throw err;
       const projRes = await this.getProjects();
       const projs = projRes.items || [];
       const jobPromises = projs.map(p =>
@@ -628,9 +657,12 @@ class RealApiClient {
       const allItems = results.flatMap(r => r.items || []);
       allItems.sort((a, b) => new Date(b.updated_at || 0) - new Date(a.updated_at || 0));
       return { items: allItems };
-    } catch(err) {
-      throw err;
     }
+  }
+
+  async getProjectFiles(projectId) {
+    if (!projectId) return { items: [] };
+    return this._fetch('GET', `/projects/${projectId}/files`).catch(() => ({ items: [] }));
   }
 
   async getJob(id) { return this._fetch('GET', `/jobs/${id}`); }
@@ -643,6 +675,17 @@ class RealApiClient {
   getFileContentUrl(fileId) {
     if (!fileId) return null;
     return `${this.base}/files/${fileId}/content`;
+  }
+
+  async fetchFileBlobUrl(fileId) {
+    const url = this.getFileContentUrl(fileId);
+    if (!url) return null;
+    const headers = {};
+    if (this.token) headers['Authorization'] = `Bearer ${this.token}`;
+    const res = await fetch(url, { headers });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const blob = await res.blob();
+    return URL.createObjectURL(blob);
   }
 }
 

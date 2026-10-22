@@ -37,6 +37,8 @@ class EditProject(NewProject, ExpectedVersion):
 
 class Overrides(Closed):
     title: str = Field(default="", max_length=200)
+    width: Literal[360, 720, 1080] | None = None
+    height: Literal[640, 1280, 1920] | None = None
 
 
 class CreateJob(Closed):

@@ -198,6 +198,29 @@ class Repository:
             rows = c.execute("SELECT * FROM command_center.jobs WHERE project_id=%s AND id>%s AND (%s::text IS NULL OR status=%s) ORDER BY id LIMIT %s", (pid, after, state, state, limit + 1)).fetchall()
             return {"items": [job_dto(c, r) for r in rows[:limit]], "next_cursor": encode_cursor(rows[limit - 1]["id"]) if len(rows) > limit else None}
 
+    def all_jobs(self, owner, token, limit, state):
+        after = cursor(token)
+        if state and state not in JOB_STATES:
+            raise DomainError("INVALID_STATUS", 422)
+        self.expire(owner)
+        with self.db.connect() as c:
+            rows = c.execute(
+                "SELECT j.* FROM command_center.jobs j JOIN command_center.projects p ON p.id=j.project_id "
+                "WHERE p.owner_id=%s AND j.id>%s AND (%s::text IS NULL OR j.status=%s) ORDER BY j.id LIMIT %s",
+                (owner, after, state, state, limit + 1),
+            ).fetchall()
+            return {"items": [job_dto(c, r) for r in rows[:limit]], "next_cursor": encode_cursor(rows[limit - 1]["id"]) if len(rows) > limit else None}
+
+    def project_files(self, owner, pid):
+        with self.db.connect() as c:
+            project(c, owner, pid)
+            rows = c.execute(
+                "SELECT * FROM command_center.files WHERE project_id=%s AND verification='verified' AND kind='video' ORDER BY created_at DESC LIMIT 50",
+                (pid,),
+            ).fetchall()
+            return {"items": [{"id": r["id"], "kind": r["kind"], "media_type": r["media_type"], "size_bytes": r["size_bytes"],
+                               "sha256": r["sha256"], "verification": r["verification"], "playback_url": None, "expires_at": None} for r in rows]}
+
     def cancel(self, owner, jid, version):
         with self.db.connect() as c:
             row = job_row(c, owner, jid, True)

@@ -511,8 +511,9 @@ async function renderNewJob() {
                   placeholder="Ví dụ: f5d34973-487e-4794-be6b-ff927eb83218"
                   value="${state.isMock ? 'f5d34973-487e-4794-be6b-ff927eb83218' : ''}"
                   aria-describedby="input-hint" />
+                <div id="verified-files-picker" style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap"></div>
                 <p class="form-hint" id="input-hint">
-                  Nhập UUID của File đã qua kiểm tra hợp lệ. Không nhập đường dẫn tệp cục bộ (C:\\... hoặc D:\\...).
+                  Nhập hoặc chọn UUID của File đã qua kiểm tra hợp lệ. Không nhập đường dẫn tệp cục bộ (C:\\... hoặc D:\\...).
                 </p>
                 <div class="form-error hidden" id="input-error">${I.alert} Cần ít nhất 1 UUID hợp lệ (36 ký tự).</div>
               </div>
@@ -577,32 +578,47 @@ async function renderNewJob() {
   $('btn-cancel-job')?.addEventListener('click', () =>
     state.projectId ? navigate('project-detail') : navigate('projects'));
 
+  function getSchemaProps(preset) {
+    if (!preset || !preset.override_schema) return {};
+    const raw = preset.override_schema.properties || preset.override_schema;
+    if (!raw || typeof raw !== 'object') return {};
+    const clean = {};
+    for (const [k, v] of Object.entries(raw)) {
+      if (!['type', 'properties', 'additionalProperties', 'required', 'title'].includes(k) || (k === 'title' && typeof v === 'object')) {
+        clean[k] = v;
+      }
+    }
+    return clean;
+  }
+
   // Update dynamic schema override fields
   function updateOverrideFields(preset) {
     const container = $('dynamic-override-container');
     if (!container) return;
 
-    if (!preset || !preset.override_schema || Object.keys(preset.override_schema).length === 0) {
+    const schema = getSchemaProps(preset);
+    if (Object.keys(schema).length === 0) {
       container.innerHTML = `<p class="form-hint">Preset này không yêu cầu hoặc không nhận tham số ghi đè (overrides rỗng).</p>`;
       return;
     }
 
-    const schema = preset.override_schema;
     let html = '';
 
     if (schema.width && schema.height) {
+      const curW = parseInt($('override-width')?.value || schema.width.default || 720, 10);
+      const curH = parseInt($('override-height')?.value || schema.height.default || 1280, 10);
       html += `
         <div class="grid-2" style="gap:12px">
           <div class="form-group">
             <label class="form-label" for="override-width">Chiều rộng (Width px)</label>
             <select class="form-select" id="override-width">
-              ${(schema.width.enum || [360, 720, 1080]).map(w => `<option value="${w}" ${w === (schema.width.default || 720) ? 'selected' : ''}>${w} px</option>`).join('')}
+              ${(schema.width.enum || [360, 720, 1080]).map(w => `<option value="${w}" ${w === curW ? 'selected' : ''}>${w} px</option>`).join('')}
             </select>
           </div>
           <div class="form-group">
             <label class="form-label" for="override-height">Chiều cao (Height px)</label>
             <select class="form-select" id="override-height">
-              ${(schema.height.enum || [640, 1280, 1920]).map(h => `<option value="${h}" ${h === (schema.height.default || 1280) ? 'selected' : ''}>${h} px (Dọc)</option>`).join('')}
+              ${(schema.height.enum || [640, 1280, 1920]).map(h => `<option value="${h}" ${h === curH ? 'selected' : ''}>${h} px (Dọc)</option>`).join('')}
             </select>
           </div>
         </div>
@@ -623,10 +639,11 @@ async function renderNewJob() {
     }
 
     container.innerHTML = html;
+    $('override-width')?.addEventListener('change', updateSummaryTextOnly);
+    $('override-height')?.addEventListener('change', updateSummaryTextOnly);
   }
 
-  // Update summary when form changes
-  function updateSummary() {
+  function updateSummaryTextOnly() {
     const projSel   = $('new-job-project');
     const presetSel = document.querySelector('input[name="preset"]:checked');
     const inputVal  = $('new-job-input')?.value.trim() || '';
@@ -636,10 +653,10 @@ async function renderNewJob() {
     const presetVer = presetSel?.dataset.version || '1.0.0';
 
     const preset = state.presets.find(p => p.id === presetId);
-    updateOverrideFields(preset);
+    const schema = getSchemaProps(preset);
 
     let overrideText = 'Không có';
-    if (preset?.override_schema?.width) {
+    if (schema.width) {
       const w = $('override-width')?.value || 720;
       const h = $('override-height')?.value || 1280;
       overrideText = `width: ${w}, height: ${h}`;
@@ -662,10 +679,53 @@ async function renderNewJob() {
     }
   }
 
-  $('new-job-project')?.addEventListener('change', updateSummary);
-  $('new-job-input')?.addEventListener('input', updateSummary);
+  // Update summary when form changes
+  function updateSummary() {
+    const presetSel = document.querySelector('input[name="preset"]:checked');
+    const preset = state.presets.find(p => p.id === (presetSel?.value || ''));
+    updateOverrideFields(preset);
+    updateSummaryTextOnly();
+  }
+
+  async function loadProjectVerifiedFiles() {
+    const projId = $('new-job-project')?.value;
+    const picker = $('verified-files-picker');
+    if (!projId || !picker || !window.CC_API.getProjectFiles) return;
+    try {
+      const res = await window.CC_API.getProjectFiles(projId);
+      const files = res.items || [];
+      if (files.length === 0) {
+        picker.innerHTML = '';
+        return;
+      }
+      if (!$('new-job-input').value.trim()) {
+        $('new-job-input').value = files[0].id;
+        updateSummaryTextOnly();
+      }
+      picker.innerHTML = files.map(f => `
+        <button type="button" class="tag" style="cursor:pointer;border:1px solid var(--teal)" data-pick-file="${f.id}">
+          ${I.film} Chọn file verified: ${window.ccUtil.shortId(f.id)} (${window.ccUtil.formatBytes(f.size_bytes)})
+        </button>
+      `).join('');
+      picker.querySelectorAll('[data-pick-file]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          $('new-job-input').value = btn.dataset.pickFile;
+          updateSummaryTextOnly();
+        });
+      });
+    } catch {
+      picker.innerHTML = '';
+    }
+  }
+
+  $('new-job-project')?.addEventListener('change', () => {
+    updateSummaryTextOnly();
+    loadProjectVerifiedFiles();
+  });
+  $('new-job-input')?.addEventListener('input', updateSummaryTextOnly);
   document.querySelectorAll('input[name="preset"]').forEach(r => r.addEventListener('change', updateSummary));
   updateSummary();
+  loadProjectVerifiedFiles();
 
   // Submit
   $('new-job-form')?.addEventListener('submit', async e => {
@@ -689,11 +749,12 @@ async function renderNewJob() {
     if (!valid) return;
 
     const preset = state.presets.find(p => p.id === presetSel.value);
+    const schema = getSchemaProps(preset);
     const overrides = {};
-    if (preset?.override_schema?.width) {
+    if (schema.width) {
       overrides.width = parseInt($('override-width')?.value || 720, 10);
       overrides.height = parseInt($('override-height')?.value || 1280, 10);
-    } else if (preset?.override_schema?.title) {
+    } else if (schema.title) {
       const t = $('override-title')?.value.trim();
       if (t) overrides.title = t;
     }
@@ -904,6 +965,17 @@ async function renderJobDetail() {
       renderJobDetail();
     });
   });
+
+  // Load authenticated blob stream for video player if in Real API mode
+  const videoEl = $('cc-stream-video');
+  const videoFile = outItems.find(f => f.kind === 'video');
+  if (videoEl && videoFile && !state.isMock && window.CC_API.fetchFileBlobUrl) {
+    window.CC_API.fetchFileBlobUrl(videoFile.id)
+      .then(blobUrl => {
+        if (blobUrl && videoEl) videoEl.src = blobUrl;
+      })
+      .catch(() => {});
+  }
 }
 
 function renderOutputSection(job, outItems) {
@@ -942,11 +1014,10 @@ function renderOutputSection(job, outItems) {
                    <source src="${videoFile.playback_url}" type="video/mp4">
                  </video>`
               : (streamUrl && !state.isMock)
-                ? `<video controls preload="metadata" style="width:100%;border-radius:6px;background:#000" aria-label="Stream video qua API">
-                     <source src="${streamUrl}" type="video/mp4">
+                ? `<video id="cc-stream-video" controls preload="metadata" style="width:100%;border-radius:6px;background:#000" aria-label="Stream video qua API">
                    </video>
                    <div style="font-size:11px;color:var(--teal);margin-top:4px">
-                     ${I.check} Stream trực tiếp từ API backend (/files/${window.ccUtil.shortId(videoFile.id)}/content HTTP 206)
+                     ${I.check} Stream xác thực trực tiếp từ API backend (/files/${window.ccUtil.shortId(videoFile.id)}/content)
                    </div>`
                 : `<div class="video-unavailable">
                      ${I.film}
