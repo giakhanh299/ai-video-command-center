@@ -1,0 +1,53 @@
+# Development environments
+.venv/
+.venv-command-center/
+venv/
+__pycache__/
+.pytest_cache/
+node_modules/
+*.pyc
+
+# Secrets & Local credentials (TUYỆT ĐỐI KHÔNG PUSH)
+.env
+*.env
+*.env.local
+backend/.env
+gdrive_token.json
+credentials.local.json
+*.local.json
+workspace/
+workspace/command_center_dev/
+
+# Large media, outputs, caches & models (>100GB)
+cache/
+outputs/
+inputs/
+recycle/
+MOI_TRUONG/
+MODELS/
+backups/
+VAN_HANH/04_BACKUP/
+voice_samples/
+assets/fonts/
+
+# Binary & media file types
+tools/bin/
+*.exe
+*.dll
+*.so
+*.dylib
+*.mp4
+*.mkv
+*.avi
+*.mov
+*.wav
+*.mp3
+*.zip
+*.rar
+*.7z
+*.tar.gz
+*.pt
+*.pth
+*.onnx
+*.bin
+*.log

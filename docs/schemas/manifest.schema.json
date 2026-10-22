@@ -1,0 +1,235 @@
+{
+  "$defs": {
+    "Task": {
+      "additionalProperties": false,
+      "properties": {
+        "task_id": {
+          "format": "uuid",
+          "title": "Task Id",
+          "type": "string"
+        },
+        "task_key": {
+          "pattern": "^[a-z][a-z0-9_]{0,63}$",
+          "title": "Task Key",
+          "type": "string"
+        },
+        "module": {
+          "title": "Module",
+          "type": "string",
+          "enum": [
+            "media.probe",
+            "render.basic"
+          ]
+        },
+        "action": {
+          "const": "run",
+          "title": "Action",
+          "type": "string"
+        },
+        "module_version": {
+          "title": "Module Version",
+          "type": "string",
+          "const": "1.0.0"
+        },
+        "depends_on": {
+          "items": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Depends On",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "config": {
+          "additionalProperties": true,
+          "title": "Config",
+          "type": "object"
+        },
+        "input_refs": {
+          "items": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Input Refs",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "output_refs": {
+          "items": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "maxItems": 32,
+          "title": "Output Refs",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "leased",
+            "running",
+            "succeeded",
+            "failed",
+            "cancelled",
+            "needs_attention"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "attempt": {
+          "minimum": 0,
+          "title": "Attempt",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "task_id",
+        "task_key",
+        "module",
+        "action",
+        "module_version",
+        "depends_on",
+        "config",
+        "input_refs",
+        "output_refs",
+        "status",
+        "attempt"
+      ],
+      "title": "Task",
+      "type": "object",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "module": {
+                "const": "media.probe"
+              }
+            },
+            "required": [
+              "module"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "module": {
+                "const": "render.basic"
+              }
+            },
+            "required": [
+              "module"
+            ]
+          },
+          "then": {
+            "properties": {
+              "config": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "width": {
+                    "type": "integer",
+                    "enum": [
+                      360,
+                      720,
+                      1080
+                    ]
+                  },
+                  "height": {
+                    "type": "integer",
+                    "enum": [
+                      640,
+                      1280,
+                      1920
+                    ]
+                  }
+                },
+                "required": [
+                  "width",
+                  "height"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0-draft",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "project_id": {
+      "format": "uuid",
+      "title": "Project Id",
+      "type": "string"
+    },
+    "job_id": {
+      "format": "uuid",
+      "title": "Job Id",
+      "type": "string"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string",
+      "format": "date-time"
+    },
+    "pipeline": {
+      "items": {
+        "$ref": "#/$defs/Task"
+      },
+      "maxItems": 32,
+      "minItems": 1,
+      "title": "Pipeline",
+      "type": "array"
+    },
+    "input_refs": {
+      "items": {
+        "format": "uuid",
+        "type": "string"
+      },
+      "maxItems": 8,
+      "minItems": 1,
+      "title": "Input Refs",
+      "type": "array",
+      "uniqueItems": true
+    },
+    "output_refs": {
+      "items": {
+        "format": "uuid",
+        "type": "string"
+      },
+      "maxItems": 1024,
+      "title": "Output Refs",
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "schema_version",
+    "project_id",
+    "job_id",
+    "created_at",
+    "pipeline",
+    "input_refs",
+    "output_refs"
+  ],
+  "title": "Manifest",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

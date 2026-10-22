@@ -1,0 +1,6 @@
+# Optional primary/secondary local voice cloning backends.
+# Install after the base requirements.
+omnivoice
+vieneu
+# Current VieNeu GPU SDK documentation recommends this transformers build.
+transformers==4.57.6

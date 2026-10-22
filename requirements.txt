@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+yt-dlp
+edge-tts
+deep-translator
+faster-whisper
+ffmpeg-python
+pydub
+python-multipart
+openai
+python-dotenv
+requests
+psutil
+opencv-python
+numpy
+soundfile
+google-auth-oauthlib

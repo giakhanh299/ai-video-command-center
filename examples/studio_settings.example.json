@@ -1,0 +1,110 @@
+{
+  "enabled": true,
+  "channel_id": "wuby",
+  "label": "WUBY / CUTE STORIES",
+  "theme": "peach",
+  "width": 1080,
+  "height": 1920,
+  "fps": "source",
+  "encoder": "libx264",
+  "crf": 20,
+  "threads": 2,
+  "font_path": "",
+  "font_family": "DejaVu Sans",
+  "title": {
+    "enabled": true,
+    "duration": 3.0,
+    "font_ratio": 0.061,
+    "max_lines": 2
+  },
+  "subtitle": {
+    "enabled": true,
+    "font_ratio": 0.047,
+    "max_lines": 2,
+    "min_page_sec": 0.45
+  },
+  "layout": {
+    "title": [
+      0.075,
+      0.07,
+      0.85,
+      0.13
+    ],
+    "video": [
+      0.045,
+      0.23,
+      0.91,
+      0.52
+    ],
+    "subtitle": [
+      0.07,
+      0.79,
+      0.86,
+      0.12
+    ],
+    "logo": [
+      0.39,
+      0.932,
+      0.22,
+      0.032
+    ]
+  },
+  "logo": {
+    "enabled": true,
+    "path": "channel_assets/wuby/logo.png",
+    "opacity": 0.16,
+    "mode": "drift_fade",
+    "cycle_sec": 8.0,
+    "drift_ratio": 0.03
+  },
+  "motion": {
+    "zoom": 1.02
+  },
+  "cleanup": {
+    "mode": "ocr",
+    "sample_fps": 24.0,
+    "crop": null,
+    "masks": [],
+    "input_already_rendered": false,
+    "reviewed": false
+  },
+  "audio": {
+    "mode": "clone",
+    "require_clone": true,
+    "background_path": "",
+    "background_gain": 0.08,
+    "normalize_voice": true,
+    "max_speedup": 1.2,
+    "minimum_gap_sec": 0.06
+  },
+  "speech_qc": {
+    "enabled": true,
+    "model": "small",
+    "device": "cpu",
+    "compute_type": "int8",
+    "local_files_only": true,
+    "max_wer": 0.35
+  },
+  "sfx": {
+    "enabled": false,
+    "events": [],
+    "avoid_speech": true,
+    "max_gain": 0.35
+  },
+  "quality": {
+    "require_listening_approval": true,
+    "require_visual_review": true
+  },
+  "source": {
+    "mode": "auto",
+    "srt_path": "",
+    "voice_path": "",
+    "title": "",
+    "allow_music_transcription": false
+  },
+  "queue": {
+    "max_active": 100,
+    "max_attempts": 2,
+    "timeout_sec": 3600
+  }
+}

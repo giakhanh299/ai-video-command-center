@@ -1,0 +1,2211 @@
+{
+  "schema_version": 2,
+  "default": {
+    "name": "Kênh Mặc Định (Cấu hình 3 - Clone Phim Nữ Hoài My)",
+    "workflow": "movie_clone",
+    "render_profile": "movie_clone_blur",
+    "voice": "hoaimy",
+    "speed": 1.3,
+    "mask_mode": "blur_sub_black",
+    "burn_sub": true,
+    "show_title_card": false,
+    "keep_bg_audio": true,
+    "bg_volume": 0.7,
+    "vocal_cut": false,
+    "force_render": true,
+    "drive_folder": "KENH_005_VuTruCayPhim/02_MOI_RENDER_CHO_XAC_NHAN",
+    "subtitle_detection": {
+      "mode": "fixed_box_padding_2pct"
+    },
+    "movie_voice_match": {
+      "enabled": false,
+      "_note": "Cấu hình 3: 1 giọng nữ Hoài My duy nhất, không chạy WeSpeaker/Light-ASD."
+    },
+    "duration_match": {
+      "adaptive": true,
+      "max_speedup": 1.8,
+      "minimum_gap_sec": 0.05
+    },
+    "dialogue_replace": {
+      "enabled": true,
+      "required": false,
+      "separator_model": "htdemucs",
+      "require_separator": false,
+      "fallback": "center_cancel",
+      "tts_volume": 1.15,
+      "instrumental_volume": 0.7,
+      "mask_rate": 1000,
+      "relative_threshold": 0.035,
+      "absolute_threshold": 0.003,
+      "attack_ms": 45,
+      "release_ms": 140,
+      "fill_gap_ms": 180,
+      "mute_original_speech": true,
+      "strategy": "surround_first",
+      "surround_min_channels": 6,
+      "mask_source": "whisper_segments",
+      "speech_pre_padding_ms": 140,
+      "speech_post_padding_ms": 320,
+      "speech_background_volume": 0.7,
+      "speech_cleanup": true
+    },
+    "audio_mode": "surround_center_remove",
+    "audio_mode_label": "Clone Phim 1 Nữ + Nền 70% / Giọng +15%"
+  },
+  "voice_profiles": {
+    "wuby_clone": {
+      "label": "Wuby - Nhân vật nữ cute / Người dẫn nữ trẻ trung",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "model": "kjanh/KhanhTTS-OmniVoice",
+      "ref_audio": "giongnucute.wav",
+      "ref_text": "Chào mọi người nha! Mình thấy câu chuyện này cực kỳ thú vị và hài hước luôn.",
+      "role_voices": {
+        "character": "omni_nu_cute",
+        "narrator": "omni_nu_tre"
+      },
+      "language": "vi",
+      "num_step": 20,
+      "guidance_scale": 2.0,
+      "require_clone": true,
+      "fallback_voice": null,
+      "speed": 1.0,
+      "allow_backend_switch": false,
+      "duration_match": {
+        "max_speedup": 1.65,
+        "minimum_gap_sec": 0.06,
+        "adaptive": true
+      }
+    },
+    "omni_nu_cute": {
+      "label": "OmniVoice - Nữ cute clone",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "ref_audio": "giongnucute.wav",
+      "ref_text": "Chào mọi người nha! Mình thấy câu chuyện này cực kỳ thú vị và hài hước luôn.",
+      "language": "vi",
+      "num_step": 24,
+      "guidance_scale": 2.0,
+      "fallback_voice": "nu_tre",
+      "reference_hz": 238.81
+    },
+    "nu_tre": {
+      "label": "Nữ Trẻ Trung - Edge Hoài My",
+      "engine": "edge",
+      "voice": "vi-VN-HoaiMyNeural",
+      "pitch": "+8Hz"
+    },
+    "nu_tram": {
+      "label": "Nữ Trầm Ấm - Edge Hoài My",
+      "engine": "edge",
+      "voice": "vi-VN-HoaiMyNeural",
+      "pitch": "-6Hz"
+    },
+    "nam_minh": {
+      "label": "Nam Minh - Edge",
+      "engine": "edge",
+      "voice": "vi-VN-NamMinhNeural",
+      "pitch": "+0Hz"
+    },
+    "hoaimy": {
+      "label": "Hoài My gốc - Edge",
+      "engine": "edge",
+      "voice": "vi-VN-HoaiMyNeural",
+      "pitch": "+0Hz"
+    },
+    "google": {
+      "label": "Chị Google",
+      "engine": "google"
+    },
+    "omni_nu_tre": {
+      "label": "OmniVoice - Nữ trẻ clone",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "ref_audio": "2_nu_tre_trung.mp3",
+      "ref_text": "Tôi đang thử nghiệm công nghệ nhân bản giọng nói. Hôm nay trời thật đẹp, nắng vàng chạy khắp những con đường nhỏ phía trước nhà.",
+      "language": "vi",
+      "num_step": 24,
+      "guidance_scale": 2.0,
+      "fallback_voice": null,
+      "reference_hz": 251.98
+    },
+    "omni_nu_tram": {
+      "label": "OmniVoice - Nữ trầm clone",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "ref_audio": "3_nu_tram_am.mp3",
+      "ref_text": "",
+      "language": "vi",
+      "num_step": 24,
+      "guidance_scale": 2.0,
+      "fallback_voice": "nu_tram",
+      "reference_hz": 231.88
+    },
+    "omni_nam_review": {
+      "label": "OmniVoice - Nam review clone",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "ref_audio": "giongnamreviewdao.mp3",
+      "ref_text": "",
+      "language": "vi",
+      "num_step": 24,
+      "guidance_scale": 2.0,
+      "fallback_voice": "nam_minh",
+      "reference_hz": 126.98
+    },
+    "omni_nam_nghiem_tuc": {
+      "label": "OmniVoice - Nam nghiêm túc clone",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "ref_audio": "giongnamtnghiemtuc.wav",
+      "ref_text": "Xin chào các bạn, hôm nay tôi sẽ chia sẻ một câu chuyện ngắn trên diễn đàn vozforums.",
+      "language": "vi",
+      "num_step": 24,
+      "guidance_scale": 2.0,
+      "fallback_voice": "nam_minh",
+      "reference_hz": 148.15
+    },
+    "pitch_v01": {
+      "label": "Pitch Bank - Nam Cổ Nhân (Cực trầm 108Hz)",
+      "engine": "edge",
+      "voice": "vi-VN-NamMinhNeural",
+      "pitch": "-20Hz",
+      "reference_hz": 108.1,
+      "ref_audio": "pitch_v01.wav"
+    },
+    "pitch_v02": {
+      "label": "Pitch Bank - Nam Review Dạo (Trầm 127Hz)",
+      "engine": "edge",
+      "voice": "vi-VN-NamMinhNeural",
+      "pitch": "-8Hz",
+      "reference_hz": 127.0,
+      "ref_audio": "pitch_v02.mp3"
+    },
+    "pitch_v03": {
+      "label": "Pitch Bank - Nam Triết Lý (137Hz)",
+      "engine": "edge",
+      "voice": "vi-VN-NamMinhNeural",
+      "pitch": "-3Hz",
+      "reference_hz": 136.8,
+      "ref_audio": "pitch_v03.wav"
+    },
+    "pitch_v04": {
+      "label": "Pitch Bank - Nam Nghiêm Túc (148Hz - youtube-Thread)",
+      "engine": "edge",
+      "voice": "vi-VN-NamMinhNeural",
+      "pitch": "+5Hz",
+      "reference_hz": 148.2,
+      "ref_audio": "pitch_v04.wav"
+    },
+    "pitch_v05": {
+      "label": "Pitch Bank - Chị Google (200Hz)",
+      "engine": "google",
+      "reference_hz": 200.0,
+      "ref_audio": "pitch_v05.wav"
+    },
+    "pitch_v06": {
+      "label": "Pitch Bank - Nữ Truyền Cảm (229Hz)",
+      "engine": "edge",
+      "voice": "vi-VN-HoaiMyNeural",
+      "pitch": "-5Hz",
+      "reference_hz": 228.6,
+      "ref_audio": "pitch_v06.mp3"
+    },
+    "pitch_v07": {
+      "label": "Pitch Bank - Nữ Trầm Ấm (232Hz)",
+      "engine": "edge",
+      "voice": "vi-VN-HoaiMyNeural",
+      "pitch": "+0Hz",
+      "reference_hz": 231.9,
+      "ref_audio": "pitch_v07.mp3"
+    },
+    "pitch_v08": {
+      "label": "Pitch Bank - Nữ Cute (239Hz - youtube-Thread)",
+      "engine": "edge",
+      "voice": "vi-VN-HoaiMyNeural",
+      "pitch": "+8Hz",
+      "reference_hz": 238.8,
+      "ref_audio": "pitch_v08.wav"
+    },
+    "pitch_v09": {
+      "label": "Pitch Bank - Nữ Trẻ Trung (252Hz)",
+      "engine": "edge",
+      "voice": "vi-VN-HoaiMyNeural",
+      "pitch": "+15Hz",
+      "reference_hz": 252.0,
+      "ref_audio": "pitch_v09.mp3"
+    },
+    "pitch_v10": {
+      "label": "Pitch Bank - Wuby Anime (276Hz)",
+      "engine": "edge",
+      "voice": "vi-VN-HoaiMyNeural",
+      "pitch": "+22Hz",
+      "reference_hz": 275.9,
+      "ref_audio": "pitch_v10.wav"
+    },
+    "omni_nam_co_nhan": {
+      "label": "OmniVoice - Nam cổ nhân clone",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "ref_audio": "giongdocconhan_short.mp3",
+      "ref_text": "",
+      "language": "vi",
+      "num_step": 24,
+      "guidance_scale": 2.0,
+      "fallback_voice": "nam_minh"
+    },
+    "omni_nam_dan_chuong_trinh": {
+      "label": "OmniVoice - Nam dẫn chương trình clone",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "ref_audio": "giongnamdanchuongtrinh.mp3",
+      "ref_text": "",
+      "language": "vi",
+      "num_step": 24,
+      "guidance_scale": 2.0,
+      "fallback_voice": "nam_minh"
+    },
+    "omni_nam_triet_ly": {
+      "label": "OmniVoice - Nam triết lý clone",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "ref_audio": "giongnam_trietly_137hz.wav",
+      "ref_text": "",
+      "language": "vi",
+      "num_step": 24,
+      "guidance_scale": 2.0,
+      "fallback_voice": "nam_minh"
+    },
+    "omni_nu_ngoc_trinh": {
+      "label": "OmniVoice - Nữ Ngọc Trinh clone",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "ref_audio": "giongnu_ngoctrinh_235hz.wav",
+      "ref_text": "",
+      "language": "vi",
+      "num_step": 24,
+      "guidance_scale": 2.0,
+      "fallback_voice": "nu_tre",
+      "reference_hz": 235.29
+    },
+    "omni_betterversion": {
+      "label": "Better Version (Review sách, tri thức 262Hz)",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "model": "kjanh/KhanhTTS-OmniVoice",
+      "ref_audio": "bettervison_short.wav",
+      "ref_text": "Nhưng quá khứ đã qua đi, và chúng ta không cần phải giằng buộc mình với nó nữa. Hãy trân trọng hiện tại để sống tốt cho tương lai.",
+      "language": "vi",
+      "num_step": 28,
+      "guidance_scale": 2.2,
+      "require_clone": true,
+      "fallback_voice": "nu_tre",
+      "reference_hz": 258.06
+    },
+    "omni_chautinhtri": {
+      "label": "Châu Tinh Trì (Hóm hỉnh, hài hước 144Hz)",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "model": "kjanh/KhanhTTS-OmniVoice",
+      "ref_audio": "chautinhtri_short.wav",
+      "ref_text": "Xin chào, tôi là Châu Tinh Trì. Các bạn thấy tôi nói tiếng gì có hay không?",
+      "language": "vi",
+      "num_step": 28,
+      "guidance_scale": 2.2,
+      "require_clone": true,
+      "fallback_voice": "nam_minh",
+      "reference_hz": 148.15
+    },
+    "omni_dan_chuong_trinh_vip": {
+      "label": "Dẫn Chương Trình VIP (Hào sảng, kịch tính 99Hz)",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "model": "kjanh/KhanhTTS-OmniVoice",
+      "ref_audio": "danchuongtrinhvip_short.wav",
+      "ref_text": "Đừng bao giờ coi thường tài năng của Lưu Bang, nếu như Hàn Tín được mệnh danh là Binh Tiên, thì chắc chắn Hán Cao Tổ Lưu Bang phải được xưng là Đế Tiên.",
+      "language": "vi",
+      "num_step": 28,
+      "guidance_scale": 2.2,
+      "require_clone": true,
+      "fallback_voice": "nam_minh",
+      "reference_hz": 93.02
+    },
+    "omni_tauthao": {
+      "label": "Tào Tháo (Trầm hùng, khí phách 137Hz)",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "model": "kjanh/KhanhTTS-OmniVoice",
+      "ref_audio": "giongtauthao_short.wav",
+      "ref_text": "Nếu như không trải qua vài lần thất bại, làm sao mà biết được, làm thế nào để chiến thắng?",
+      "language": "vi",
+      "num_step": 28,
+      "guidance_scale": 2.2,
+      "require_clone": true,
+      "fallback_voice": "nam_minh",
+      "reference_hz": 128.0
+    },
+    "omni_laivansam": {
+      "label": "MC Lại Văn Sâm (Triết lý, truyền cảm 139Hz)",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "model": "kjanh/KhanhTTS-OmniVoice",
+      "ref_audio": "laivansam_short.wav",
+      "ref_text": "Cuộc đời quả thực nó là vô thường, nó dài đấy, nhưng mà nó ngắn đấy.",
+      "language": "vi",
+      "num_step": 28,
+      "guidance_scale": 2.2,
+      "require_clone": true,
+      "fallback_voice": "nam_minh",
+      "reference_hz": 119.4
+    },
+    "omni_kienthuc_taichinh": {
+      "label": "Nam( KTTC - ts100hz ) - Kiến Thức Tài Chính (Trầm chắc 100Hz)",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "model": "kjanh/KhanhTTS-OmniVoice",
+      "ref_audio": "giongcuakienthuctaichinh.mp3",
+      "ref_text": "Xin chào. Hôm nay là một ngày khá đẹp và tôi muốn kể cho bạn nghe một câu chuyện nhỏ.",
+      "language": "vi",
+      "num_step": 28,
+      "guidance_scale": 2.2,
+      "require_clone": true,
+      "fallback_voice": "nam_minh",
+      "reference_hz": 100.0
+    },
+    "omni_nam_cuon_hut": {
+      "label": "Nam( NCH - ts192hz ) - Nam Cuốn Hút (Ấm cao 192Hz)",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "model": "kjanh/KhanhTTS-OmniVoice",
+      "ref_audio": "giongnamcuonhut.mp3",
+      "ref_text": "Xin chào, đây là đoạn văn mẫu để kiểm tra chất lượng giọng đọc AI.",
+      "language": "vi",
+      "num_step": 28,
+      "guidance_scale": 2.2,
+      "require_clone": true,
+      "fallback_voice": "nam_minh",
+      "reference_hz": 192.8
+    },
+    "omni_nam_mienBac_lichsu": {
+      "label": "Nam( NMBL - ts130hz ) - Nam Miền Bắc Lịch Sử (Trầm ấm 130Hz)",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "model": "kjanh/KhanhTTS-OmniVoice",
+      "ref_audio": "giongnammienbaclichsu.mp3",
+      "ref_text": "Xin chào, đây là đoạn văn mẫu để kiểm tra chất lượng giọng đọc AI.",
+      "language": "vi",
+      "num_step": 28,
+      "guidance_scale": 2.2,
+      "require_clone": true,
+      "fallback_voice": "nam_minh",
+      "reference_hz": 130.1
+    },
+    "omni_nu_cam_xuc": {
+      "label": "Nữ( NCX - ts225hz ) - Nữ Cảm Xúc (225Hz)",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "model": "kjanh/KhanhTTS-OmniVoice",
+      "ref_audio": "giongnucamxuc.mp3",
+      "ref_text": "Chào bạn! Một năm mới nữa lại sang, hy vọng rằng, mọi dự định mà bạn đang ấp ủ đều sẽ trở thành hiện thực.",
+      "language": "vi",
+      "num_step": 28,
+      "guidance_scale": 2.2,
+      "require_clone": true,
+      "fallback_voice": "nu_tram",
+      "reference_hz": 225.4
+    },
+    "omni_nu_diu_dang": {
+      "label": "Nữ( NDD - ts217hz ) - Nữ Dịu Dàng (217Hz)",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "model": "kjanh/KhanhTTS-OmniVoice",
+      "ref_audio": "giongnudiudang.mp3",
+      "ref_text": "Xin chào, đây là đoạn văn mẫu để kiểm tra chất lượng giọng đọc AI.",
+      "language": "vi",
+      "num_step": 28,
+      "guidance_scale": 2.2,
+      "require_clone": true,
+      "fallback_voice": "nu_tram",
+      "reference_hz": 217.7
+    },
+    "omni_nu_tre_trung": {
+      "label": "Nữ( NTT - ts242hz ) - Nữ Trẻ Trung (242Hz)",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "model": "kjanh/KhanhTTS-OmniVoice",
+      "ref_audio": "giongnutretrung.mp3",
+      "ref_text": "Tôi đang thử nghiệm công nghệ nhân bản giọng nói. Hôm nay trời thật đẹp.",
+      "language": "vi",
+      "num_step": 28,
+      "guidance_scale": 2.2,
+      "require_clone": true,
+      "fallback_voice": "nu_tre",
+      "reference_hz": 242.4
+    },
+    "omni_huyen_narrator": {
+      "label": "Nữ( HYN - ts216hz ) - Huyền Narrator (Tự tin, rõ ràng 216Hz)",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "model": "kjanh/KhanhTTS-OmniVoice",
+      "ref_audio": "huyen-clear-confident-narrator.mp3",
+      "ref_text": "Khu trung tâm Hoàng Thành Thăng Long, Hà Nội, tổ chức lễ khởi công dự án đầu tư bảo quản.",
+      "language": "vi",
+      "num_step": 28,
+      "guidance_scale": 2.2,
+      "require_clone": true,
+      "fallback_voice": "nu_tram",
+      "reference_hz": 216.2
+    }
+  },
+  "render_profiles": {
+    "gaidep_blur": {
+      "mask_mode": "blur_sub_black",
+      "blur_bg_alpha": 0.0,
+      "blur_strength": 20,
+      "top_cover": {
+        "enabled": false,
+        "mode": "none"
+      },
+      "title": {
+        "enabled": false
+      },
+      "subtitle": {
+        "enabled": true,
+        "style_mode": "karaoke",
+        "font": "Arial",
+        "font_size": 38,
+        "color": "#FFE600",
+        "secondary_color": "#FFFFFF",
+        "outline_color": "#000000",
+        "outline_size": 3.5,
+        "shadow_size": 1.5,
+        "bold": true,
+        "alignment": 2,
+        "margin_v": null,
+        "border_style": 1
+      },
+      "logo": {
+        "enabled": false
+      },
+      "cover": {
+        "enabled": false
+      },
+      "encoder": {
+        "use_nvenc": true,
+        "nvenc_preset": "p4",
+        "cq": 21,
+        "bitrate": "5M",
+        "maxrate": "8M",
+        "bufsize": "12M",
+        "audio_bitrate": "160k"
+      }
+    },
+    "review_film_black": {
+      "mask_mode": "black_bar",
+      "vertical_right_watermark": true,
+      "top_cover": {
+        "enabled": true,
+        "mode": "black"
+      },
+      "film_bars": {
+        "top_ratio": 0.1,
+        "bottom_ratio": 0.22,
+        "bottom_max_ratio": 0.35
+      },
+      "title": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFE600",
+        "outline_color": "#000000",
+        "outline_size": 3,
+        "bold": true,
+        "uppercase": true,
+        "font_ratio_on_bar": 0.44,
+        "persistent_on_top_bar": true,
+        "persistent": true,
+        "intro_duration": 6.0,
+        "single_line": true,
+        "alignment": 8,
+        "line_break_at": 0
+      },
+      "subtitle": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFFFFF",
+        "outline_color": "#000000",
+        "outline_size": 6,
+        "bold": true,
+        "alignment": 2,
+        "max_lines": 2
+      },
+      "logo": {
+        "enabled": true,
+        "file": "auto",
+        "position": "bottom_right",
+        "width_ratio": 0.18,
+        "opacity": 0.12,
+        "margin_x": 20,
+        "margin_y": 20
+      },
+      "cover": {
+        "enabled": true,
+        "file": "auto",
+        "mode": "intro",
+        "duration": 1.2,
+        "fit": "cover"
+      },
+      "encoder": {
+        "use_nvenc": true,
+        "nvenc_preset": "p4",
+        "cq": 28,
+        "bitrate": "950k",
+        "maxrate": "1350k",
+        "bufsize": "2500k",
+        "audio_bitrate": "96k"
+      }
+    },
+    "review_film_blur": {
+      "mask_mode": "blur",
+      "top_cover": {
+        "enabled": false,
+        "mode": "none"
+      },
+      "blur_strength": 18,
+      "title": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFE600",
+        "outline_color": "#000000",
+        "outline_size": 3,
+        "bold": true,
+        "intro_duration": 6.0
+      },
+      "subtitle": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFFFFF",
+        "outline_color": "#000000",
+        "outline_size": 6,
+        "bold": true
+      },
+      "logo": {
+        "enabled": true,
+        "file": "auto",
+        "position": "bottom_right",
+        "width_ratio": 0.16,
+        "opacity": 0.1,
+        "margin_x": 20,
+        "margin_y": 20
+      },
+      "cover": {
+        "enabled": true,
+        "file": "auto",
+        "mode": "intro",
+        "duration": 1.2,
+        "fit": "cover"
+      },
+      "encoder": {
+        "use_nvenc": true,
+        "nvenc_preset": "p4",
+        "cq": 28
+      }
+    },
+    "sub_black_bar": {
+      "mask_mode": "sub_black_bar",
+      "top_cover": {
+        "enabled": false,
+        "mode": "none"
+      },
+      "title": {
+        "enabled": false
+      },
+      "subtitle": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFFFFF",
+        "outline_color": "#000000",
+        "outline_size": 4,
+        "border_style": 3,
+        "bold": true
+      },
+      "encoder": {
+        "use_nvenc": true,
+        "nvenc_preset": "p4",
+        "cq": 28,
+        "audio_bitrate": "160k"
+      },
+      "logo": {
+        "enabled": true,
+        "opacity": 0.12,
+        "position": "floating",
+        "width_ratio": 0.15,
+        "speed_x": 45.0,
+        "speed_y": 30.0
+      }
+    },
+    "clean_sub": {
+      "mask_mode": "none",
+      "top_cover": {
+        "enabled": false,
+        "mode": "none"
+      },
+      "title": {
+        "enabled": false
+      },
+      "subtitle": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFFFFF",
+        "outline_color": "#000000",
+        "outline_size": 5,
+        "bold": true
+      },
+      "logo": {
+        "enabled": true,
+        "file": "auto",
+        "position": "bottom_right",
+        "width_ratio": 0.14,
+        "opacity": 0.1,
+        "margin_x": 18,
+        "margin_y": 18
+      },
+      "cover": {
+        "enabled": false,
+        "file": "auto"
+      },
+      "encoder": {
+        "use_nvenc": true,
+        "nvenc_preset": "p4",
+        "cq": 27
+      }
+    },
+    "wuby_overlay": {
+      "mask_mode": "in_video_overlay",
+      "ocr_enabled": true,
+      "ocr_fps": 24.0,
+      "top_cover": {
+        "enabled": false,
+        "mode": "none"
+      },
+      "film_bars": {
+        "top_ratio": 0.0,
+        "bottom_ratio": 0.0,
+        "bottom_max_ratio": 0.0
+      },
+      "title": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFE600",
+        "outline_color": "#000000",
+        "outline_size": 3,
+        "bold": true,
+        "uppercase": true,
+        "single_line": true,
+        "line_break_at": 0
+      },
+      "subtitle": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFFFFF",
+        "outline_color": "#000000",
+        "outline_size": 4,
+        "bold": true,
+        "follow_motion": true,
+        "min_font_size": 26,
+        "max_font_size": 44
+      },
+      "logo": {
+        "enabled": false
+      },
+      "cover": {
+        "enabled": false
+      },
+      "encoder": {
+        "use_nvenc": true,
+        "nvenc_preset": "p4",
+        "cq": 28
+      }
+    },
+    "movie_clone_blur": {
+      "mask_mode": "blur_sub_black",
+      "prefer_existing_bottom_bar": true,
+      "top_cover": {
+        "enabled": false,
+        "mode": "none"
+      },
+      "title": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFE600",
+        "outline_color": "#000000",
+        "outline_size": 3,
+        "bold": true,
+        "uppercase": true,
+        "persistent": true,
+        "intro_duration": 6.0,
+        "alignment": 2
+      },
+      "subtitle": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFFFFF",
+        "outline_color": "#000000",
+        "outline_size": 4,
+        "border_style": 1,
+        "bold": true,
+        "max_lines": 2
+      },
+      "encoder": {
+        "use_nvenc": true,
+        "nvenc_preset": "p4",
+        "cq": 27,
+        "audio_bitrate": "160k"
+      },
+      "logo": {
+        "enabled": false
+      },
+      "cover": {
+        "enabled": false
+      },
+      "subtitle_scan_fps": 2.0
+    }
+  },
+  "workflows": {
+    "gaidep_cauca": {
+      "name": "Chị Đẹp Đi Câu (@chidepdicau) - Sub Karaoke & Giọng Nữ Cute",
+      "render_profile": "gaidep_blur",
+      "settings": {
+        "mask_mode": "blur_sub_black",
+        "burn_sub": true,
+        "show_title_card": false,
+        "keep_bg_audio": true,
+        "bg_volume": 0.5,
+        "tts_enabled": true,
+        "vocal_cut": false,
+        "voice": "omni_nu_cute",
+        "speed": 1.4,
+        "mute_original_speech": true,
+        "dialogue_replace": {
+          "enabled": true,
+          "required": true,
+          "hard_replace": true,
+          "mute_original_speech": true,
+          "require_cuda": true,
+          "model_filename": "UVR-MDX-NET-Inst_HQ_3.onnx",
+          "separator_python": "D:\\0.1_FACE_BOOK\\Lay video tiktok\\MOI_TRUONG\\audio_sep_env\\Scripts\\python.exe",
+          "model_file_dir": "D:\\0.1_FACE_BOOK\\Lay video tiktok\\MODELS\\audio_separator",
+          "tts_volume": 1.0,
+          "instrumental_volume": 0.5
+        },
+        "voice_overrides": {
+          "engine": "omnivoice",
+          "require_clone": true,
+          "fallback_voice": null,
+          "allow_backend_switch": false,
+          "pitch": "+0Hz",
+          "duration_match": {
+            "adaptive": false,
+            "max_speedup": 1.8,
+            "minimum_gap_sec": 0.05,
+            "max_early_start": 0.25
+          },
+          "synthesis_speed": 0.9,
+          "playback_speed": 1.4
+        },
+        "audio_mode": "separated_background_and_cute_voice",
+        "audio_mode_label": "Clone nữ Cute 0.9x; time-stretch giữ cao độ lên 1.4x, khớp SRT; nền sạch 50%",
+        "voice_accuracy": {
+          "enabled": true,
+          "min_accuracy": 0.95,
+          "max_attempts": 4
+        },
+        "synthesis_speed": 0.9,
+        "duration_match": {
+          "adaptive": false,
+          "max_speedup": 1.8,
+          "minimum_gap_sec": 0.05,
+          "max_early_start": 0.25
+        }
+      }
+    },
+    "film_review_black": {
+      "name": "Review phim - che đen chữ gốc + title/sub Việt",
+      "render_profile": "review_film_black",
+      "settings": {
+        "mask_mode": "black_bar",
+        "burn_sub": true,
+        "show_title_card": true,
+        "keep_bg_audio": false
+      }
+    },
+    "film_review_blur": {
+      "name": "Review phim - blur chữ gốc",
+      "render_profile": "review_film_blur",
+      "settings": {
+        "mask_mode": "blur",
+        "burn_sub": true,
+        "show_title_card": true,
+        "keep_bg_audio": false
+      }
+    },
+    "sub_only_clean": {
+      "name": "Giữ hình gốc - chỉ hardsub Việt",
+      "render_profile": "clean_sub",
+      "settings": {
+        "mask_mode": "none",
+        "burn_sub": true,
+        "show_title_card": false,
+        "keep_bg_audio": false
+      }
+    },
+    "wuby": {
+      "name": "Cấu hình 1 (Wuby) - Nhận diện & đè sub lên chữ trong video",
+      "render_profile": "wuby_overlay",
+      "settings": {
+        "mask_mode": "in_video_overlay",
+        "burn_sub": true,
+        "show_title_card": true,
+        "keep_bg_audio": false,
+        "ocr_overlay": true,
+        "wuby_preflight": {
+          "enabled": true,
+          "visual": {
+            "sample_frames": 48
+          },
+          "scene_detection": {
+            "diff_threshold": 28.0,
+            "min_scene_sec": 0.35,
+            "analysis_width": 160
+          },
+          "ocr": {
+            "sample_fps": 12.0,
+            "min_confidence": 0.28,
+            "max_duration": 3600.0,
+            "remove_classes": [
+              "chinese",
+              "mixed_chinese"
+            ],
+            "max_track_gap_sec": 0.65,
+            "max_center_distance_px": 190.0,
+            "pre_padding_sec": 0.08,
+            "post_padding_factor": 0.75,
+            "adaptive_by_motion": true
+          },
+          "voice_match": {
+            "enabled": true,
+            "method": "whisper_segment_f0_wuby_preflight",
+            "sample_rate": 16000,
+            "f0_min_hz": 70,
+            "f0_max_hz": 420,
+            "switch_margin_cents": 85,
+            "sticky_gap_sec": 2.5,
+            "use_scene_reset": true,
+            "fallback_voice": "wuby_clone",
+            "voice_bank": [
+              {
+                "profile": "omni_dan_chuong_trinh_vip",
+                "reference_hz": 93.02,
+                "enabled": true
+              },
+              {
+                "profile": "omni_laivansam",
+                "reference_hz": 119.4,
+                "enabled": true
+              },
+              {
+                "profile": "omni_nam_review",
+                "reference_hz": 126.98,
+                "enabled": true
+              },
+              {
+                "profile": "omni_tauthao",
+                "reference_hz": 128.0,
+                "enabled": true
+              },
+              {
+                "profile": "omni_chautinhtri",
+                "reference_hz": 148.15,
+                "enabled": true
+              },
+              {
+                "profile": "omni_nu_tram",
+                "reference_hz": 231.88,
+                "enabled": true
+              },
+              {
+                "profile": "omni_nu_ngoc_trinh",
+                "reference_hz": 235.29,
+                "enabled": true
+              },
+              {
+                "profile": "omni_nu_cute",
+                "reference_hz": 238.81,
+                "enabled": true
+              },
+              {
+                "profile": "omni_nu_tre",
+                "reference_hz": 251.98,
+                "enabled": true
+              },
+              {
+                "profile": "omni_betterversion",
+                "reference_hz": 258.06,
+                "enabled": true
+              }
+            ],
+            "duration_match": {
+              "adaptive": true,
+              "max_speedup": 1.6,
+              "minimum_gap_sec": 0.05
+            },
+            "_note": "Character-first: WeSpeaker/Light-ASD khóa một Character ID xuyên suốt video. F0 chỉ còn là gợi ý chọn màu giọng Việt một lần cho Character ID; tuyệt đối không dùng F0 để đổi nhân vật.",
+            "island_smoothing_max_sec": 2.2,
+            "speaker_lock_enabled": true,
+            "octave_correction": true,
+            "max_speakers": 12,
+            "speaker_similarity_threshold": 0.78,
+            "character_identity": {
+              "enabled": true,
+              "backend": "wespeaker",
+              "model": "chinese",
+              "device": "cuda:0",
+              "allow_cpu_fallback": true,
+              "allow_fallback": true,
+              "sample_rate": 16000,
+              "max_speakers": 12,
+              "min_overlap_ratio": 0.52,
+              "ambiguity_margin_ratio": 0.16,
+              "nearest_gap_sec": 0.8,
+              "sticky_gap_sec": 1.2,
+              "fallback_similarity_threshold": 0.8,
+              "light_asd": {
+                "enabled": true,
+                "ambiguity_only": true,
+                "repo_path": "external/Light-ASD",
+                "model_path": "external/Light-ASD/weight/finetuning_TalkSet.model",
+                "window_padding_sec": 1.4,
+                "merge_gap_sec": 1.2,
+                "max_chunk_sec": 24.0,
+                "max_chunks": 30,
+                "min_active_score": 0.0,
+                "min_track_margin": 0.2,
+                "association_min_share": 0.62,
+                "timeout_sec": 420,
+                "cuda_visible_devices": "0"
+              },
+              "_note": "Character ID dùng WeSpeaker Chinese toàn video; Light-ASD chỉ chạy các đoạn mơ hồ. F0 không tạo/đổi speaker ID."
+            }
+          },
+          "qc": {
+            "max_mask_ratio": 0.35,
+            "max_track_duration_sec": 12.0,
+            "min_ocr_segment_coverage": 0.65,
+            "min_f0_coverage": 0.55,
+            "abort_on_warning": false
+          },
+          "_note": "Phân tích trước render; Character ID bằng WeSpeaker, Light-ASD chỉ chạy đoạn mơ hồ."
+        }
+      }
+    },
+    "movie_clone": {
+      "name": "Cấu hình 2 - Clone phim: Whisper → Character ID → đa giọng khóa nhân vật → render",
+      "render_profile": "movie_clone_blur",
+      "settings": {
+        "mask_mode": "blur_sub_black",
+        "burn_sub": true,
+        "show_title_card": false,
+        "keep_bg_audio": true,
+        "bg_volume": 0.78,
+        "vocal_cut": false,
+        "force_render": true,
+        "movie_voice_match": {
+          "enabled": true,
+          "method": "whisper_segment_f0_to_bundled_voice",
+          "sample_rate": 16000,
+          "f0_min_hz": 70,
+          "f0_max_hz": 420,
+          "switch_margin_cents": 55,
+          "sticky_gap_sec": 1.8,
+          "use_scene_reset": true,
+          "fallback_voice": "omni_nam_review",
+          "voice_bank": [
+            {
+              "profile": "omni_dan_chuong_trinh_vip",
+              "reference_hz": 93.02,
+              "enabled": true
+            },
+            {
+              "profile": "omni_laivansam",
+              "reference_hz": 119.4,
+              "enabled": true
+            },
+            {
+              "profile": "omni_nam_review",
+              "reference_hz": 126.98,
+              "enabled": true
+            },
+            {
+              "profile": "omni_tauthao",
+              "reference_hz": 128.0,
+              "enabled": true
+            },
+            {
+              "profile": "omni_chautinhtri",
+              "reference_hz": 148.15,
+              "enabled": true
+            },
+            {
+              "profile": "omni_nu_tram",
+              "reference_hz": 231.88,
+              "enabled": true
+            },
+            {
+              "profile": "omni_nu_ngoc_trinh",
+              "reference_hz": 235.29,
+              "enabled": true
+            },
+            {
+              "profile": "omni_nu_cute",
+              "reference_hz": 238.81,
+              "enabled": true
+            },
+            {
+              "profile": "omni_nu_tre",
+              "reference_hz": 251.98,
+              "enabled": true
+            },
+            {
+              "profile": "omni_betterversion",
+              "reference_hz": 258.06,
+              "enabled": true
+            }
+          ],
+          "duration_match": {
+            "adaptive": true,
+            "max_speedup": 1.6,
+            "minimum_gap_sec": 0.05
+          },
+          "_note": "Character-first: WeSpeaker/Light-ASD khóa một Character ID xuyên suốt video. F0 chỉ còn là gợi ý chọn màu giọng Việt một lần cho Character ID; tuyệt đối không dùng F0 để đổi nhân vật.",
+          "character_identity": {
+            "enabled": true,
+            "backend": "wespeaker",
+            "model": "chinese",
+            "device": "cuda:0",
+            "allow_cpu_fallback": true,
+            "allow_fallback": true,
+            "sample_rate": 16000,
+            "max_speakers": 12,
+            "min_overlap_ratio": 0.52,
+            "ambiguity_margin_ratio": 0.16,
+            "nearest_gap_sec": 0.8,
+            "sticky_gap_sec": 1.2,
+            "fallback_similarity_threshold": 0.8,
+            "light_asd": {
+              "enabled": true,
+              "ambiguity_only": true,
+              "repo_path": "external/Light-ASD",
+              "model_path": "external/Light-ASD/weight/finetuning_TalkSet.model",
+              "window_padding_sec": 1.4,
+              "merge_gap_sec": 1.2,
+              "max_chunk_sec": 24.0,
+              "max_chunks": 30,
+              "min_active_score": 0.0,
+              "min_track_margin": 0.2,
+              "association_min_share": 0.62,
+              "timeout_sec": 420,
+              "cuda_visible_devices": "0"
+            },
+            "_note": "Character ID dùng WeSpeaker Chinese toàn video; Light-ASD chỉ chạy các đoạn mơ hồ. F0 không tạo/đổi speaker ID."
+          },
+          "speaker_lock_enabled": true,
+          "max_speakers": 12
+        },
+        "dialogue_replace": {
+          "enabled": true,
+          "required": false,
+          "separator_model": "htdemucs",
+          "require_separator": false,
+          "fallback": "center_cancel",
+          "tts_volume": 1.0,
+          "instrumental_volume": 0.78,
+          "mask_rate": 1000,
+          "relative_threshold": 0.035,
+          "absolute_threshold": 0.003,
+          "attack_ms": 80,
+          "release_ms": 220,
+          "fill_gap_ms": 180,
+          "mute_original_speech": true,
+          "_note": "Khi TTS nói: giữ nền/instrumental và thay lời gốc. Khi TTS im: có thể trả audio gốc; Demucs cho kết quả sạch nhất."
+        }
+      }
+    }
+  },
+  "channels": {
+    "-1004439918026": {
+      "name": "Kênh TikTok Trinh (Cấu hình 3 - Clone Phim Nữ Hoài My)",
+      "workflow": "movie_clone",
+      "render_profile": "movie_clone_blur",
+      "voice": "hoaimy",
+      "speed": 1.3,
+      "drive_folder": "KENH_005_VuTruCayPhim/02_MOI_RENDER_CHO_XAC_NHAN"
+    },
+    "-5579042871": {
+      "name": "Kênh Review Nam",
+      "workflow": "film_review_black",
+      "voice": "nam_minh",
+      "speed": 1.7,
+      "drive_folder": "KENH_004_BoxmanKeChuyen/02_MOI_RENDER_CHO_XAC_NHAN",
+      "asset_folder": "Kenh_Nam"
+    },
+    "-1004462729383": {
+      "name": "Nhóm Quản Trị Control",
+      "workflow": "movie_clone",
+      "voice": "omni_nam_review",
+      "speed": 1.0,
+      "drive_folder": "KENH_005_VuTruCayPhim/02_MOI_RENDER_CHO_XAC_NHAN",
+      "asset_folder": "Review_Nam",
+      "render_profile": "movie_clone_blur",
+      "mask_mode": "blur_sub_black"
+    },
+    "KENH_001_TienVaDoi": {
+      "name": "Tiền Và Đời",
+      "workflow": "film_review_black",
+      "render_profile": "review_film_black",
+      "voice": "omni_kienthuc_taichinh",
+      "speed": 1.25,
+      "drive_folder": "KENH_001_TienVaDoi/02_MOI_RENDER_CHO_XAC_NHAN",
+      "_logo_type": "kenh_001_tienvadoi"
+    },
+    "KENH_002_BatPhimLen": {
+      "name": "Bật Phim Lên (Review Phim)",
+      "workflow": "film_review_black",
+      "render_profile": "review_film_black",
+      "voice": "nu_tre",
+      "speed": 1.3,
+      "drive_folder": "KENH_002_BatPhimLen/02_MOI_RENDER_CHO_XAC_NHAN",
+      "_logo_type": "kenh_002_batphimlen"
+    },
+    "KENH_003_ReviewSachCoTam": {
+      "name": "Review Sách Có Tâm",
+      "workflow": "sub_only_clean",
+      "render_profile": "clean_sub",
+      "voice": "omni_betterversion",
+      "speed": 1.1,
+      "drive_folder": "KENH_003_ReviewSachCoTam/02_MOI_RENDER_CHO_XAC_NHAN",
+      "_logo_type": "kenh_003_reviewsachcotam"
+    },
+    "KENH_004_BoxmanKeChuyen": {
+      "name": "Boxman Kể Chuyện",
+      "workflow": "film_review_black",
+      "render_profile": "review_film_black",
+      "voice": "nam_minh",
+      "speed": 1.3,
+      "drive_folder": "KENH_004_BoxmanKeChuyen/02_MOI_RENDER_CHO_XAC_NHAN",
+      "_logo_type": "kenh_004_boxmankechuyen"
+    },
+    "KENH_005_VuTruCayPhim": {
+      "name": "Vũ Trụ Cày Phim (Clone Phim)",
+      "workflow": "movie_clone",
+      "render_profile": "movie_clone_blur",
+      "voice": "hoaimy",
+      "speed": 1.3,
+      "drive_folder": "KENH_005_VuTruCayPhim/02_MOI_RENDER_CHO_XAC_NHAN",
+      "_logo_type": "kenh_005_vutrucayphim",
+      "subtitle_detection": {
+        "mode": "lower_third_precise",
+        "allow_estimated_mask": false,
+        "ocr_backend": "rapidocr",
+        "min_center_ratio": 0.75
+      },
+      "burn_sub": true,
+      "render": {
+        "blur_bg_alpha": 1.0,
+        "blur_strength": 64
+      }
+    },
+    "KENH_006_TieuWuby": {
+      "name": "Tiểu Wuby (Cấu hình 1)",
+      "workflow": "wuby",
+      "render_profile": "wuby_overlay",
+      "voice": "wuby_clone",
+      "speed": 1.0,
+      "drive_folder": "KENH_006_TieuWuby/02_MOI_RENDER_CHO_XAC_NHAN",
+      "_logo_type": "kenh_006_tieuwuby"
+    },
+    "KENH_007_Song1MinhCoGiVui": {
+      "name": "Sống 1 mình có gì vui",
+      "workflow": "wuby",
+      "render_profile": "wuby_overlay",
+      "voice": "wuby_clone",
+      "speed": 1.0,
+      "drive_folder": "KENH_007_Song1MinhCoGiVui/02_MOI_RENDER_CHO_XAC_NHAN",
+      "_logo_type": "kenh_007_song1minhcogivui"
+    },
+    "KENH_008_ChiDepDiCau": {
+      "name": "Chị Đẹp Đi Câu",
+      "workflow": "gaidep_cauca",
+      "render_profile": "gaidep_blur",
+      "voice": "omni_nu_cute",
+      "speed": 1.4,
+      "drive_folder": "KENH_008_ChiDepDiCau/02_MOI_RENDER_CHO_XAC_NHAN",
+      "_logo_type": "kenh_008_chidepdicau",
+      "subtitle_detection": {
+        "mode": "fixed_box_padding_2pct"
+      },
+      "burn_sub": true,
+      "render": {
+        "blur_bg_alpha": 0.0,
+        "blur_strength": 20
+      },
+      "tts_enabled": true,
+      "keep_bg_audio": true,
+      "bg_volume": 0.5,
+      "vocal_cut": false,
+      "mlev": 0.04,
+      "slev": 0.3,
+      "mute_original_speech": true,
+      "dialogue_replace": {
+        "enabled": true,
+        "required": true,
+        "hard_replace": true,
+        "mute_original_speech": true,
+        "require_cuda": true,
+        "model_filename": "UVR-MDX-NET-Inst_HQ_3.onnx",
+        "separator_python": "D:\\0.1_FACE_BOOK\\Lay video tiktok\\MOI_TRUONG\\audio_sep_env\\Scripts\\python.exe",
+        "model_file_dir": "D:\\0.1_FACE_BOOK\\Lay video tiktok\\MODELS\\audio_separator",
+        "tts_volume": 1.0,
+        "instrumental_volume": 0.5
+      },
+      "movie_voice_match": {
+        "enabled": false
+      },
+      "duration_match": {
+        "adaptive": false,
+        "max_speedup": 1.8,
+        "minimum_gap_sec": 0.05,
+        "max_early_start": 0.25
+      },
+      "audio_mode": "separated_background_and_cute_voice",
+      "audio_mode_label": "Clone nữ Cute 0.9x; time-stretch giữ cao độ lên 1.4x, khớp SRT; nền sạch 50%",
+      "voice_overrides": {
+        "engine": "omnivoice",
+        "require_clone": true,
+        "fallback_voice": null,
+        "allow_backend_switch": false,
+        "pitch": "+0Hz",
+        "duration_match": {
+          "adaptive": false,
+          "max_speedup": 1.8,
+          "minimum_gap_sec": 0.05,
+          "max_early_start": 0.25
+        },
+        "synthesis_speed": 0.9,
+        "playback_speed": 1.4
+      },
+      "voice_accuracy": {
+        "enabled": true,
+        "min_accuracy": 0.95,
+        "max_attempts": 4
+      },
+      "synthesis_speed": 0.9
+    }
+  },
+  "presets": {
+    "wuby": {
+      "name": "Cấu hình 1 (Wuby Hoạt Hình - AI Giữ Nền & 5.1 Smart)",
+      "hashtags": [
+        "#wuby",
+        "#quby",
+        "#cauhinh1"
+      ],
+      "workflow": "wuby",
+      "voice": "wuby_clone",
+      "speed": 1.0,
+      "drive_folder": "KENH_006_TieuWuby/02_MOI_RENDER_CHO_XAC_NHAN",
+      "_logo_type": "kenh_006_tieuwuby",
+      "wuby_studio": {
+        "enabled": true,
+        "channel_id": "wuby",
+        "hybrid_frame": {
+          "enabled": true,
+          "theme": "peach"
+        }
+      },
+      "wuby_preflight": {
+        "enabled": true,
+        "visual": {
+          "sample_frames": 48
+        },
+        "scene_detection": {
+          "diff_threshold": 28.0,
+          "min_scene_sec": 0.35,
+          "analysis_width": 160
+        },
+        "ocr": {
+          "sample_fps": 12.0,
+          "min_confidence": 0.28,
+          "max_duration": 3600.0,
+          "remove_classes": [
+            "chinese",
+            "mixed_chinese"
+          ],
+          "max_track_gap_sec": 0.65,
+          "max_center_distance_px": 190.0,
+          "pre_padding_sec": 0.08,
+          "post_padding_factor": 0.75,
+          "adaptive_by_motion": true
+        },
+        "voice_match": {
+          "enabled": true,
+          "method": "whisper_segment_f0_wuby_preflight",
+          "sample_rate": 16000,
+          "f0_min_hz": 70,
+          "f0_max_hz": 420,
+          "switch_margin_cents": 85,
+          "sticky_gap_sec": 2.5,
+          "use_scene_reset": true,
+          "fallback_voice": "wuby_clone",
+          "voice_bank": [
+            {
+              "profile": "omni_dan_chuong_trinh_vip",
+              "reference_hz": 93.02,
+              "enabled": true
+            },
+            {
+              "profile": "omni_laivansam",
+              "reference_hz": 119.4,
+              "enabled": true
+            },
+            {
+              "profile": "omni_nam_review",
+              "reference_hz": 126.98,
+              "enabled": true
+            },
+            {
+              "profile": "omni_tauthao",
+              "reference_hz": 128.0,
+              "enabled": true
+            },
+            {
+              "profile": "omni_chautinhtri",
+              "reference_hz": 148.15,
+              "enabled": true
+            },
+            {
+              "profile": "omni_nu_tram",
+              "reference_hz": 231.88,
+              "enabled": true
+            },
+            {
+              "profile": "omni_nu_ngoc_trinh",
+              "reference_hz": 235.29,
+              "enabled": true
+            },
+            {
+              "profile": "omni_nu_cute",
+              "reference_hz": 238.81,
+              "enabled": true
+            },
+            {
+              "profile": "omni_nu_tre",
+              "reference_hz": 251.98,
+              "enabled": true
+            },
+            {
+              "profile": "omni_betterversion",
+              "reference_hz": 258.06,
+              "enabled": true
+            }
+          ],
+          "duration_match": {
+            "adaptive": true,
+            "max_speedup": 1.6,
+            "minimum_gap_sec": 0.05
+          },
+          "_note": "Character-first: WeSpeaker/Light-ASD khóa một Character ID xuyên suốt video. F0 chỉ còn là gợi ý chọn màu giọng Việt một lần cho Character ID; tuyệt đối không dùng F0 để đổi nhân vật.",
+          "island_smoothing_max_sec": 2.2,
+          "speaker_lock_enabled": true,
+          "octave_correction": true,
+          "max_speakers": 12,
+          "speaker_similarity_threshold": 0.78,
+          "character_identity": {
+            "enabled": true,
+            "backend": "wespeaker",
+            "model": "chinese",
+            "device": "cuda:0",
+            "allow_cpu_fallback": true,
+            "allow_fallback": true,
+            "sample_rate": 16000,
+            "max_speakers": 12,
+            "min_overlap_ratio": 0.52,
+            "ambiguity_margin_ratio": 0.16,
+            "nearest_gap_sec": 0.8,
+            "sticky_gap_sec": 1.2,
+            "fallback_similarity_threshold": 0.8,
+            "light_asd": {
+              "enabled": true,
+              "ambiguity_only": true,
+              "repo_path": "external/Light-ASD",
+              "model_path": "external/Light-ASD/weight/finetuning_TalkSet.model",
+              "window_padding_sec": 1.4,
+              "merge_gap_sec": 1.2,
+              "max_chunk_sec": 24.0,
+              "max_chunks": 30,
+              "min_active_score": 0.0,
+              "min_track_margin": 0.2,
+              "association_min_share": 0.62,
+              "timeout_sec": 420,
+              "cuda_visible_devices": "0"
+            },
+            "_note": "Character ID dùng WeSpeaker Chinese toàn video; Light-ASD chỉ chạy các đoạn mơ hồ. F0 không tạo/đổi speaker ID."
+          }
+        },
+        "qc": {
+          "max_mask_ratio": 0.35,
+          "max_track_duration_sec": 12.0,
+          "min_ocr_segment_coverage": 0.65,
+          "min_f0_coverage": 0.55,
+          "abort_on_warning": false
+        },
+        "_note": "Phân tích Wuby trước render: hình học/FPS/motion/scene/OCR + Character ID; Light-ASD chỉ kiểm tra đoạn mơ hồ."
+      },
+      "audio_mode": "surround_center_remove",
+      "audio_mode_label": "Wuby + 5.1 Smart & AI giữ nền/SFX",
+      "dialogue_replace": {
+        "enabled": true,
+        "required": false,
+        "separator_model": "htdemucs",
+        "require_separator": false,
+        "fallback": "center_cancel",
+        "tts_volume": 1.0,
+        "instrumental_volume": 0.95,
+        "mask_rate": 1000,
+        "relative_threshold": 0.035,
+        "absolute_threshold": 0.003,
+        "attack_ms": 45,
+        "release_ms": 140,
+        "fill_gap_ms": 180,
+        "mute_original_speech": true,
+        "_note": "Tích hợp toàn diện Cấu hình 3 (AI giữ nền) và Cấu hình 4 (5.1 Smart Audio): Tự động nhận diện nếu có >= 5.1/7.1 thì bỏ center lấy surround/SFX siêu sạch; Nếu là stereo thì tự động chạy AI (MDX-Net/Demucs) triệt tiêu 100% thoại gốc trong cửa sổ Whisper, giữ trọn vẹn nhạc nền & SFX.",
+        "strategy": "surround_first",
+        "surround_min_channels": 6,
+        "mask_source": "whisper_segments",
+        "speech_pre_padding_ms": 140,
+        "speech_post_padding_ms": 320,
+        "speech_background_volume": 0.95,
+        "speech_cleanup": true
+      },
+      "keep_bg_audio": true,
+      "bg_volume": 0.95
+    },
+    "cauhinh2": {
+      "name": "Cấu hình 2 (Review Phim - Dải Đen)",
+      "hashtags": [
+        "#cauhinh2",
+        "#reviewphim",
+        "#daiden",
+        "#batphimlen"
+      ],
+      "workflow": "film_review_black",
+      "render_profile": "review_film_black",
+      "voice": "nu_tre",
+      "speed": 1.3,
+      "drive_folder": "KENH_002_BatPhimLen/02_MOI_RENDER_CHO_XAC_NHAN",
+      "mask_mode": "black_bar",
+      "burn_sub": true,
+      "show_title_card": true,
+      "keep_bg_audio": true,
+      "bg_volume": 0.1,
+      "vocal_cut": true,
+      "force_render": true,
+      "tts_enabled": true,
+      "_logo_type": "kenh_002_batphimlen",
+      "duration_match": {
+        "adaptive": true,
+        "max_speedup": 1.8,
+        "minimum_gap_sec": 0.05
+      }
+    },
+    "chidepdicau": {
+      "name": "Cấu hình 4 (Chị Đẹp Đi Câu @chidepdicau - Sub Karaoke & Giọng Nữ Cute)",
+      "hashtags": [
+        "#chidepdicau",
+        "#cauca",
+        "#chidep",
+        "#gaidepcauca",
+        "#fishing"
+      ],
+      "workflow": "gaidep_cauca",
+      "render_profile": "gaidep_blur",
+      "voice": "omni_nu_cute",
+      "speed": 1.4,
+      "drive_folder": "KENH_008_ChiDepDiCau/02_MOI_RENDER_CHO_XAC_NHAN",
+      "mask_mode": "blur_sub_black",
+      "burn_sub": true,
+      "show_title_card": false,
+      "keep_bg_audio": true,
+      "bg_volume": 0.5,
+      "vocal_cut": false,
+      "mlev": 0.04,
+      "slev": 0.3,
+      "mute_original_speech": true,
+      "force_render": true,
+      "tts_enabled": true,
+      "_logo_type": "kenh_008_chidepdicau",
+      "logo": {
+        "enabled": true,
+        "type": "chidepdicau",
+        "text": "Chị Đẹp Đi Câu",
+        "tag": "@ChiDepDiCau"
+      },
+      "subtitle_detection": {
+        "mode": "fixed_box_padding_2pct"
+      },
+      "movie_voice_match": {
+        "enabled": false
+      },
+      "duration_match": {
+        "adaptive": false,
+        "max_speedup": 1.8,
+        "minimum_gap_sec": 0.05,
+        "max_early_start": 0.25
+      },
+      "dialogue_replace": {
+        "enabled": true,
+        "required": true,
+        "hard_replace": true,
+        "mute_original_speech": true,
+        "require_cuda": true,
+        "model_filename": "UVR-MDX-NET-Inst_HQ_3.onnx",
+        "separator_python": "D:\\0.1_FACE_BOOK\\Lay video tiktok\\MOI_TRUONG\\audio_sep_env\\Scripts\\python.exe",
+        "model_file_dir": "D:\\0.1_FACE_BOOK\\Lay video tiktok\\MODELS\\audio_separator",
+        "tts_volume": 1.0,
+        "instrumental_volume": 0.5
+      },
+      "require_intro_preview": true,
+      "audio_mode": "separated_background_and_cute_voice",
+      "audio_mode_label": "Clone nữ Cute 0.9x; time-stretch giữ cao độ lên 1.4x, khớp SRT; nền sạch 50%",
+      "render": {
+        "blur_bg_alpha": 0.0,
+        "blur_strength": 20
+      },
+      "voice_overrides": {
+        "engine": "omnivoice",
+        "require_clone": true,
+        "fallback_voice": null,
+        "allow_backend_switch": false,
+        "pitch": "+0Hz",
+        "duration_match": {
+          "adaptive": false,
+          "max_speedup": 1.8,
+          "minimum_gap_sec": 0.05,
+          "max_early_start": 0.25
+        },
+        "synthesis_speed": 0.9,
+        "playback_speed": 1.4
+      },
+      "voice_accuracy": {
+        "enabled": true,
+        "min_accuracy": 0.95,
+        "max_attempts": 4
+      },
+      "synthesis_speed": 0.9
+    },
+    "cauhinh3": {
+      "name": "Cấu hình 3 (Clone Phim 1 Giọng Nữ Chính - Nền 70% / Giọng +15%)",
+      "subtitle_detection": {
+        "mode": "lower_third_precise",
+        "allow_estimated_mask": false,
+        "ocr_backend": "rapidocr",
+        "min_center_ratio": 0.75
+      },
+      "hashtags": [
+        "#cauhinh3",
+        "#clonephim",
+        "#giongnuchinhduy nhat"
+      ],
+      "workflow": "movie_clone",
+      "render_profile": "movie_clone_blur",
+      "voice": "hoaimy",
+      "speed": 1.3,
+      "drive_folder": "KENH_005_VuTruCayPhim/02_MOI_RENDER_CHO_XAC_NHAN",
+      "_logo_type": "kenh_005_vutrucayphim",
+      "mask_mode": "blur_sub_black",
+      "burn_sub": true,
+      "show_title_card": false,
+      "keep_bg_audio": true,
+      "bg_volume": 0.7,
+      "vocal_cut": false,
+      "force_render": true,
+      "movie_voice_match": {
+        "enabled": false,
+        "_note": "Cấu hình 3: TẮT đa giọng - toàn bộ phim dùng 1 giọng Hoài My Edge từ đầu đến cuối. Không chạy WeSpeaker/Light-ASD."
+      },
+      "duration_match": {
+        "adaptive": true,
+        "max_speedup": 1.8,
+        "minimum_gap_sec": 0.05,
+        "_note": "Bắt đầu đọc 1.3x, tự tăng tốc tối đa 1.8x nếu câu dài hơn khoảng cách cho phép"
+      },
+      "dialogue_replace": {
+        "enabled": true,
+        "required": false,
+        "separator_model": "htdemucs",
+        "require_separator": false,
+        "fallback": "center_cancel",
+        "tts_volume": 1.15,
+        "instrumental_volume": 0.7,
+        "mask_rate": 1000,
+        "relative_threshold": 0.035,
+        "absolute_threshold": 0.003,
+        "attack_ms": 45,
+        "release_ms": 140,
+        "fill_gap_ms": 180,
+        "mute_original_speech": true,
+        "_note": "Tăng giọng đọc +15% (tts_volume=1.15), giảm nền xuống 70% (instrumental_volume=0.70). 1 giọng nữ duy nhất từ đầu đến cuối.",
+        "strategy": "surround_first",
+        "surround_min_channels": 6,
+        "mask_source": "whisper_segments",
+        "speech_pre_padding_ms": 140,
+        "speech_post_padding_ms": 320,
+        "speech_background_volume": 0.7,
+        "speech_cleanup": true
+      },
+      "audio_mode": "surround_center_remove",
+      "audio_mode_label": "Clone Phim 1 Nữ + Nền 70% / Giọng +15%",
+      "render": {
+        "blur_bg_alpha": 1.0,
+        "blur_strength": 64
+      }
+    },
+    "kenh_nam": {
+      "name": "Preset Kênh Nam",
+      "hashtags": [
+        "#nam",
+        "#kenhnam"
+      ],
+      "voice": "nam_minh",
+      "speed": 1.7,
+      "workflow": "film_review_black",
+      "drive_folder": "Kenh_Nam",
+      "asset_folder": "Kenh_Nam"
+    },
+    "kenh_nu_tram": {
+      "name": "Preset Nữ Trầm Ấm",
+      "hashtags": [
+        "#nutram",
+        "#nu_tram"
+      ],
+      "voice": "nu_tram",
+      "speed": 1.2,
+      "workflow": "film_review_blur",
+      "drive_folder": "Nu_Tram"
+    },
+    "kenh_blur": {
+      "name": "Preset Blur",
+      "hashtags": [
+        "#blur"
+      ],
+      "workflow": "film_review_blur"
+    },
+    "kenh_khong_che": {
+      "name": "Preset Không Che",
+      "hashtags": [
+        "#khongche",
+        "#noche"
+      ],
+      "workflow": "sub_only_clean"
+    },
+    "vu_tru_phim": {
+      "name": "Vũ Trụ Phim",
+      "hashtags": [
+        "#vutruphim"
+      ],
+      "workflow": "film_review_black",
+      "voice": "omni_nam_review",
+      "speed": 1.3,
+      "drive_folder": "KENH_005_VuTruCayPhim/02_MOI_RENDER_CHO_XAC_NHAN",
+      "_logo_type": "kenh_005_vutrucayphim",
+      "asset_folder": "Vũ Trụ Phim",
+      "render": {
+        "logo": {
+          "opacity": 0.1,
+          "position": "bottom_right"
+        },
+        "cover": {
+          "duration": 1.5
+        }
+      }
+    },
+    "review_sach": {
+      "name": "Preset Review Sách (Better Version)",
+      "hashtags": [
+        "#reviewsach",
+        "#sach",
+        "#betterversion",
+        "#review_sach"
+      ],
+      "workflow": "sub_only_clean",
+      "voice": "omni_betterversion",
+      "speed": 1.1,
+      "drive_folder": "KENH_003_ReviewSachCoTam/02_MOI_RENDER_CHO_XAC_NHAN",
+      "_logo_type": "kenh_003_reviewsachcotam"
+    },
+    "cauhinh3_wuby": {
+      "name": "Cấu hình 3-Wuby (Wuby + AI giữ nền, hard mute thoại gốc)",
+      "hashtags": [
+        "#cauhinh3wuby",
+        "#giunen",
+        "#aiaudio",
+        "#dubai"
+      ],
+      "workflow": "wuby",
+      "render_profile": "wuby_overlay",
+      "voice": "omni_nam_review",
+      "speed": 1.0,
+      "drive_folder": "Clone_Phim_AI_BG",
+      "mask_mode": "in_video_overlay",
+      "burn_sub": true,
+      "show_title_card": false,
+      "keep_bg_audio": true,
+      "bg_volume": 0.95,
+      "vocal_cut": false,
+      "force_render": true,
+      "movie_voice_match": {
+        "enabled": true,
+        "method": "whisper_segment_f0_to_bundled_voice",
+        "sample_rate": 16000,
+        "f0_min_hz": 70,
+        "f0_max_hz": 420,
+        "switch_margin_cents": 55,
+        "sticky_gap_sec": 1.8,
+        "use_scene_reset": true,
+        "fallback_voice": "omni_nam_review",
+        "voice_bank": [
+          {
+            "profile": "omni_dan_chuong_trinh_vip",
+            "reference_hz": 93.02,
+            "enabled": true
+          },
+          {
+            "profile": "omni_laivansam",
+            "reference_hz": 119.4,
+            "enabled": true
+          },
+          {
+            "profile": "omni_nam_review",
+            "reference_hz": 126.98,
+            "enabled": true
+          },
+          {
+            "profile": "omni_tauthao",
+            "reference_hz": 128.0,
+            "enabled": true
+          },
+          {
+            "profile": "omni_chautinhtri",
+            "reference_hz": 148.15,
+            "enabled": true
+          },
+          {
+            "profile": "omni_nu_tram",
+            "reference_hz": 231.88,
+            "enabled": true
+          },
+          {
+            "profile": "omni_nu_ngoc_trinh",
+            "reference_hz": 235.29,
+            "enabled": true
+          },
+          {
+            "profile": "omni_nu_cute",
+            "reference_hz": 238.81,
+            "enabled": true
+          },
+          {
+            "profile": "omni_nu_tre",
+            "reference_hz": 251.98,
+            "enabled": true
+          },
+          {
+            "profile": "omni_betterversion",
+            "reference_hz": 258.06,
+            "enabled": true
+          }
+        ],
+        "duration_match": {
+          "adaptive": true,
+          "max_speedup": 1.6,
+          "minimum_gap_sec": 0.05
+        },
+        "_note": "Whisper tách câu gốc; đo F0 từng đoạn; ref_audio thật được đo lại runtime và ưu tiên hơn reference_hz. Đây là matching theo pitch, không nhận diện danh tính speaker."
+      },
+      "dialogue_replace": {
+        "enabled": true,
+        "required": false,
+        "separator_model": "htdemucs",
+        "require_separator": false,
+        "fallback": "center_cancel",
+        "tts_volume": 1.0,
+        "instrumental_volume": 0.92,
+        "mask_rate": 1000,
+        "relative_threshold": 0.035,
+        "absolute_threshold": 0.003,
+        "attack_ms": 45,
+        "release_ms": 140,
+        "fill_gap_ms": 180,
+        "mute_original_speech": true,
+        "_note": "Clone trực tiếp Wuby visual/preflight; chỉ thay audio bằng AI dialogue removal. Nền chạy đều, không duck mạnh; thoại gốc bị hard replace theo timestamp Whisper.",
+        "strategy": "ai_first",
+        "mask_source": "whisper_segments",
+        "speech_pre_padding_ms": 140,
+        "speech_post_padding_ms": 320,
+        "speech_background_volume": 0.92
+      },
+      "audio_mode": "ai_dialogue_remove",
+      "audio_mode_label": "Wuby + AI tách thoại, nền ổn định không pumping"
+    },
+    "cauhinh4": {
+      "name": "Cấu hình 4 (Wuby + 5.1 Smart hard mute thoại gốc)",
+      "hashtags": [
+        "#cauhinh4",
+        "#51smart",
+        "#surround",
+        "#dub51"
+      ],
+      "workflow": "wuby",
+      "render_profile": "wuby_overlay",
+      "voice": "omni_nam_review",
+      "speed": 1.0,
+      "drive_folder": "Clone_Phim_51_Smart",
+      "mask_mode": "in_video_overlay",
+      "burn_sub": true,
+      "show_title_card": false,
+      "keep_bg_audio": true,
+      "bg_volume": 0.98,
+      "vocal_cut": false,
+      "force_render": true,
+      "movie_voice_match": {
+        "enabled": true,
+        "method": "whisper_segment_f0_to_bundled_voice",
+        "sample_rate": 16000,
+        "f0_min_hz": 70,
+        "f0_max_hz": 420,
+        "switch_margin_cents": 55,
+        "sticky_gap_sec": 1.8,
+        "use_scene_reset": true,
+        "fallback_voice": "omni_nam_review",
+        "voice_bank": [
+          {
+            "profile": "omni_dan_chuong_trinh_vip",
+            "reference_hz": 93.02,
+            "enabled": true
+          },
+          {
+            "profile": "omni_laivansam",
+            "reference_hz": 119.4,
+            "enabled": true
+          },
+          {
+            "profile": "omni_nam_review",
+            "reference_hz": 126.98,
+            "enabled": true
+          },
+          {
+            "profile": "omni_tauthao",
+            "reference_hz": 128.0,
+            "enabled": true
+          },
+          {
+            "profile": "omni_chautinhtri",
+            "reference_hz": 148.15,
+            "enabled": true
+          },
+          {
+            "profile": "omni_nu_tram",
+            "reference_hz": 231.88,
+            "enabled": true
+          },
+          {
+            "profile": "omni_nu_ngoc_trinh",
+            "reference_hz": 235.29,
+            "enabled": true
+          },
+          {
+            "profile": "omni_nu_cute",
+            "reference_hz": 238.81,
+            "enabled": true
+          },
+          {
+            "profile": "omni_nu_tre",
+            "reference_hz": 251.98,
+            "enabled": true
+          },
+          {
+            "profile": "omni_betterversion",
+            "reference_hz": 258.06,
+            "enabled": true
+          }
+        ],
+        "duration_match": {
+          "adaptive": true,
+          "max_speedup": 1.6,
+          "minimum_gap_sec": 0.05
+        },
+        "_note": "Whisper tách câu gốc; đo F0 từng đoạn; ref_audio thật được đo lại runtime và ưu tiên hơn reference_hz. Đây là matching theo pitch, không nhận diện danh tính speaker."
+      },
+      "dialogue_replace": {
+        "enabled": true,
+        "required": false,
+        "separator_model": "htdemucs",
+        "require_separator": false,
+        "fallback": "center_cancel",
+        "tts_volume": 1.0,
+        "instrumental_volume": 0.95,
+        "mask_rate": 1000,
+        "relative_threshold": 0.035,
+        "absolute_threshold": 0.003,
+        "attack_ms": 45,
+        "release_ms": 140,
+        "fill_gap_ms": 180,
+        "mute_original_speech": true,
+        "_note": "Wuby visual/preflight + 5.1 Smart audio. Ngoài thoại giữ surround center-omit; trong cửa sổ Whisper dùng lớp nền clean lần 2 để dập voice rò L/R; không sidechain ducking.",
+        "strategy": "surround_first",
+        "surround_min_channels": 6,
+        "mask_source": "whisper_segments",
+        "speech_pre_padding_ms": 140,
+        "speech_post_padding_ms": 320,
+        "speech_background_volume": 0.95,
+        "speech_cleanup": true
+      },
+      "audio_mode": "surround_center_remove",
+      "audio_mode_label": "Wuby + 5.1 Smart hard replace thoại, giữ nền/SFX"
+    },
+    "song1minhcogivui": {
+      "name": "Cấu hình 5 (Sống 1 mình có gì vui)",
+      "hashtags": [
+        "#song1minh",
+        "#song1minhcogivui",
+        "#cauhinh5",
+        "#k7"
+      ],
+      "workflow": "wuby",
+      "render_profile": "wuby_overlay",
+      "voice": "wuby_clone",
+      "speed": 1.0,
+      "drive_folder": "KENH_007_Song1MinhCoGiVui/02_MOI_RENDER_CHO_XAC_NHAN",
+      "_logo_type": "kenh_007_song1minhcogivui",
+      "logo": {
+        "enabled": true,
+        "type": "kenh_007_song1minhcogivui",
+        "text": "Sống 1 mình có gì vui",
+        "tag": "@Song1MinhCoGiVui"
+      }
+    },
+    "tienvadoi": {
+      "name": "Kênh 1 - Tiền Và Đời",
+      "hashtags": [
+        "#tienvadoi",
+        "#tien_va_doi",
+        "#kenh1",
+        "#k1"
+      ],
+      "workflow": "film_review_black",
+      "render_profile": "review_film_black",
+      "voice": "omni_kienthuc_taichinh",
+      "speed": 1.25,
+      "drive_folder": "KENH_001_TienVaDoi/02_MOI_RENDER_CHO_XAC_NHAN",
+      "_logo_type": "kenh_001_tienvadoi",
+      "logo": {
+        "enabled": true,
+        "type": "kenh_001_tienvadoi",
+        "text": "Tiền Và Đời",
+        "tag": "@TienVaDoi"
+      }
+    },
+    "boxman": {
+      "name": "Kênh 4 - Boxman Kể Chuyện",
+      "hashtags": [
+        "#boxman",
+        "#boxmankechuyen",
+        "#kenh4",
+        "#k4"
+      ],
+      "workflow": "film_review_black",
+      "render_profile": "review_film_black",
+      "voice": "nam_minh",
+      "speed": 1.3,
+      "drive_folder": "KENH_004_BoxmanKeChuyen/02_MOI_RENDER_CHO_XAC_NHAN",
+      "_logo_type": "kenh_004_boxmankechuyen",
+      "logo": {
+        "enabled": true,
+        "type": "kenh_004_boxmankechuyen",
+        "text": "Boxman Kể Chuyện",
+        "tag": "@BoxmanKeChuyen"
+      }
+    },
+    "chuyen_hai_dua": {
+      "name": "Chuyện Hai Đứa — tình yêu nam nữ (thử nghiệm)",
+      "hashtags": [
+        "#wuby",
+        "#quby",
+        "#cauhinh1"
+      ],
+      "workflow": "wuby",
+      "voice": "omni_nu_cam_xuc",
+      "speed": 1.0,
+      "drive_folder": "THU_NGHIEM_ChuyenHaiDua/02_MOI_RENDER_CHO_XAC_NHAN",
+      "_logo_type": "chuyen_hai_dua",
+      "wuby_studio": {
+        "enabled": true,
+        "channel_id": "wuby",
+        "hybrid_frame": {
+          "enabled": true,
+          "theme": "peach"
+        }
+      },
+      "wuby_preflight": {
+        "enabled": true,
+        "visual": {
+          "sample_frames": 48
+        },
+        "scene_detection": {
+          "diff_threshold": 28.0,
+          "min_scene_sec": 0.35,
+          "analysis_width": 160
+        },
+        "ocr": {
+          "sample_fps": 12.0,
+          "min_confidence": 0.28,
+          "max_duration": 3600.0,
+          "remove_classes": [
+            "chinese",
+            "mixed_chinese"
+          ],
+          "max_track_gap_sec": 0.65,
+          "max_center_distance_px": 190.0,
+          "pre_padding_sec": 0.08,
+          "post_padding_factor": 0.75,
+          "adaptive_by_motion": true
+        },
+        "voice_match": {
+          "enabled": true,
+          "method": "whisper_segment_f0_wuby_preflight",
+          "sample_rate": 16000,
+          "f0_min_hz": 70,
+          "f0_max_hz": 420,
+          "switch_margin_cents": 85,
+          "sticky_gap_sec": 2.5,
+          "use_scene_reset": true,
+          "fallback_voice": "omni_nu_cam_xuc",
+          "voice_bank": [
+            {
+              "profile": "omni_nam_cuon_hut",
+              "reference_hz": 130.1,
+              "enabled": true
+            },
+            {
+              "profile": "omni_nu_cam_xuc",
+              "reference_hz": 225.4,
+              "enabled": true
+            },
+            {
+              "profile": "omni_nu_diu_dang",
+              "reference_hz": 217.7,
+              "enabled": true
+            }
+          ],
+          "duration_match": {
+            "adaptive": true,
+            "max_speedup": 1.6,
+            "minimum_gap_sec": 0.05
+          },
+          "_note": "Character-first: WeSpeaker/Light-ASD khóa một Character ID xuyên suốt video. F0 chỉ còn là gợi ý chọn màu giọng Việt một lần cho Character ID; tuyệt đối không dùng F0 để đổi nhân vật.",
+          "island_smoothing_max_sec": 2.2,
+          "speaker_lock_enabled": true,
+          "octave_correction": true,
+          "max_speakers": 12,
+          "speaker_similarity_threshold": 0.78,
+          "character_identity": {
+            "enabled": true,
+            "backend": "wespeaker",
+            "model": "chinese",
+            "device": "cuda:0",
+            "allow_cpu_fallback": true,
+            "allow_fallback": true,
+            "sample_rate": 16000,
+            "max_speakers": 12,
+            "min_overlap_ratio": 0.52,
+            "ambiguity_margin_ratio": 0.16,
+            "nearest_gap_sec": 0.8,
+            "sticky_gap_sec": 1.2,
+            "fallback_similarity_threshold": 0.8,
+            "light_asd": {
+              "enabled": true,
+              "ambiguity_only": true,
+              "repo_path": "external/Light-ASD",
+              "model_path": "external/Light-ASD/weight/finetuning_TalkSet.model",
+              "window_padding_sec": 1.4,
+              "merge_gap_sec": 1.2,
+              "max_chunk_sec": 24.0,
+              "max_chunks": 30,
+              "min_active_score": 0.0,
+              "min_track_margin": 0.2,
+              "association_min_share": 0.62,
+              "timeout_sec": 420,
+              "cuda_visible_devices": "0"
+            },
+            "_note": "Character ID dùng WeSpeaker Chinese toàn video; Light-ASD chỉ chạy các đoạn mơ hồ. F0 không tạo/đổi speaker ID."
+          }
+        },
+        "qc": {
+          "max_mask_ratio": 0.35,
+          "max_track_duration_sec": 12.0,
+          "min_ocr_segment_coverage": 0.65,
+          "min_f0_coverage": 0.55,
+          "abort_on_warning": false
+        },
+        "_note": "Phân tích Wuby trước render: hình học/FPS/motion/scene/OCR + Character ID; Light-ASD chỉ kiểm tra đoạn mơ hồ."
+      },
+      "audio_mode": "surround_center_remove",
+      "audio_mode_label": "Wuby + 5.1 Smart & AI giữ nền/SFX",
+      "dialogue_replace": {
+        "enabled": true,
+        "required": false,
+        "separator_model": "htdemucs",
+        "require_separator": false,
+        "fallback": "center_cancel",
+        "tts_volume": 1.0,
+        "instrumental_volume": 0.95,
+        "mask_rate": 1000,
+        "relative_threshold": 0.035,
+        "absolute_threshold": 0.003,
+        "attack_ms": 45,
+        "release_ms": 140,
+        "fill_gap_ms": 180,
+        "mute_original_speech": true,
+        "_note": "Tích hợp toàn diện Cấu hình 3 (AI giữ nền) và Cấu hình 4 (5.1 Smart Audio): Tự động nhận diện nếu có >= 5.1/7.1 thì bỏ center lấy surround/SFX siêu sạch; Nếu là stereo thì tự động chạy AI (MDX-Net/Demucs) triệt tiêu 100% thoại gốc trong cửa sổ Whisper, giữ trọn vẹn nhạc nền & SFX.",
+        "strategy": "surround_first",
+        "surround_min_channels": 6,
+        "mask_source": "whisper_segments",
+        "speech_pre_padding_ms": 140,
+        "speech_post_padding_ms": 320,
+        "speech_background_volume": 0.95,
+        "speech_cleanup": true
+      },
+      "keep_bg_audio": true,
+      "bg_volume": 0.95,
+      "show_title_card": false,
+      "logo": {
+        "enabled": true,
+        "text": "Chuyện Hai Đứa",
+        "tag": "@ChuyenHaiDua"
+      },
+      "review_note": "Preset thử nghiệm; phải xác nhận Character ID/nam nữ và nghe đầu ra. Không tạo kênh đăng hoặc tự duyệt.",
+      "render_profile": "wuby_overlay",
+      "mask_mode": "in_video_overlay",
+      "burn_sub": true,
+      "tts_enabled": true
+    }
+  }
+}

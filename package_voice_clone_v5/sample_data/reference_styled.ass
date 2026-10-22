@@ -1,0 +1,18 @@
+[Script Info]
+ScriptType: v4.00+
+PlayResX: 1080
+PlayResY: 1920
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: TitleCard,Arial,52,&H0000E6FF,&H000000FF,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,3,0,8,30,30,45,1
+Style: WubyWhiteText,Arial,48,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,-1,0,0,0,100,100,0,0,1,3,0,5,10,10,10,1
+Style: WubyBlackText,Arial,48,&H00000000,&H000000FF,&H00FFFFFF,&H00000000,-1,0,0,0,100,100,0,0,1,2,0,5,10,10,10,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 1,0:00:00.00,9:59:59.00,TitleCard,,0,0,0,,{\q2\b1}ANH CỨ BẬN ĐI, MẶC KỆ EM{\b0}
+Dialogue: 2,0:00:00.00,0:00:02.25,WubyWhiteText,,0,0,0,,{\pos(541,863)\fs56\b1}Gửi cho người không để ý đến bạn xem{\b0}
+Dialogue: 2,0:00:02.85,0:00:04.25,WubyWhiteText,,0,0,0,,{\pos(283,621)\fs50\b1}Em bận thì\Ncứ bận đi{\b0}
+Dialogue: 2,0:00:08.35,0:00:09.10,WubyBlackText,,0,0,0,,{\pos(154,1194)\fs56\b1}冒{\b0}

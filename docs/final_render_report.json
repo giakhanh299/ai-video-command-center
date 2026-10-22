@@ -1,0 +1,46 @@
+{
+  "schema": 7,
+  "source": "/mnt/data/wuby_work/Wuby_V7/workspace/uploads/8fa5df27b5c24b6e9ece26b90a8f8c20.mp4",
+  "source_sha256": "d6ab1e78213a4c1a8cb2de73c40862c7cfa0d1ef04767e5ce569edbecc778652",
+  "source_fps": "24/1",
+  "output": "/mnt/data/wuby_work/Wuby_V7/workspace/queue_jobs/35601e4523a1472a9a4c4d871b8ae1f1/output.mp4",
+  "output_sha256": "8f94e54f1e4aec7c03977f31f8d00dfa658e6b9d4e0abbb73e7c9c46a9406f0c",
+  "fps": "24/1",
+  "width": 1080,
+  "height": 1920,
+  "duration": 20.0,
+  "encoder_used": "libx264",
+  "wall_seconds": 12.32,
+  "caption_page_count": 14,
+  "cue_hash": "4104464b36db3f7c5229a4fecea20e8199fd5a0ade8c4d044d47b5506df73924",
+  "layout_collisions": 0,
+  "caption_time_overlaps": 0,
+  "residual_source_text_verified": false,
+  "residual_check_method": "not_verified",
+  "speaker_identity_verified": false,
+  "clone_conditioned": false,
+  "speech_qc": {
+    "status": "not_run"
+  },
+  "audio_mode": "preserve",
+  "voice_audio_sha256": null,
+  "sfx": [],
+  "notes": [
+    {
+      "type": "fast_reading",
+      "start": 4.98,
+      "characters_per_second": 25.2
+    },
+    {
+      "type": "existing_audio_preserved",
+      "message": "This is not a newly tested voice clone"
+    }
+  ],
+  "graphics": {
+    "font_path": "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
+    "title_lines": [
+      "Vận may ghé thăm"
+    ]
+  },
+  "status": "needs_review"
+}

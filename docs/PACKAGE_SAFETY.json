@@ -1,0 +1,4 @@
+{
+  "hardcoded_credential_pattern_hits": 0,
+  "note": "Pattern scan is not a universal secret detector. Supplied handoff reported sanitized; workspace/backups/env/models/fonts excluded."
+}

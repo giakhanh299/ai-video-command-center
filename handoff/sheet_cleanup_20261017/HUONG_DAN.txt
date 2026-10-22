@@ -1,0 +1,8 @@
+API service account và OAuth hiện có đều trả 403 khi tạo tab. Chưa thay đổi Google Sheet.
+
+1. Mở đúng spreadsheet bằng tài khoản giakhanh299@gmail.com.
+2. Extensions > Apps Script.
+3. Dán toàn bộ DON_DEP_VIDEO_AI.gs, lưu và chạy cleanupVideoAiSheet.
+4. Tự cấp quyền Google khi được hỏi. Script sao lưu toàn bộ spreadsheet trước khi nhập bảng và xóa đúng 7 tab.
+
+Dữ liệu đã nhúng sẵn, gồm 8 kênh và 1 dòng Telegram quản trị. Cột đầu ra của 8 kênh dùng D:/0.1_FACE_BOOK/videos_upload/<kênh>/02_MOI_RENDER_CHO_XAC_NHAN. Không tự đăng bài.

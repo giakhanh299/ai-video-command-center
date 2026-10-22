@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "enabled": true,
+  "interval_hours": 6,
+  "lookback_hours": 72,
+  "max_new_per_channel": 3,
+  "publish": false,
+  "mapping_basis": "Followed authors observed in signed-in Douyin plus public topic sources authorized by user on 2026-10-18",
+  "channels": {
+    "KENH_001": {
+      "sources": [
+        {
+          "name": "财商研习社",
+          "sec_user_id": "MS4wLjABAAAAzR1IUu5xvEwqB5x5WnUJGI6WZTiaKQzXAyxm7Ts43_dvx0la6IrYLlH3SLlrvy60",
+          "url": "https://www.douyin.com/user/MS4wLjABAAAAzR1IUu5xvEwqB5x5WnUJGI6WZTiaKQzXAyxm7Ts43_dvx0la6IrYLlH3SLlrvy60",
+          "evidence_url": "https://www.douyin.com/video/7697568844546088703",
+          "origin": "PUBLIC_TOPIC_SEARCH_IN_SIGNED_IN_DOUYIN",
+          "verified_date": "2026-10-18",
+          "topic": "Financial literacy, money psychology and economics"
+        }
+      ],
+      "status": "SOURCE_CONFIGURED"
+    },
+    "KENH_002": {
+      "sources": [
+        {
+          "name": "阿刚速看",
+          "sec_user_id": "MS4wLjABAAAAUewX30vrd2sxQV9Bpkt2rbQTl5e7ILBUSVAuMQOea0u7uHDq-8oeAzMEdHSAmVvT",
+          "url": "https://www.douyin.com/user/MS4wLjABAAAAUewX30vrd2sxQV9Bpkt2rbQTl5e7ILBUSVAuMQOea0u7uHDq-8oeAzMEdHSAmVvT"
+        }
+      ]
+    },
+    "KENH_003": {
+      "sources": [
+        {
+          "name": "达叔的财智日记",
+          "sec_user_id": "MS4wLjABAAAA1vdy4dTY1Ksgmw4D_7spVIaFnSD9wgQ3kwaknB79SlQ",
+          "url": "https://www.douyin.com/user/MS4wLjABAAAA1vdy4dTY1Ksgmw4D_7spVIaFnSD9wgQ3kwaknB79SlQ",
+          "evidence_url": "https://jingxuan.douyin.com/m/video/7568332009655815443",
+          "origin": "PUBLIC_TOPIC_SEARCH",
+          "verified_date": "2026-10-18"
+        }
+      ],
+      "status": "SOURCE_CONFIGURED"
+    },
+    "KENH_004": {
+      "sources": [
+        {
+          "name": "诡诡漫",
+          "sec_user_id": "MS4wLjABAAAAN-1fM0RHuDRh5s783UTZPUyOSn7yxIglA5LjqCfAXI6MWnxXZ7d_jiPrfEPLGWNt",
+          "url": "https://www.douyin.com/user/MS4wLjABAAAAN-1fM0RHuDRh5s783UTZPUyOSn7yxIglA5LjqCfAXI6MWnxXZ7d_jiPrfEPLGWNt",
+          "evidence_url": "https://www.douyin.com/video/7621166123672718643",
+          "origin": "PUBLIC_TOPIC_SEARCH",
+          "verified_date": "2026-10-18"
+        }
+      ],
+      "status": "SOURCE_CONFIGURED"
+    },
+    "KENH_005": {
+      "sources": [
+        {
+          "name": "奋斗的希瓜皮",
+          "sec_user_id": "MS4wLjABAAAAzjF0uYCtXbf928SK2W0jgEBC7idgE2RT9VHipW7UEF8",
+          "url": "https://www.douyin.com/user/MS4wLjABAAAAzjF0uYCtXbf928SK2W0jgEBC7idgE2RT9VHipW7UEF8"
+        }
+      ]
+    },
+    "KENH_006": {
+      "sources": [
+        {
+          "name": "乖巧宝宝Quby",
+          "sec_user_id": "MS4wLjABAAAAfAuPSkhuWIAv7Yx56Y1sI52BoJc0teeXWA2soSCeook",
+          "url": "https://www.douyin.com/user/MS4wLjABAAAAfAuPSkhuWIAv7Yx56Y1sI52BoJc0teeXWA2soSCeook"
+        }
+      ]
+    },
+    "KENH_007": {
+      "sources": [
+        {
+          "name": "迷人的歪姐",
+          "sec_user_id": "MS4wLjABAAAAD3g0DECFFzLHG8GLkd0-ESvyOkYCCpHtC4OKhG4yadPVPxi5bGiguqui1fERASD0",
+          "url": "https://www.douyin.com/user/MS4wLjABAAAAD3g0DECFFzLHG8GLkd0-ESvyOkYCCpHtC4OKhG4yadPVPxi5bGiguqui1fERASD0"
+        }
+      ]
+    },
+    "KENH_008": {
+      "sources": [
+        {
+          "name": "女钓手豆豆",
+          "sec_user_id": "MS4wLjABAAAA-YcErrxgnoO9Drrannm8IFMQAN8vzYAjCNqHFMOzLUg",
+          "url": "https://www.douyin.com/user/MS4wLjABAAAA-YcErrxgnoO9Drrannm8IFMQAN8vzYAjCNqHFMOzLUg"
+        },
+        {
+          "name": "娜小娜爱钓鱼",
+          "sec_user_id": "MS4wLjABAAAAK0iiFW0YkZoBVGjZVyF44vZf-9WqApRlfeXaTcUcOdo",
+          "url": "https://www.douyin.com/user/MS4wLjABAAAAK0iiFW0YkZoBVGjZVyF44vZf-9WqApRlfeXaTcUcOdo"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,132 @@
+[
+  {
+    "profile": "omni_dan_chuong_trinh_vip",
+    "label": "Dẫn Chương Trình VIP (Hào sảng, kịch tính 99Hz)",
+    "reference_hz": 93.02,
+    "reference_audio": "/mnt/data/lay_video_tiktok_code_work/voice_samples/danchuongtrinhvip_short.wav",
+    "reference_measurement": {
+      "median_f0_hz": 93.02,
+      "p20_hz": 85.11,
+      "p80_hz": 112.68,
+      "voiced_frames": 304,
+      "duration": 7.9
+    }
+  },
+  {
+    "profile": "omni_laivansam",
+    "label": "MC Lại Văn Sâm (Triết lý, truyền cảm 139Hz)",
+    "reference_hz": 119.4,
+    "reference_audio": "/mnt/data/lay_video_tiktok_code_work/voice_samples/laivansam_short.wav",
+    "reference_measurement": {
+      "median_f0_hz": 119.4,
+      "p20_hz": 102.56,
+      "p80_hz": 141.59,
+      "voiced_frames": 191,
+      "duration": 4.6
+    }
+  },
+  {
+    "profile": "omni_nam_review",
+    "label": "OmniVoice - Nam review clone",
+    "reference_hz": 126.98,
+    "reference_audio": "/mnt/data/lay_video_tiktok_code_work/voice_samples/giongnamreviewdao.mp3",
+    "reference_measurement": {
+      "median_f0_hz": 126.98,
+      "p20_hz": 105.96,
+      "p80_hz": 168.42,
+      "voiced_frames": 381,
+      "duration": 9.207
+    }
+  },
+  {
+    "profile": "omni_tauthao",
+    "label": "Tào Tháo (Trầm hùng, khí phách 137Hz)",
+    "reference_hz": 128.0,
+    "reference_audio": "/mnt/data/lay_video_tiktok_code_work/voice_samples/giongtauthao_short.wav",
+    "reference_measurement": {
+      "median_f0_hz": 128.0,
+      "p20_hz": 106.1,
+      "p80_hz": 161.29,
+      "voiced_frames": 217,
+      "duration": 7.0
+    }
+  },
+  {
+    "profile": "omni_chautinhtri",
+    "label": "Châu Tinh Trì (Hóm hỉnh, hài hước 144Hz)",
+    "reference_hz": 148.15,
+    "reference_audio": "/mnt/data/lay_video_tiktok_code_work/voice_samples/chautinhtri_short.wav",
+    "reference_measurement": {
+      "median_f0_hz": 148.15,
+      "p20_hz": 123.08,
+      "p80_hz": 166.67,
+      "voiced_frames": 141,
+      "duration": 3.9
+    }
+  },
+  {
+    "profile": "omni_nu_tram",
+    "label": "OmniVoice - Nữ trầm clone",
+    "reference_hz": 231.88,
+    "reference_audio": "/mnt/data/lay_video_tiktok_code_work/voice_samples/3_nu_tram_am.mp3",
+    "reference_measurement": {
+      "median_f0_hz": 231.88,
+      "p20_hz": 205.13,
+      "p80_hz": 271.19,
+      "voiced_frames": 171,
+      "duration": 4.68
+    }
+  },
+  {
+    "profile": "omni_nu_ngoc_trinh",
+    "label": "OmniVoice - Nữ Ngọc Trinh clone",
+    "reference_hz": 235.29,
+    "reference_audio": "/mnt/data/lay_video_tiktok_code_work/voice_samples/giongnu_ngoctrinh_235hz.wav",
+    "reference_measurement": {
+      "median_f0_hz": 235.29,
+      "p20_hz": 202.53,
+      "p80_hz": 271.19,
+      "voiced_frames": 434,
+      "duration": 11.952
+    }
+  },
+  {
+    "profile": "omni_nu_cute",
+    "label": "OmniVoice - Nữ cute clone",
+    "reference_hz": 238.81,
+    "reference_audio": "/mnt/data/lay_video_tiktok_code_work/voice_samples/giongnucute.wav",
+    "reference_measurement": {
+      "median_f0_hz": 238.81,
+      "p20_hz": 197.53,
+      "p80_hz": 347.83,
+      "voiced_frames": 351,
+      "duration": 7.802
+    }
+  },
+  {
+    "profile": "omni_nu_tre",
+    "label": "OmniVoice - Nữ trẻ clone",
+    "reference_hz": 251.98,
+    "reference_audio": "/mnt/data/lay_video_tiktok_code_work/voice_samples/2_nu_tre_trung.mp3",
+    "reference_measurement": {
+      "median_f0_hz": 251.98,
+      "p20_hz": 222.22,
+      "p80_hz": 290.91,
+      "voiced_frames": 149,
+      "duration": 4.128
+    }
+  },
+  {
+    "profile": "omni_betterversion",
+    "label": "Better Version (Review sách, tri thức 262Hz)",
+    "reference_hz": 258.06,
+    "reference_audio": "/mnt/data/lay_video_tiktok_code_work/voice_samples/bettervison_short.wav",
+    "reference_measurement": {
+      "median_f0_hz": 258.06,
+      "p20_hz": 219.18,
+      "p80_hz": 311.31,
+      "voiced_frames": 278,
+      "duration": 7.85
+    }
+  }
+]

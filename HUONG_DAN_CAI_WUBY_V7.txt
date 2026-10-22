@@ -1,0 +1,23 @@
+WUBY V7 - CAI BAN SUA VA THU TRUOC
+
+1) Dung bot va render dang chay.
+2) Giai nen ZIP vao thu muc rieng, KHONG chep de project cu.
+3) Chay CAP_NHAT_WUBY_V7.bat, nhap project ROOT co backend/ va duong dan
+   python.exe cua venv dang dung. Xem danh sach truoc khi go APPLY.
+   Neu CONFLICT: giao Anti merge; khong force chep de.
+4) Trong project da cap nhat, chay CAI_WUBY_V7.bat.
+   FFmpeg/ffprobe can co san PATH (hoac FFMPEG_BINARY / FFPROBE_BINARY).
+   Bo cai khong cai lai Torch, CUDA hay model giong.
+5) Dua HUONG_DAN_ANTI_WUBY_V7.txt cho Anti de xac minh mau clone va moi truong.
+6) Chay MO_WUBY_STUDIO.bat: them logo PNG, chon theme, xem preview mot video.
+7) Test giong: python -m wuby_studio.cli test-voice --channel wuby
+   Nghe audition.wav so voi file mau, sau do:
+   python -m wuby_studio.cli approve-voice --sample "...\audition.wav" --listened
+8) Dan toi da 100 link rieng le, moi dong mot link. Chay CHAY_HANG_CHO.bat.
+   Xu ly lan luot, co log/pause/retry/cancel, xuat REVIEW truoc khi dang.
+
+DEMO DINH KEM GIU AUDIO CU. CHUA CO BANG CHUNG GIONG CLONE MOI DA DUNG.
+Da do 3 video mau: 1080x1920, 24 FPS. Giu FPS nguon la mac dinh.
+Video da burn chu cu can mask/crop duyet rieng; uu tien video goc.
+Doc README_WUBY_V7.md va docs/TEST_REPORT_V7.md de biet ro pham vi test.
+Khong chia se backups vi co the chua API key/duong dan rieng.

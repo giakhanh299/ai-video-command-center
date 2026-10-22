@@ -1,0 +1,32 @@
+[
+  {
+    "file": "anh_cu_ban_di_mac_ke_em_wuby.mp4",
+    "sha256": "9b9e376cfc808b9f1122ba7c4097ae512f73b389a7c2395b1f209ba07da18fe7",
+    "width": 1080,
+    "height": 1920,
+    "fps": "24/1",
+    "duration": 8.541016,
+    "audio_duration": "8.520998",
+    "inspection": "ffprobe and sampled real frames; not full transcription/voice listening"
+  },
+  {
+    "file": "van_may_cu_the_xoay_quanh_em.mp4",
+    "sha256": "d6ab1e78213a4c1a8cb2de73c40862c7cfa0d1ef04767e5ce569edbecc778652",
+    "width": 1080,
+    "height": 1920,
+    "fps": "24/1",
+    "duration": 20.0,
+    "audio_duration": "19.991995",
+    "inspection": "ffprobe and sampled real frames; not full transcription/voice listening"
+  },
+  {
+    "file": "hai_nhan_cach_vat_lon_vi_cong_viec.mp4",
+    "sha256": "4222eb292ad10adbdb03f9e3b48ddf2cce90232ca22771c917a41d43e66eea19",
+    "width": 1080,
+    "height": 1920,
+    "fps": "24/1",
+    "duration": 22.166016,
+    "audio_duration": "22.151995",
+    "inspection": "ffprobe and sampled real frames; not full transcription/voice listening"
+  }
+]

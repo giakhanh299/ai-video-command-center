@@ -1,0 +1,10 @@
+{
+  "actual_handoff_files_before": 43,
+  "dry_run_no_writes": true,
+  "files_changed": 74,
+  "second_apply_changes": 0,
+  "rollback_restored": 74,
+  "original_files_byte_identical_after_rollback": true,
+  "reference_model_and_transcript_preserved": true,
+  "environment": "isolated copy, not user live project"
+}

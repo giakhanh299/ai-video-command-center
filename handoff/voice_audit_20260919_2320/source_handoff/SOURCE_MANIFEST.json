@@ -1,0 +1,172 @@
+[
+  {
+    "file": "backend/audio_processor.py",
+    "source_sha256": "08e3b8e58eb45d84bd47693ea8e3c5ee719111762c9b72919a7bd72088b72183",
+    "sanitized": false
+  },
+  {
+    "file": "backend/omnivoice_service.py",
+    "source_sha256": "8ddda4e70af901986a14757b96a53d6cace702ab03a0b37fc0b5cc3fa56ce09e",
+    "sanitized": false
+  },
+  {
+    "file": "backend/voice_router.py",
+    "source_sha256": "2fb9d8786ab7b8f91050bed2d658537cf215c22e62ff17307ccc156a1691ba40",
+    "sanitized": false
+  },
+  {
+    "file": "backend/zerotts_voice.py",
+    "source_sha256": "a5f90a95f6de9c492f371e4ab5852fe5aa1e02f86714d12d011114cacd64729d",
+    "sanitized": false
+  },
+  {
+    "file": "backend/sub_processor.py",
+    "source_sha256": "93a24ea80f129f087277fad2aee2cf60f81174c440aec45a77f5dd61d8e36526",
+    "sanitized": false
+  },
+  {
+    "file": "backend/video_merger.py",
+    "source_sha256": "11feacf4f0686e502aefbc9db3b25a1fbdd3c83ab199465cedbbb1b27805bf75",
+    "sanitized": false
+  },
+  {
+    "file": "backend/channel_manager.py",
+    "source_sha256": "f26b2596d7cfcd559e6e453b934e9d498b1cc7a3f875eb87399d107faccad571",
+    "sanitized": false
+  },
+  {
+    "file": "backend/wuby_config.py",
+    "source_sha256": "4a62bde5aa9be8c53168759162957a1eac9beebaaf60c379eefec0a61240aced",
+    "sanitized": false
+  },
+  {
+    "file": "backend/wuby_ocr_overlay.py",
+    "source_sha256": "a3fc10c087511b441a5860347854f3814f36c78128582056ca8d34d282a895e7",
+    "sanitized": false
+  },
+  {
+    "file": "backend/asset_manager.py",
+    "source_sha256": "bf58e0f1c3d77689f4c29b838afd55cb760edb28e0b8ac4a8dd19bce51674cd9",
+    "sanitized": false
+  },
+  {
+    "file": "backend/film_bars.py",
+    "source_sha256": "b2301e6c96df9d687880e5266a638070439c23bfb3a084401d2b13b0405d28f1",
+    "sanitized": false
+  },
+  {
+    "file": "backend/scene_detector.py",
+    "source_sha256": "7cb5cbd10d1dee043884a340a233c526de551bfba3cbb89d2da634bc981a671a",
+    "sanitized": false
+  },
+  {
+    "file": "test_voice_clone.py",
+    "source_sha256": "06aef30a089873484c0d106acb229c081b626b60cf19e8c56cd09605b940a404",
+    "sanitized": false
+  },
+  {
+    "file": "test_ab_voice_clone.py",
+    "source_sha256": "4040157ab0cfaf1e567cc145ed913f6daf86972b23676da81213b97cacf216fe",
+    "sanitized": false
+  },
+  {
+    "file": "inspect_voice_reference.py",
+    "source_sha256": "91805dcd9157e3f1b722a84913719d51dff616dc69469b8173eba722ba436487",
+    "sanitized": false
+  },
+  {
+    "file": "check_voice_backends.py",
+    "source_sha256": "d61d63b487a40c209284cf3f7dfdc2e1167b7a4f5acb1f9f7ee7e5885d3ccde8",
+    "sanitized": false
+  },
+  {
+    "file": "backend/tests/test_channel_profiles.py",
+    "source_sha256": "493617d887226fc7174e9f2e56c0d44e99c23b2fc0d0387ffba34620cfdcd2b7",
+    "sanitized": false
+  },
+  {
+    "file": "backend/tests/test_film_bars.py",
+    "source_sha256": "78533a4c0de9c1718379837eb616ed9e5e857152b071674449f4b654447f141f",
+    "sanitized": false
+  },
+  {
+    "file": "backend/tests/test_ocr_overlap.py",
+    "source_sha256": "039ba88105f8bc2094625b8c8d058b30507d57faa420bd5e5921943b2378bbe4",
+    "sanitized": false
+  },
+  {
+    "file": "tests/test_preset_channel.py",
+    "source_sha256": "09d765f699c20947d79b4de667cbb91c74c53ec2ce77720c7bdebc1949e6e7b1",
+    "sanitized": false
+  },
+  {
+    "file": "tests/test_render_wuby_video.py",
+    "source_sha256": "98c0e3393762118333832454db23f65a1828ceaaf7fb385acd1ed85023367ad1",
+    "sanitized": false
+  },
+  {
+    "file": "tests/test_sub_processor_wuby.py",
+    "source_sha256": "fe668e365b32c1b769ca92a7c7c5a11d04558693d882cea840708b61e1215078",
+    "sanitized": false
+  },
+  {
+    "file": "tests/test_wuby_real_model.py",
+    "source_sha256": "a3c22b2548d5878f2c093e04014c2af21fe6226778e50fcd959db7223b239256",
+    "sanitized": false
+  },
+  {
+    "file": "OmniVoice/omnivoice/models/omnivoice.py",
+    "source_sha256": "844b25b553dde521fd7e4903d451bd1aa3f0d01dc8c65c22a61503a57dbea947",
+    "sanitized": false
+  },
+  {
+    "file": "OmniVoice/omnivoice/models/__init__.py",
+    "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sanitized": false
+  },
+  {
+    "file": "OmniVoice/omnivoice/utils/audio.py",
+    "source_sha256": "64bdfbe0b65e523a4adba14da6109162738c1301ea711f76cf888596c60ef734",
+    "sanitized": false
+  },
+  {
+    "file": "OmniVoice/omnivoice/utils/common.py",
+    "source_sha256": "e0ef5ea11c1a3f13199817860b1f678bd5896f8f5b86717e284ff34976730b62",
+    "sanitized": false
+  },
+  {
+    "file": "OmniVoice/omnivoice/utils/data_utils.py",
+    "source_sha256": "3c1bb1f249fd05d3584fca52aa04ddd2dcb2d1d07a0c931ab3331e5d01ae9e6a",
+    "sanitized": false
+  },
+  {
+    "file": "OmniVoice/omnivoice/utils/duration.py",
+    "source_sha256": "dace4db5fd26bbfba462f79ba18418bc90d2053f5db7d14bab6a5965db924191",
+    "sanitized": false
+  },
+  {
+    "file": "OmniVoice/omnivoice/utils/lang_map.py",
+    "source_sha256": "a2710effacec1684e17bdaa7241018e66262196f66acd296e918217ed5699262",
+    "sanitized": false
+  },
+  {
+    "file": "OmniVoice/omnivoice/utils/text.py",
+    "source_sha256": "ed289310d488d81a7907e9329a084f45842ba0bcb387da2679297936a0386465",
+    "sanitized": false
+  },
+  {
+    "file": "OmniVoice/omnivoice/utils/voice_design.py",
+    "source_sha256": "11693c8ce2adb29426a7f0a672c82bd27ece900d8325088363a8f282955e622b",
+    "sanitized": false
+  },
+  {
+    "file": "OmniVoice/omnivoice/utils/__init__.py",
+    "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sanitized": false
+  },
+  {
+    "file": "OmniVoice/omnivoice/__init__.py",
+    "source_sha256": "7464a1e374d5fce3b75c23f9e7f2841eae1ccd1dbbe4439558b65722804aa099",
+    "sanitized": false
+  }
+]

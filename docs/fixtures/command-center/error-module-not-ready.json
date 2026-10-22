@@ -1,0 +1,8 @@
+{
+  "error": {
+    "code": "MODULE_NOT_READY",
+    "message": "Module chưa sẵn sàng trên Agent được cấp quyền.",
+    "request_id": "req_fixture_001",
+    "details": [{"field": "preset_id", "code": "CAPABILITY_UNAVAILABLE", "message": "Chưa có Agent đáp ứng preset này."}]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "result": "PASS",
+  "channel_paths_verified": 8,
+  "csv_data_rows": 9,
+  "csv_columns": 16,
+  "youtube_entry_scripts_removed": 7,
+  "youtube_upload_functions_cannot_publish": true,
+  "sheet_sync_only_channel_master": true,
+  "google_sheet_status": "UNCHANGED: both supplied credentials return 403 on addSheet",
+  "owner_script": "D:\\0.1_FACE_BOOK\\Lay video tiktok\\handoff\\sheet_cleanup_20261017\\DON_DEP_VIDEO_AI.gs"
+}

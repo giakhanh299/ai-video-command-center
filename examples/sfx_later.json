@@ -1,0 +1,14 @@
+{
+  "sfx": {
+    "enabled": false,
+    "avoid_speech": true,
+    "max_gain": 0.35,
+    "events": [
+      {
+        "path": "channel_assets/wuby/sfx/laugh_owned.wav",
+        "start": 4.5,
+        "gain": 0.2
+      }
+    ]
+  }
+}

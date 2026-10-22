@@ -1,0 +1,10 @@
+{
+  "timestamp": 1792635038.0421124,
+  "time_str": "2026-10-22 09:10:38",
+  "pid": 31388,
+  "status": "polling",
+  "uptime_seconds": 5208,
+  "extra": {
+    "offset": 400869877
+  }
+}

@@ -1,0 +1,244 @@
+{
+  "modules": [
+    {
+      "id": "media.probe",
+      "version": "1.0.0",
+      "actions": [
+        "run"
+      ],
+      "config_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "available": true,
+      "unavailable_reason": null
+    },
+    {
+      "id": "render.basic",
+      "version": "1.0.0",
+      "actions": [
+        "run"
+      ],
+      "config_schema": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "width": {
+            "type": "integer",
+            "enum": [
+              360,
+              720,
+              1080
+            ]
+          },
+          "height": {
+            "type": "integer",
+            "enum": [
+              640,
+              1280,
+              1920
+            ]
+          }
+        },
+        "required": [
+          "width",
+          "height"
+        ]
+      },
+      "available": true,
+      "unavailable_reason": null
+    },
+    {
+      "id": "render.compose",
+      "version": "1.0.0",
+      "actions": [
+        "run"
+      ],
+      "config_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "available": false,
+      "unavailable_reason": "ADAPTER_NOT_INTEGRATED"
+    },
+    {
+      "id": "render.rerender",
+      "version": "1.0.0",
+      "actions": [
+        "run"
+      ],
+      "config_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "available": false,
+      "unavailable_reason": "ADAPTER_NOT_INTEGRATED"
+    }
+  ],
+  "presets": [
+    {
+      "id": "inspect_media",
+      "version": "1.0.0",
+      "label": "Kiểm tra thông số video",
+      "available": true,
+      "modules": [
+        "media.probe"
+      ],
+      "override_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "basic_render",
+      "version": "1.0.0",
+      "label": "Render cơ bản CPU — giữ âm thanh gốc",
+      "available": true,
+      "modules": [
+        "media.probe",
+        "render.basic"
+      ],
+      "override_schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "id": "wuby",
+      "version": "1.0.0",
+      "label": "Wuby — đang tích hợp adapter",
+      "available": false,
+      "modules": [
+        "render.compose"
+      ],
+      "override_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "title": "Overrides",
+        "type": "object"
+      }
+    },
+    {
+      "id": "cauhinh2",
+      "version": "1.0.0",
+      "label": "Film review black — đang tích hợp",
+      "available": false,
+      "modules": [
+        "render.compose"
+      ],
+      "override_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "title": "Overrides",
+        "type": "object"
+      }
+    },
+    {
+      "id": "cauhinh3",
+      "version": "1.0.0",
+      "label": "Movie clone — đang tích hợp",
+      "available": false,
+      "modules": [
+        "render.compose"
+      ],
+      "override_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "title": "Overrides",
+        "type": "object"
+      }
+    },
+    {
+      "id": "cauhinh3_wuby",
+      "version": "1.0.0",
+      "label": "Wuby AI giữ nền — đang tích hợp",
+      "available": false,
+      "modules": [
+        "render.compose"
+      ],
+      "override_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "title": "Overrides",
+        "type": "object"
+      }
+    },
+    {
+      "id": "chidepdicau",
+      "version": "1.0.0",
+      "label": "Chị đẹp đi câu — đang tích hợp",
+      "available": false,
+      "modules": [
+        "render.compose"
+      ],
+      "override_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "title": "Overrides",
+        "type": "object"
+      }
+    },
+    {
+      "id": "song1minhcogivui",
+      "version": "1.0.0",
+      "label": "Sống một mình — đang tích hợp",
+      "available": false,
+      "modules": [
+        "render.compose"
+      ],
+      "override_schema": {
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "default": "",
+            "maxLength": 200,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "title": "Overrides",
+        "type": "object"
+      }
+    }
+  ]
+}

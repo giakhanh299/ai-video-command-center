@@ -1,0 +1,116 @@
+[
+  {
+    "name": "router rejects silent audio",
+    "status": "PASS"
+  },
+  {
+    "name": "require_clone rejects preset",
+    "status": "PASS"
+  },
+  {
+    "name": "missing reference fails closed",
+    "status": "PASS"
+  },
+  {
+    "name": "all preset chunks fail",
+    "actual": {
+      "path": "handoff\\voice_audit_20260919_2320\\preset_failed.wav",
+      "bytes": 110294,
+      "streams": [
+        {
+          "index": 0,
+          "codec_type": "audio",
+          "codec_name": "pcm_s16le",
+          "sample_rate": "11025",
+          "channels": 1,
+          "duration": "5.000000"
+        }
+      ],
+      "format_duration": "5.000000",
+      "duration_s": 5.0,
+      "rms": 0.0,
+      "peak": 0.0,
+      "rms_dbfs": -240.0,
+      "peak_dbfs": -240.0,
+      "silent_frames_pct": 100.0,
+      "clip_pct": 0.0
+    },
+    "status": "BUG_REPRODUCED"
+  },
+  {
+    "name": "legacy all TTS fails",
+    "actual": {
+      "path": "handoff\\voice_audit_20260919_2320\\legacy_failed.wav",
+      "bytes": 22094,
+      "streams": [
+        {
+          "index": 0,
+          "codec_type": "audio",
+          "codec_name": "pcm_s16le",
+          "sample_rate": "11025",
+          "channels": 1,
+          "duration": "1.000000"
+        }
+      ],
+      "format_duration": "1.000000",
+      "duration_s": 1.0,
+      "rms": 0.0,
+      "peak": 0.0,
+      "rms_dbfs": -240.0,
+      "peak_dbfs": -240.0,
+      "silent_frames_pct": 100.0,
+      "clip_pct": 0.0
+    },
+    "status": "BUG_REPRODUCED"
+  },
+  {
+    "name": "mix_default",
+    "actual": {
+      "path": "handoff\\voice_audit_20260919_2320\\mix_default.wav",
+      "bytes": 48078,
+      "streams": [
+        {
+          "index": 0,
+          "codec_type": "audio",
+          "codec_name": "pcm_s16le",
+          "sample_rate": "24000",
+          "channels": 1,
+          "duration": "1.000000"
+        }
+      ],
+      "format_duration": "1.000000",
+      "duration_s": 1.0,
+      "rms": 0.07071128487586975,
+      "peak": 0.1000257283449173,
+      "rms_dbfs": -23.010225424705805,
+      "peak_dbfs": -19.997765551785733,
+      "silent_frames_pct": 0.0,
+      "clip_pct": 0.0
+    }
+  },
+  {
+    "name": "mix_off",
+    "actual": {
+      "path": "handoff\\voice_audit_20260919_2320\\mix_off.wav",
+      "bytes": 48078,
+      "streams": [
+        {
+          "index": 0,
+          "codec_type": "audio",
+          "codec_name": "pcm_s16le",
+          "sample_rate": "24000",
+          "channels": 1,
+          "duration": "1.000000"
+        }
+      ],
+      "format_duration": "1.000000",
+      "duration_s": 1.0,
+      "rms": 0.14142489433288574,
+      "peak": 0.20002338290214539,
+      "rms_dbfs": -16.98948274150348,
+      "peak_dbfs": -13.978384639542211,
+      "silent_frames_pct": 0.0,
+      "clip_pct": 0.0
+    }
+  }
+]

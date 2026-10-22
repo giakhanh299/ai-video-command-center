@@ -1,0 +1,30 @@
+{
+  "requested_mode": "clone_original_voice",
+  "reference_audio": "D:\\0.1_FACE_BOOK\\Lay video tiktok\\voice_samples\\wuby_character_tuned.wav",
+  "reference_text": "你不理你的人看你",
+  "backend_attempts": [
+    {
+      "backend": "khanh_omnivoice",
+      "status": "success",
+      "detail": "all remaining cues generated"
+    }
+  ],
+  "final_backend": "khanh_omnivoice",
+  "final_mode": "cloned_voice",
+  "clone_success": true,
+  "cue_count": 2,
+  "new_cue_count": 2,
+  "output": "D:\\0.1_FACE_BOOK\\Lay video tiktok\\handoff\\voice_audit_20260919_2320\\test_pipeline_wuby_dubbed.wav",
+  "sample_rate": 24000,
+  "engine": "omnivoice",
+  "backends_used_for_new_cues": [
+    "khanh_omnivoice"
+  ],
+  "attempts": [
+    {
+      "backend": "khanh_omnivoice",
+      "ok": true,
+      "detail": "all remaining cues generated"
+    }
+  ]
+}

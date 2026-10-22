@@ -1,0 +1,740 @@
+[
+  {
+    "path": "voice_samples\\character_original.ref.wav",
+    "bytes": 240124,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "5.000000"
+      }
+    ],
+    "format_duration": "5.000000",
+    "duration_s": 5.0,
+    "rms": 0.2353149652481079,
+    "peak": 0.9502792358398438,
+    "rms_dbfs": -12.567009045259727,
+    "peak_dbfs": -0.4429752044292624,
+    "silent_frames_pct": 1.6,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "voice_samples\\character_tuned.ref.wav",
+    "bytes": 153644,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "3.200000"
+      }
+    ],
+    "format_duration": "3.200000",
+    "duration_s": 3.2,
+    "rms": 0.15995261073112488,
+    "peak": 0.599739670753479,
+    "rms_dbfs": -15.920173340185402,
+    "peak_dbfs": -4.440744461980341,
+    "silent_frames_pct": 2.5,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "voice_samples\\giongchigg.wav",
+    "bytes": 1196076,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "44100",
+        "channels": 2,
+        "duration": "6.780227"
+      }
+    ],
+    "format_duration": "6.780227",
+    "duration_s": 6.78025,
+    "rms": 0.12915770709514618,
+    "peak": 0.6680640578269958,
+    "rms_dbfs": -17.77759347018091,
+    "peak_dbfs": -3.503637857465871,
+    "silent_frames_pct": 1.4749262536873156,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "voice_samples\\giongnamtnghiemtuc.wav",
+    "bytes": 1179692,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "44100",
+        "channels": 2,
+        "duration": "6.687347"
+      }
+    ],
+    "format_duration": "6.687347",
+    "duration_s": 6.687375,
+    "rms": 0.12749214470386505,
+    "peak": 1.2464722394943237,
+    "rms_dbfs": -17.890331460186612,
+    "peak_dbfs": 1.9136522132550056,
+    "silent_frames_pct": 0.0,
+    "clip_pct": 0.013084356716947979
+  },
+  {
+    "path": "voice_samples\\giongnucute.wav",
+    "bytes": 374570,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "7.801917"
+      }
+    ],
+    "format_duration": "7.801917",
+    "duration_s": 7.8019375,
+    "rms": 0.12421761453151703,
+    "peak": 0.9963529109954834,
+    "rms_dbfs": -18.116336303571792,
+    "peak_dbfs": -0.03173612006251832,
+    "silent_frames_pct": 0.0,
+    "clip_pct": 0.0008010830643029375
+  },
+  {
+    "path": "voice_samples\\wuby_character_original.wav",
+    "bytes": 240124,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "5.000000"
+      }
+    ],
+    "format_duration": "5.000000",
+    "duration_s": 5.0,
+    "rms": 0.2353149652481079,
+    "peak": 0.9502792358398438,
+    "rms_dbfs": -12.567009045259727,
+    "peak_dbfs": -0.4429752044292624,
+    "silent_frames_pct": 1.6,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "voice_samples\\wuby_character_tuned.wav",
+    "bytes": 153644,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "3.200000"
+      }
+    ],
+    "format_duration": "3.200000",
+    "duration_s": 3.2,
+    "rms": 0.15995261073112488,
+    "peak": 0.599739670753479,
+    "rms_dbfs": -15.920173340185402,
+    "peak_dbfs": -4.440744461980341,
+    "silent_frames_pct": 2.5,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "voice_samples\\1_chi_google.mp3",
+    "bytes": 43200,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "mp3",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "5.400000"
+      }
+    ],
+    "format_duration": "5.400000",
+    "duration_s": 5.4,
+    "rms": 0.10950663685798645,
+    "peak": 0.5040251016616821,
+    "rms_dbfs": -19.211191175663785,
+    "peak_dbfs": -5.950956682133547,
+    "silent_frames_pct": 17.77777777777778,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "voice_samples\\2_nu_tre_trung.mp3",
+    "bytes": 24768,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "mp3",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "4.128000"
+      }
+    ],
+    "format_duration": "4.128000",
+    "duration_s": 4.128,
+    "rms": 0.1128881499171257,
+    "peak": 0.566787838935852,
+    "rms_dbfs": -18.947032887932526,
+    "peak_dbfs": -4.931589531925319,
+    "silent_frames_pct": 22.330097087378643,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "voice_samples\\3_nu_tram_am.mp3",
+    "bytes": 28080,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "mp3",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "4.680000"
+      }
+    ],
+    "format_duration": "4.680000",
+    "duration_s": 4.68,
+    "rms": 0.11258243769407272,
+    "peak": 0.6055520176887512,
+    "rms_dbfs": -18.970587040035653,
+    "peak_dbfs": -4.356970889399236,
+    "silent_frames_pct": 22.64957264957265,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "voice_samples\\giongdocconhan_short.mp3",
+    "bytes": 191050,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "mp3",
+        "sample_rate": "22050",
+        "channels": 1,
+        "duration": "11.911837"
+      }
+    ],
+    "format_duration": "11.911837",
+    "duration_s": 11.887875,
+    "rms": 0.09800834953784943,
+    "peak": 0.7253044843673706,
+    "rms_dbfs": -20.17473848538479,
+    "peak_dbfs": -2.7895927480218417,
+    "silent_frames_pct": 18.51851851851852,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "voice_samples\\giongnamdanchuongtrinh.mp3",
+    "bytes": 295724,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "mp3",
+        "sample_rate": "44100",
+        "channels": 2,
+        "duration": "9.125442"
+      }
+    ],
+    "format_duration": "9.125442",
+    "duration_s": 9.1254375,
+    "rms": 0.12293460220098495,
+    "peak": 1.0141162872314453,
+    "rms_dbfs": -18.206517195019202,
+    "peak_dbfs": 0.12175515531665536,
+    "silent_frames_pct": 5.0438596491228065,
+    "clip_pct": 0.0013697973384837712
+  },
+  {
+    "path": "voice_samples\\giongnamreviewdao.mp3",
+    "bytes": 298234,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "mp3",
+        "sample_rate": "44100",
+        "channels": 2,
+        "duration": "9.206712"
+      }
+    ],
+    "format_duration": "9.206712",
+    "duration_s": 9.20675,
+    "rms": 0.12671761214733124,
+    "peak": 0.8029178380966187,
+    "rms_dbfs": -17.94326038949322,
+    "peak_dbfs": -1.9065778686947987,
+    "silent_frames_pct": 3.6956521739130435,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "voice_samples\\ref_better_version.mp3",
+    "bytes": 185901,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "mp3",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "11.592000"
+      }
+    ],
+    "format_duration": "11.592000",
+    "duration_s": 11.57,
+    "rms": 0.115040123462677,
+    "peak": 0.8193538188934326,
+    "rms_dbfs": -18.78301321740004,
+    "peak_dbfs": -1.730570355252159,
+    "silent_frames_pct": 12.975778546712801,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "workspace\\7192882199555788044_voice.wav",
+    "bytes": 320684,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "6.680000"
+      }
+    ],
+    "format_duration": "6.680000",
+    "duration_s": 6.68,
+    "rms": 0.08573778718709946,
+    "peak": 0.6888594627380371,
+    "rms_dbfs": -21.336554588383976,
+    "peak_dbfs": -3.237387427824661,
+    "silent_frames_pct": 62.874251497005986,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "workspace\\7678_final_mix.wav",
+    "bytes": 389092,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "8.105167"
+      }
+    ],
+    "format_duration": "8.105167",
+    "duration_s": 8.1051875,
+    "rms": 0.12053021043539047,
+    "peak": 0.7020779848098755,
+    "rms_dbfs": -18.378081703943007,
+    "peak_dbfs": -3.072292900095328,
+    "silent_frames_pct": 1.4814814814814816,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "workspace\\7678_orig_audio.wav",
+    "bytes": 389126,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "8.105167"
+      }
+    ],
+    "format_duration": "8.105167",
+    "duration_s": 8.1051875,
+    "rms": 0.06180569529533386,
+    "peak": 0.38875848054885864,
+    "rms_dbfs": -24.179430070595444,
+    "peak_dbfs": -8.206402479410128,
+    "silent_frames_pct": 1.4814814814814816,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "workspace\\7678_wuby_dubbed.wav",
+    "bytes": 531884,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "11.080000"
+      }
+    ],
+    "format_duration": "11.080000",
+    "duration_s": 11.08,
+    "rms": 0.09295306354761124,
+    "peak": 0.6326929330825806,
+    "rms_dbfs": -20.634725843522695,
+    "peak_dbfs": -3.976140328056779,
+    "silent_frames_pct": 50.361010830324915,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "workspace\\input_video_full_audio.wav",
+    "bytes": 410282,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "8.544958"
+      }
+    ],
+    "format_duration": "8.544958",
+    "duration_s": 8.545,
+    "rms": 0.29506850242614746,
+    "peak": 0.9550129771232605,
+    "rms_dbfs": -10.601542950129383,
+    "peak_dbfs": -0.39981453995373534,
+    "silent_frames_pct": 2.576112412177986,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "workspace\\song_yen_binh_mot_minh_voice.wav",
+    "bytes": 755564,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "15.740000"
+      }
+    ],
+    "format_duration": "15.740000",
+    "duration_s": 15.74,
+    "rms": 0.11941712349653244,
+    "peak": 0.6676376461982727,
+    "rms_dbfs": -18.458667885095984,
+    "peak_dbfs": -3.5091836533005827,
+    "silent_frames_pct": 31.003811944091485,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "workspace\\temp_full_audio.wav",
+    "bytes": 410282,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "8.544958"
+      }
+    ],
+    "format_duration": "8.544958",
+    "duration_s": 8.545,
+    "rms": 0.29506850242614746,
+    "peak": 0.9550129771232605,
+    "rms_dbfs": -10.601542950129383,
+    "peak_dbfs": -0.39981453995373534,
+    "silent_frames_pct": 2.576112412177986,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "workspace\\test_7680.wav",
+    "bytes": 419986,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "16000",
+        "channels": 1,
+        "duration": "13.120688"
+      }
+    ],
+    "format_duration": "13.120688",
+    "duration_s": 13.1206875,
+    "rms": 0.15976566076278687,
+    "peak": 0.9749755859375,
+    "rms_dbfs": -15.930331201794658,
+    "peak_dbfs": -0.22012518398568137,
+    "silent_frames_pct": 0.9146341463414633,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "workspace\\test_pipeline_wuby_dubbed.wav",
+    "bytes": 288044,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "6.000000"
+      }
+    ],
+    "format_duration": "6.000000",
+    "duration_s": 6.0,
+    "rms": 0.2508712708950043,
+    "peak": 0.8987889289855957,
+    "rms_dbfs": -12.010981401539793,
+    "peak_dbfs": -0.9268457146014981,
+    "silent_frames_pct": 21.666666666666668,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "workspace\\test_preset_channel.wav",
+    "bytes": 408044,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "8.500000"
+      }
+    ],
+    "format_duration": "8.500000",
+    "duration_s": 8.5,
+    "rms": 0.07116809487342834,
+    "peak": 0.6186122298240662,
+    "rms_dbfs": -22.954293196326915,
+    "peak_dbfs": -4.171629966882978,
+    "silent_frames_pct": 60.0,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "workspace\\test_render_voice.wav",
+    "bytes": 1173164,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "24.440000"
+      }
+    ],
+    "format_duration": "24.440000",
+    "duration_s": 24.44,
+    "rms": 0.11032889038324356,
+    "peak": 0.6784286499023438,
+    "rms_dbfs": -19.146214993058635,
+    "peak_dbfs": -3.369916403948748,
+    "silent_frames_pct": 35.27004909983633,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "workspace\\test_wuby_clone_real.wav",
+    "bytes": 197804,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "audio",
+        "codec_name": "pcm_s16le",
+        "sample_rate": "24000",
+        "channels": 1,
+        "duration": "4.120000"
+      }
+    ],
+    "format_duration": "4.120000",
+    "duration_s": 4.12,
+    "rms": 0.16596993803977966,
+    "peak": 0.8208855986595154,
+    "rms_dbfs": -15.599411362783721,
+    "peak_dbfs": -1.7143472676669345,
+    "silent_frames_pct": 6.796116504854369,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "workspace\\test_audio_bg003.mp4",
+    "bytes": 3438952,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "video",
+        "codec_name": "h264",
+        "sample_rate": null,
+        "channels": null,
+        "duration": "23.000000"
+      },
+      {
+        "index": 1,
+        "codec_type": "audio",
+        "codec_name": "aac",
+        "sample_rate": "44100",
+        "channels": 2,
+        "duration": "22.987007"
+      }
+    ],
+    "format_duration": "23.000000",
+    "duration_s": 22.98775,
+    "rms": 0.05699004605412483,
+    "peak": 0.33472126722335815,
+    "rms_dbfs": -24.884019841381715,
+    "peak_dbfs": -9.506333858950121,
+    "silent_frames_pct": 0.7832898172323759,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "workspace\\test_audio_ducked.mp4",
+    "bytes": 3437439,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "video",
+        "codec_name": "h264",
+        "sample_rate": null,
+        "channels": null,
+        "duration": "23.000000"
+      },
+      {
+        "index": 1,
+        "codec_type": "audio",
+        "codec_name": "aac",
+        "sample_rate": "44100",
+        "channels": 2,
+        "duration": "22.987007"
+      }
+    ],
+    "format_duration": "23.000000",
+    "duration_s": 22.98775,
+    "rms": 0.057563070207834244,
+    "peak": 0.3375399708747864,
+    "rms_dbfs": -24.79712100813416,
+    "peak_dbfs": -9.433495828362975,
+    "silent_frames_pct": 0.6092254134029591,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "workspace\\test_audio_vocal_cut.mp4",
+    "bytes": 3439106,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "video",
+        "codec_name": "h264",
+        "sample_rate": null,
+        "channels": null,
+        "duration": "23.000000"
+      },
+      {
+        "index": 1,
+        "codec_type": "audio",
+        "codec_name": "aac",
+        "sample_rate": "44100",
+        "channels": 2,
+        "duration": "22.987007"
+      }
+    ],
+    "format_duration": "23.000000",
+    "duration_s": 22.98775,
+    "rms": 0.05682644993066788,
+    "peak": 0.3382491171360016,
+    "rms_dbfs": -24.908989488177824,
+    "peak_dbfs": -9.415266565617175,
+    "silent_frames_pct": 13.4029590948651,
+    "clip_pct": 0.0
+  },
+  {
+    "path": "workspace\\ocr_overlap_20260919\\full_after.mp4",
+    "bytes": 12026619,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "video",
+        "codec_name": "h264",
+        "sample_rate": null,
+        "channels": null,
+        "duration": "13.125000"
+      }
+    ],
+    "format_duration": "13.125000",
+    "decode": "no audio decoded"
+  },
+  {
+    "path": "workspace\\ocr_overlap_20260919\\audio_full_clean.mp4",
+    "bytes": 9491759,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "video",
+        "codec_name": "mpeg4",
+        "sample_rate": null,
+        "channels": null,
+        "duration": "13.125000"
+      },
+      {
+        "index": 1,
+        "codec_type": "audio",
+        "codec_name": "aac",
+        "sample_rate": "44100",
+        "channels": 2,
+        "duration": "13.120000"
+      }
+    ],
+    "format_duration": "13.125000",
+    "duration_s": 13.1206875,
+    "rms": 0.22594279050827026,
+    "peak": 1.3788340091705322,
+    "rms_dbfs": -12.920030235797295,
+    "peak_dbfs": 2.7902397362752436,
+    "silent_frames_pct": 0.7621951219512195,
+    "clip_pct": 0.09002958114809152
+  },
+  {
+    "path": "workspace\\wuby_v5_cloned_voice_demo.mp4",
+    "bytes": 1227533,
+    "streams": [
+      {
+        "index": 0,
+        "codec_type": "video",
+        "codec_name": "h264",
+        "sample_rate": null,
+        "channels": null,
+        "duration": "8.541016"
+      },
+      {
+        "index": 1,
+        "codec_type": "audio",
+        "codec_name": "aac",
+        "sample_rate": "44100",
+        "channels": 2,
+        "duration": "8.520998"
+      }
+    ],
+    "format_duration": "8.541016",
+    "duration_s": 8.52175,
+    "rms": 0.10828298330307007,
+    "peak": 0.452681303024292,
+    "rms_dbfs": -19.308795749901137,
+    "peak_dbfs": -6.884148853680769,
+    "silent_frames_pct": 2.112676056338028,
+    "clip_pct": 0.0
+  }
+]

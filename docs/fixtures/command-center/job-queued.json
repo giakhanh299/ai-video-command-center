@@ -1,0 +1,24 @@
+{
+  "id": "33333333-3333-4333-8333-333333333333",
+  "project_id": "11111111-1111-4111-8111-111111111111",
+  "preset_id": "wuby",
+  "preset_version": "fixture-1",
+  "status": "queued",
+  "version": 1,
+  "created_at": "2026-10-22T00:00:00Z",
+  "updated_at": "2026-10-22T00:00:00Z",
+  "progress": {"completed_tasks": 0, "total_tasks": 1, "percent": null},
+  "current_task_id": null,
+  "error": null,
+  "tasks": [{
+    "id": "44444444-4444-4444-8444-444444444444",
+    "task_key": "compose",
+    "module": "render.compose",
+    "action": "run",
+    "module_version": "fixture-1",
+    "status": "queued",
+    "attempt": 0,
+    "depends_on": [],
+    "error": null
+  }]
+}

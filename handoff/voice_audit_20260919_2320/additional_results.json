@@ -1,0 +1,14 @@
+[
+  {
+    "test": "test_wuby_real_model.py",
+    "status": "FAILED",
+    "seconds": 9.9,
+    "output_redirected_only": true
+  },
+  {
+    "test": "test_sub_processor_wuby.py",
+    "status": "PASS",
+    "seconds": 11.11,
+    "output_redirected_only": true
+  }
+]

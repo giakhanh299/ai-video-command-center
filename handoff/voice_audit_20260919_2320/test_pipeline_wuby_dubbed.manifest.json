@@ -1,0 +1,9 @@
+{
+  "voice": "wuby_clone",
+  "engine": "omnivoice",
+  "speed": 1.0,
+  "ref_audio": "D:\\0.1_FACE_BOOK\\Lay video tiktok\\voice_samples\\wuby_character_tuned.wav",
+  "ref_hash": "0cc63f1fb24deefb",
+  "require_clone": true,
+  "seg_hash": "9cb8871586da6a42"
+}

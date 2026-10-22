@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "tiktok-telegram-bot",
+  "main": "src/index.js",
+  "compatibility_date": "2024-09-23",
+  "compatibility_flags": ["nodejs_compat"],
+  "vars": {
+    "TELEGRAM_GROUP_ID": "-1004439918026,-5579042871",
+    "GDRIVE_FOLDER_ID": "1fV0GyTCBblUHQIpJ1Kzsh6rho8oYwY8b",
+    "GDRIVE_CLIENT_ID": "798006115839-dqu56lc04igivicrpham6a5desojq9uv.apps.googleusercontent.com"
+  }
+}

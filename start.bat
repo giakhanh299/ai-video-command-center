@@ -1,0 +1,6 @@
+@echo off
+echo Installing requirements...
+pip install -r requirements.txt
+echo Starting FastAPI server...
+cd backend
+uvicorn main:app --host 0.0.0.0 --port 8005 --reload

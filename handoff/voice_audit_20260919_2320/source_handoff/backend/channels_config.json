@@ -1,0 +1,464 @@
+{
+  "schema_version": 2,
+  "default": {
+    "name": "Kênh Mặc Định (Wuby Main)",
+    "workflow": "wuby",
+    "voice": "wuby_clone",
+    "speed": 1.0,
+    "ocr_fps": 24.0,
+    "mask_mode": "in_video_overlay",
+    "burn_sub": true,
+    "show_title_card": true,
+    "keep_bg_audio": true,
+    "bg_volume": 0.5,
+    "vocal_cut": false,
+    "slev": 1.0,
+    "mlev": 0.0,
+    "drive_folder": "Đã Render/Wuby",
+    "asset_folder": "default"
+  },
+  "voice_profiles": {
+    "wuby_clone": {
+      "label": "Wuby Anime Clone (KhanhTTS OmniVoice F0 ~335Hz)",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "model": "kjanh/KhanhTTS-OmniVoice",
+      "ref_audio": "wuby_character_tuned.wav",
+      "ref_text": "你不理你的人看你",
+      "language": "vi",
+      "num_step": 20,
+      "guidance_scale": 2.0,
+      "require_clone": true,
+      "fallback_voice": null,
+      "speed": 1.0
+    },
+    "nu_tre": {
+      "label": "Nữ Trẻ Trung - Edge Hoài My",
+      "engine": "edge",
+      "voice": "vi-VN-HoaiMyNeural",
+      "pitch": "+8Hz"
+    },
+    "nu_tram": {
+      "label": "Nữ Trầm Ấm - Edge Hoài My",
+      "engine": "edge",
+      "voice": "vi-VN-HoaiMyNeural",
+      "pitch": "-6Hz"
+    },
+    "nam_minh": {
+      "label": "Nam Minh - Edge",
+      "engine": "edge",
+      "voice": "vi-VN-NamMinhNeural",
+      "pitch": "+0Hz"
+    },
+    "hoaimy": {
+      "label": "Hoài My gốc - Edge",
+      "engine": "edge",
+      "voice": "vi-VN-HoaiMyNeural",
+      "pitch": "+0Hz"
+    },
+    "google": {
+      "label": "Chị Google",
+      "engine": "google"
+    },
+    "omni_nu_tre": {
+      "label": "OmniVoice - Nữ trẻ clone",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "ref_audio": "2_nu_tre_trung.mp3",
+      "ref_text": "",
+      "language": "vi",
+      "num_step": 24,
+      "guidance_scale": 2.0,
+      "fallback_voice": "nu_tre"
+    },
+    "omni_nu_tram": {
+      "label": "OmniVoice - Nữ trầm clone",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "ref_audio": "3_nu_tram_am.mp3",
+      "ref_text": "",
+      "language": "vi",
+      "num_step": 24,
+      "guidance_scale": 2.0,
+      "fallback_voice": "nu_tram"
+    },
+    "omni_nam_review": {
+      "label": "OmniVoice - Nam review clone",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "ref_audio": "giongnamreviewdao.mp3",
+      "ref_text": "",
+      "language": "vi",
+      "num_step": 24,
+      "guidance_scale": 2.0,
+      "fallback_voice": "nam_minh"
+    },
+    "omni_nam_nghiem_tuc": {
+      "label": "OmniVoice - Nam nghiêm túc clone",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "ref_audio": "giongnamtnghiemtuc.wav",
+      "ref_text": "",
+      "language": "vi",
+      "num_step": 24,
+      "guidance_scale": 2.0,
+      "fallback_voice": "nam_minh"
+    },
+    "omni_nu_cute": {
+      "label": "OmniVoice - Nữ cute clone",
+      "engine": "omnivoice",
+      "mode": "clone",
+      "ref_audio": "giongnucute.wav",
+      "ref_text": "",
+      "language": "vi",
+      "num_step": 24,
+      "guidance_scale": 2.0,
+      "fallback_voice": "nu_tre"
+    }
+  },
+  "render_profiles": {
+    "review_film_black": {
+      "mask_mode": "black_bar",
+      "top_cover": {
+        "enabled": true,
+        "mode": "black"
+      },
+      "film_bars": {
+        "top_ratio": 0.1,
+        "bottom_ratio": 0.22,
+        "bottom_max_ratio": 0.35
+      },
+      "title": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFE600",
+        "outline_color": "#000000",
+        "outline_size": 3,
+        "bold": true,
+        "uppercase": true,
+        "font_ratio_on_bar": 0.44,
+        "persistent_on_top_bar": true,
+        "intro_duration": 6.0,
+        "single_line": true,
+        "line_break_at": 0
+      },
+      "subtitle": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFFFFF",
+        "outline_color": "#000000",
+        "outline_size": 6,
+        "bold": true,
+        "alignment": 2,
+        "max_lines": 2
+      },
+      "logo": {
+        "enabled": true,
+        "file": "auto",
+        "position": "bottom_right",
+        "width_ratio": 0.18,
+        "opacity": 0.12,
+        "margin_x": 20,
+        "margin_y": 20
+      },
+      "cover": {
+        "enabled": true,
+        "file": "auto",
+        "mode": "intro",
+        "duration": 1.2,
+        "fit": "cover"
+      },
+      "encoder": {
+        "use_nvenc": true,
+        "nvenc_preset": "p4",
+        "cq": 28,
+        "bitrate": "950k",
+        "maxrate": "1350k",
+        "bufsize": "2500k",
+        "audio_bitrate": "96k"
+      }
+    },
+    "review_film_blur": {
+      "mask_mode": "blur",
+      "top_cover": {
+        "enabled": false,
+        "mode": "none"
+      },
+      "blur_strength": 18,
+      "title": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFE600",
+        "outline_color": "#000000",
+        "outline_size": 3,
+        "bold": true,
+        "intro_duration": 6.0
+      },
+      "subtitle": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFFFFF",
+        "outline_color": "#000000",
+        "outline_size": 6,
+        "bold": true
+      },
+      "logo": {
+        "enabled": true,
+        "file": "auto",
+        "position": "bottom_right",
+        "width_ratio": 0.16,
+        "opacity": 0.1,
+        "margin_x": 20,
+        "margin_y": 20
+      },
+      "cover": {
+        "enabled": true,
+        "file": "auto",
+        "mode": "intro",
+        "duration": 1.2,
+        "fit": "cover"
+      },
+      "encoder": {
+        "use_nvenc": true,
+        "nvenc_preset": "p4",
+        "cq": 28
+      }
+    },
+    "clean_sub": {
+      "mask_mode": "none",
+      "top_cover": {
+        "enabled": false,
+        "mode": "none"
+      },
+      "title": {
+        "enabled": false
+      },
+      "subtitle": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFFFFF",
+        "outline_color": "#000000",
+        "outline_size": 5,
+        "bold": true
+      },
+      "logo": {
+        "enabled": true,
+        "file": "auto",
+        "position": "bottom_right",
+        "width_ratio": 0.14,
+        "opacity": 0.1,
+        "margin_x": 18,
+        "margin_y": 18
+      },
+      "cover": {
+        "enabled": false,
+        "file": "auto"
+      },
+      "encoder": {
+        "use_nvenc": true,
+        "nvenc_preset": "p4",
+        "cq": 27
+      }
+    },
+    "wuby_overlay": {
+      "mask_mode": "in_video_overlay",
+      "ocr_enabled": true,
+      "ocr_fps": 24.0,
+      "top_cover": {
+        "enabled": false,
+        "mode": "none"
+      },
+      "film_bars": {
+        "top_ratio": 0.0,
+        "bottom_ratio": 0.0,
+        "bottom_max_ratio": 0.0
+      },
+      "title": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFE600",
+        "outline_color": "#000000",
+        "outline_size": 3,
+        "bold": true,
+        "uppercase": true,
+        "single_line": true,
+        "line_break_at": 0
+      },
+      "subtitle": {
+        "enabled": true,
+        "font": "Arial",
+        "color": "#FFFFFF",
+        "outline_color": "#000000",
+        "outline_size": 5,
+        "bold": true
+      },
+      "logo": {
+        "enabled": false
+      },
+      "cover": {
+        "enabled": false
+      },
+      "encoder": {
+        "use_nvenc": true,
+        "nvenc_preset": "p4",
+        "cq": 28
+      }
+    }
+  },
+  "workflows": {
+    "film_review_black": {
+      "name": "Review phim - che đen chữ gốc + title/sub Việt",
+      "render_profile": "review_film_black",
+      "settings": {
+        "mask_mode": "black_bar",
+        "burn_sub": true,
+        "show_title_card": true,
+        "keep_bg_audio": true
+      }
+    },
+    "film_review_blur": {
+      "name": "Review phim - blur chữ gốc",
+      "render_profile": "review_film_blur",
+      "settings": {
+        "mask_mode": "blur",
+        "burn_sub": true,
+        "show_title_card": true,
+        "keep_bg_audio": true
+      }
+    },
+    "sub_only_clean": {
+      "name": "Giữ hình gốc - chỉ hardsub Việt",
+      "render_profile": "clean_sub",
+      "settings": {
+        "mask_mode": "none",
+        "burn_sub": true,
+        "show_title_card": false,
+        "keep_bg_audio": true
+      }
+    },
+    "wuby": {
+      "name": "Cấu hình 1 (Wuby) - Nhận diện & đè sub lên chữ trong video",
+      "render_profile": "wuby_overlay",
+      "settings": {
+        "mask_mode": "in_video_overlay",
+        "burn_sub": true,
+        "show_title_card": true,
+        "keep_bg_audio": true,
+        "ocr_overlay": true
+      }
+    },
+    "cauhinh2": {
+      "name": "Cấu hình 2 - Review phim dải đen điện ảnh",
+      "render_profile": "review_film_black",
+      "settings": {
+        "mask_mode": "black_bar",
+        "burn_sub": true,
+        "show_title_card": true,
+        "keep_bg_audio": true
+      }
+    }
+  },
+  "channels": {
+    "-1004439918026": {
+      "name": "Kênh TikTok Trinh (Wuby Main)",
+      "workflow": "wuby",
+      "voice": "wuby_clone",
+      "speed": 1.0,
+      "ocr_fps": 24.0,
+      "drive_folder": "Đã Render/Wuby",
+      "asset_folder": "default"
+    },
+    "-5579042871": {
+      "name": "Kênh Review Nam",
+      "workflow": "film_review_black",
+      "voice": "nam_minh",
+      "speed": 1.4,
+      "drive_folder": "Đã Render/Kenh_Nam",
+      "asset_folder": "Kenh_Nam"
+    }
+  },
+  "presets": {
+    "wuby": {
+      "name": "Cấu hình 1 (Wuby Đè Chữ Video)",
+      "hashtags": [
+        "#wuby",
+        "#quby",
+        "#cauhinh1"
+      ],
+      "workflow": "wuby",
+      "voice": "wuby_clone",
+      "speed": 1.0,
+      "drive_folder": "Đã Render/Wuby"
+    },
+    "cauhinh2": {
+      "name": "Cấu hình 2 (Review Phim Dải Đen)",
+      "hashtags": [
+        "#cauhinh2",
+        "#reviewphim",
+        "#film_review"
+      ],
+      "workflow": "film_review_black",
+      "voice": "nu_tre",
+      "speed": 1.5,
+      "drive_folder": "Đã Render/Kenh_Trinh"
+    },
+    "kenh_nam": {
+      "name": "Preset Kênh Nam",
+      "hashtags": [
+        "#nam",
+        "#kenhnam"
+      ],
+      "voice": "nam_minh",
+      "speed": 1.4,
+      "workflow": "film_review_black",
+      "drive_folder": "Đã Render/Kenh_Nam",
+      "asset_folder": "Kenh_Nam"
+    },
+    "kenh_nu_tram": {
+      "name": "Preset Nữ Trầm Ấm",
+      "hashtags": [
+        "#nutram",
+        "#nu_tram"
+      ],
+      "voice": "nu_tram",
+      "speed": 1.2,
+      "workflow": "film_review_blur",
+      "drive_folder": "Đã Render/Nu_Tram"
+    },
+    "kenh_blur": {
+      "name": "Preset Blur",
+      "hashtags": [
+        "#blur"
+      ],
+      "workflow": "film_review_blur"
+    },
+    "kenh_khong_che": {
+      "name": "Preset Không Che",
+      "hashtags": [
+        "#khongche",
+        "#noche"
+      ],
+      "workflow": "sub_only_clean"
+    },
+    "vu_tru_phim": {
+      "name": "Vũ Trụ Phim",
+      "hashtags": [
+        "#vutruphim"
+      ],
+      "workflow": "film_review_black",
+      "voice": "omni_nam_review",
+      "speed": 1.3,
+      "drive_folder": "Đã Render/Vu_Tru_Phim",
+      "asset_folder": "Vũ Trụ Phim",
+      "render": {
+        "logo": {
+          "opacity": 0.1,
+          "position": "bottom_right"
+        },
+        "cover": {
+          "duration": 1.5
+        }
+      }
+    }
+  }
+}

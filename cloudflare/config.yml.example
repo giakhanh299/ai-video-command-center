@@ -1,0 +1,9 @@
+﻿# Sao chép vào config cloudflared của máy và thay TUNNEL_UUID.
+# Không commit file credentials JSON.
+tunnel: TUNNEL_UUID
+credentials-file: C:\Users\YOUR_USER\.cloudflared\TUNNEL_UUID.json
+
+ingress:
+  - hostname: api-tiktok.giakhanh.xyz
+    service: http://127.0.0.1:8005
+  - service: http_status:404

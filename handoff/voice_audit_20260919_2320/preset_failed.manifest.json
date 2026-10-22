@@ -1,0 +1,9 @@
+{
+  "voice": "nu_tre",
+  "engine": "edge",
+  "speed": 1.0,
+  "ref_audio": "",
+  "ref_hash": "",
+  "require_clone": false,
+  "seg_hash": "c1685c6379e9e12c"
+}

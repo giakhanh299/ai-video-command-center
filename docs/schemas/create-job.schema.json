@@ -1,0 +1,68 @@
+{
+  "$defs": {
+    "Overrides": {
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "default": "",
+          "maxLength": 200,
+          "title": "Title",
+          "type": "string"
+        }
+      },
+      "title": "Overrides",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "0.1.0-draft",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "project_id": {
+      "format": "uuid",
+      "title": "Project Id",
+      "type": "string"
+    },
+    "preset_id": {
+      "maxLength": 64,
+      "minLength": 1,
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "title": "Preset Id",
+      "type": "string"
+    },
+    "preset_version": {
+      "maxLength": 64,
+      "minLength": 1,
+      "title": "Preset Version",
+      "type": "string"
+    },
+    "input_refs": {
+      "items": {
+        "format": "uuid",
+        "type": "string"
+      },
+      "maxItems": 8,
+      "minItems": 1,
+      "title": "Input Refs",
+      "type": "array",
+      "uniqueItems": true
+    },
+    "overrides": {
+      "$ref": "#/$defs/Overrides"
+    }
+  },
+  "required": [
+    "schema_version",
+    "project_id",
+    "preset_id",
+    "preset_version",
+    "input_refs",
+    "overrides"
+  ],
+  "title": "CreateJob",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

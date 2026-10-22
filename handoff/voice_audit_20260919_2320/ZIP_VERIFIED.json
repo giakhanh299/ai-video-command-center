@@ -1,0 +1,223 @@
+{
+  "path": "D:\\0.1_FACE_BOOK\\Lay video tiktok\\handoff\\voice_audit_20260919_2320\\voice_source_handoff_20260919_2320.zip",
+  "bytes": 140608,
+  "crc": "PASS",
+  "sha256": "9a30f387f9ac5092a1f8f30bdb09111c932bdf022195ed0b97afaa2f90002bc6",
+  "contents": [
+    {
+      "file": "additional_results.json",
+      "bytes": 272,
+      "compressed": 139
+    },
+    {
+      "file": "backend/asset_manager.py",
+      "bytes": 4828,
+      "compressed": 1553
+    },
+    {
+      "file": "backend/audio_processor.py",
+      "bytes": 5993,
+      "compressed": 2276
+    },
+    {
+      "file": "backend/channel_manager.py",
+      "bytes": 18646,
+      "compressed": 5021
+    },
+    {
+      "file": "backend/channels_config.json",
+      "bytes": 11742,
+      "compressed": 2080
+    },
+    {
+      "file": "backend/film_bars.py",
+      "bytes": 3907,
+      "compressed": 1317
+    },
+    {
+      "file": "backend/omnivoice_service.py",
+      "bytes": 10260,
+      "compressed": 2982
+    },
+    {
+      "file": "backend/scene_detector.py",
+      "bytes": 2827,
+      "compressed": 1231
+    },
+    {
+      "file": "backend/sub_processor.py",
+      "bytes": 38484,
+      "compressed": 11831
+    },
+    {
+      "file": "backend/tests/test_channel_profiles.py",
+      "bytes": 1704,
+      "compressed": 648
+    },
+    {
+      "file": "backend/tests/test_film_bars.py",
+      "bytes": 5958,
+      "compressed": 1890
+    },
+    {
+      "file": "backend/tests/test_ocr_overlap.py",
+      "bytes": 2914,
+      "compressed": 1058
+    },
+    {
+      "file": "backend/video_merger.py",
+      "bytes": 50544,
+      "compressed": 13252
+    },
+    {
+      "file": "backend/voice_router.py",
+      "bytes": 32734,
+      "compressed": 8764
+    },
+    {
+      "file": "backend/wuby_config.py",
+      "bytes": 2379,
+      "compressed": 922
+    },
+    {
+      "file": "backend/wuby_ocr_overlay.py",
+      "bytes": 35760,
+      "compressed": 10975
+    },
+    {
+      "file": "backend/zerotts_voice.py",
+      "bytes": 17454,
+      "compressed": 5695
+    },
+    {
+      "file": "check_voice_backends.py",
+      "bytes": 4775,
+      "compressed": 1793
+    },
+    {
+      "file": "diagnose.py",
+      "bytes": 7764,
+      "compressed": 3246
+    },
+    {
+      "file": "inspect_voice_reference.py",
+      "bytes": 6520,
+      "compressed": 2301
+    },
+    {
+      "file": "ISSUE_VI.md",
+      "bytes": 8083,
+      "compressed": 3736
+    },
+    {
+      "file": "logic.json",
+      "bytes": 2887,
+      "compressed": 579
+    },
+    {
+      "file": "measurements.json",
+      "bytes": 19229,
+      "compressed": 2940
+    },
+    {
+      "file": "OmniVoice/omnivoice/__init__.py",
+      "bytes": 706,
+      "compressed": 316
+    },
+    {
+      "file": "OmniVoice/omnivoice/models/__init__.py",
+      "bytes": 0,
+      "compressed": 2
+    },
+    {
+      "file": "OmniVoice/omnivoice/models/omnivoice.py",
+      "bytes": 61795,
+      "compressed": 15793
+    },
+    {
+      "file": "OmniVoice/omnivoice/utils/__init__.py",
+      "bytes": 0,
+      "compressed": 2
+    },
+    {
+      "file": "OmniVoice/omnivoice/utils/audio.py",
+      "bytes": 10628,
+      "compressed": 3106
+    },
+    {
+      "file": "OmniVoice/omnivoice/utils/common.py",
+      "bytes": 2542,
+      "compressed": 1096
+    },
+    {
+      "file": "OmniVoice/omnivoice/utils/data_utils.py",
+      "bytes": 2474,
+      "compressed": 1110
+    },
+    {
+      "file": "OmniVoice/omnivoice/utils/duration.py",
+      "bytes": 11931,
+      "compressed": 3972
+    },
+    {
+      "file": "OmniVoice/omnivoice/utils/lang_map.py",
+      "bytes": 18424,
+      "compressed": 6379
+    },
+    {
+      "file": "OmniVoice/omnivoice/utils/text.py",
+      "bytes": 5613,
+      "compressed": 1970
+    },
+    {
+      "file": "OmniVoice/omnivoice/utils/voice_design.py",
+      "bytes": 2829,
+      "compressed": 1398
+    },
+    {
+      "file": "runs.json",
+      "bytes": 950,
+      "compressed": 214
+    },
+    {
+      "file": "SECURITY_SCAN.json",
+      "bytes": 1936,
+      "compressed": 598
+    },
+    {
+      "file": "SOURCE_MANIFEST.json",
+      "bytes": 5836,
+      "compressed": 1758
+    },
+    {
+      "file": "test_ab_voice_clone.py",
+      "bytes": 8874,
+      "compressed": 3141
+    },
+    {
+      "file": "test_voice_clone.py",
+      "bytes": 13125,
+      "compressed": 3792
+    },
+    {
+      "file": "tests/test_preset_channel.py",
+      "bytes": 1536,
+      "compressed": 828
+    },
+    {
+      "file": "tests/test_render_wuby_video.py",
+      "bytes": 1664,
+      "compressed": 775
+    },
+    {
+      "file": "tests/test_sub_processor_wuby.py",
+      "bytes": 3047,
+      "compressed": 1430
+    },
+    {
+      "file": "tests/test_wuby_real_model.py",
+      "bytes": 2066,
+      "compressed": 1105
+    }
+  ]
+}

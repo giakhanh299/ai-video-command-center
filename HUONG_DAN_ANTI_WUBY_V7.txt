@@ -1,0 +1,46 @@
+Ban la ky su du an WUBY CUTE, khong phai ReviewSach.
+Hay cai va xac minh Wuby V7 tren DUNG project local. Thuc hien truc tiep,
+khong chi doc bao cao roi ket luan "clone chuan".
+
+A. Handoff goc chi co backend va OmniVoice source, KHONG co bot/main/model/ref.
+Truy vet lenh Telegram -> channel -> sub_processor -> video_merger tren project
+that. V7 co standalone Studio/queue; noi bot vao API queue neu bot local van
+bo qua cac module da sua. Khong nhan da sua file khong co trong handoff.
+
+B. Dung worker truoc. Giai nen patch ben ngoai project. Dung venv dang chay,
+python apply_wuby_v7.py --target "PROJECT_ROOT" de dry-run. Xung dot phai
+so sanh/merge; KHONG chep channels_config.json mau de len file that.
+Installer co backup/rollback va giu cac kenh khac.
+
+C. Chay doctor. Giu Torch/CUDA/transformers/model clone dang tuong thich.
+Chi cai cac dependency thieu sau khi xem pip plan. Xem LOCAL_MODEL_SETUP.md.
+FFmpeg/ffprobe bat buoc; libass va atempo can hoat dong. Tai font bang installer
+tren may; ZIP khong chua font. faster-whisper small CPU/int8 va EasyOCR ch_sim/en
+can weights local. YouTube yeu cau yt-dlp/EJS/JS runtime phu hop.
+
+D. Xac minh DUNG wuby_character_tuned.wav duoc resolve tai local. Doc ref_text
+bang nghe file mau. Khong tu gan transcript cu neu khong khop. Khong doi
+engine sang Edge khi clone loi. Dung test-voice sinh audition bang model THAT,
+cho nguoi dung nghe doi chieu; chi approve-voice --listened sau khi da nghe.
+F0>300, backend tra WAV, reference ton tai khong chung minh identity.
+Khong bieu dien --listened nhu mot buoc tu dong de qua gate.
+
+E. Test 2-3 video GOC duoc phep dung: do FPS, crop/mask text Trung, 1 vung phu de,
+1 vung tieu de, logo khong de chu. Kiem tra frame o dau, giua, cuoi va luc doi chu.
+Test giong loi: missing reference, sai transcript, model loi/OOM, cau qua dai,
+cache cu. Phai needs_attention/failed, KHONG preset fallback hay cat mat chu.
+Kiem tra speech QC voi loi doc that; nghe lai neu ASR bao lech, khong tat QC
+chi de lay trang thai thanh cong. Kiem tra nguyen am/dau, lap tu, hai giong chong.
+
+F. Test queue toi da 100 LINK, CHI 1 worker/model/render. Test link trung, restart,
+pause/retry/cancel/timeout, dong thoi hai worker bi chan. Mot SRT rieng khong
+dung cho ca batch. 100 bai unit test queue KHONG la 100 video render that.
+
+G. Test Studio native Canvas va MP4 that tren Windows; clipboard/upload/theme,
+logo/fade, keo vung layout collision, SFX local off/mac dinh, avoid speech.
+Canvas khong phai Canva day du. Khong cai Revideo/Remotion bat buoc cho Wuby.
+
+H. Bao cao file sua, thong so FPS/audio, bo test, log that, output video, cac buoc
+chua test. Giay phep model va file am thanh/noi dung phai hop le. Khong tu upload.
+Khong viet "clone 100%" khi chua nghe model that. Xem TEST_REPORT_V7.md: demo
+ban giao GIU AUDIO NGUON, crop manual video da burn chu, khong phai TTS that.

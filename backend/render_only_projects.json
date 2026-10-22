@@ -1,0 +1,10 @@
+[
+  {
+    "id": "chuyen_hai_dua",
+    "name": "Chuyện Hai Đứa",
+    "folder": "THU_NGHIEM_ChuyenHaiDua",
+    "preset": "chuyen_hai_dua",
+    "publish_permission": "NONE",
+    "status": "EXPERIMENTAL_PENDING_OUTPUT_AND_VOICE_REVIEW"
+  }
+]

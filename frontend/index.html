@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#090d1b">
+  <title>AI Video Dubbing</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="shell">
+<header>
+  <div class="brand">GK <span>Studio</span></div>
+  <nav style="display:flex;gap:16px;align-items:center;">
+    <a href="index.html" style="color:#60a5fa;text-decoration:none;font-size:13px;font-weight:600;">Tải Video</a>
+    <a href="reel.html" style="color:#94a3b8;text-decoration:none;font-size:13px;font-weight:500;">Đăng Reel FB</a>
+    <a href="command-center.html" style="color:#2dd4bf;text-decoration:none;font-size:13px;font-weight:600;border:1px solid #2dd4bf44;padding:3px 10px;border-radius:4px;">⚙ Command Center</a>
+  </nav>
+  <div id="health" class="health checking"><i></i><span>Đang kiểm tra API</span></div>
+</header>
+  <section class="hero"><p class="eyebrow">AI VIDEO WORKFLOW</p><h1>Dịch và lồng tiếng<br><em>video trong vài phút.</em></h1><p>Dán liên kết Douyin hoặc TikTok. Hệ thống tự động tải, xử lý giọng Việt và xuất video hoàn chỉnh.</p></section>
+  <section class="card">
+    <form id="dub-form">
+      <label for="text-input">Nội dung chứa liên kết</label>
+      <textarea id="text-input" placeholder="Dán nội dung và liên kết video tại đây…" required></textarea>
+      <div class="grid">
+        <div><label for="voice-select">Giọng đọc AI</label><select id="voice-select"><option value="vi-VN-HoaiMyNeural">Hoài My — Nữ, truyền cảm</option><option value="vi-VN-NamMinhNeural">Nam Minh — Nam, trầm ấm</option></select></div>
+        <div class="toggle-row"><div><strong>Che phụ đề gốc</strong><small>Làm mờ vùng phía dưới</small></div><label class="switch"><input type="checkbox" id="blur-subtitle" checked><span></span></label></div>
+      </div>
+      <div id="blur-height-container"><label for="blur-height">Chiều cao vùng che <b id="range-value">25%</b></label><input type="range" id="blur-height" min="10" max="50" value="25"></div>
+      <button type="submit" id="submit-btn">Bắt đầu xử lý <span>→</span></button>
+    </form>
+    <div id="error-box" role="alert"></div>
+    <div id="progress-container"><div class="progress-head"><h3 id="status-title">Đang khởi tạo…</h3><b id="progress-value">0%</b></div><div class="progress-track"><div id="progress-fill"></div></div><p id="status-text">Vui lòng giữ trang này mở.</p></div>
+    <div id="result-container"><div class="success">✓ Hoàn tất — video đã sẵn sàng</div><video id="result-video" controls preload="metadata"></video><a id="download-btn" class="download">Tải video xuống</a></div>
+  </section>
+  <footer>Secure processing · Cloudflare Network</footer>
+</main>
+<script src="script.js"></script>
+</body></html>

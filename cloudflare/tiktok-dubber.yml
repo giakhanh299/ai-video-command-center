@@ -1,0 +1,10 @@
+tunnel: a9766d7f-8d8f-4cdd-8376-e36a649ecb75
+credentials-file: C:\Users\w\.cloudflared\a9766d7f-8d8f-4cdd-8376-e36a649ecb75.json
+
+# Dedicated TikTok tunnel. Deliberately separate from telegram-bot config/process.
+ingress:
+  - hostname: api-tiktok.giakhanh.xyz
+    service: http://127.0.0.1:8005
+  - hostname: tiktok.giakhanh.xyz
+    service: http://127.0.0.1:8005
+  - service: http_status:404

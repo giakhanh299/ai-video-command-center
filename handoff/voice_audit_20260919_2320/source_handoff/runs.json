@@ -1,0 +1,56 @@
+[
+  {
+    "mode": "unit",
+    "status": "PASS",
+    "returncode": 0,
+    "seconds": 0.17
+  },
+  {
+    "mode": "logic",
+    "status": "FAILED",
+    "returncode": 1,
+    "seconds": 3.11
+  },
+  {
+    "mode": "khanh_original",
+    "status": "PASS",
+    "returncode": 0,
+    "seconds": 9.03
+  },
+  {
+    "mode": "khanh_tuned",
+    "status": "PASS",
+    "returncode": 0,
+    "seconds": 8.93
+  },
+  {
+    "mode": "khanh_male",
+    "status": "PASS",
+    "returncode": 0,
+    "seconds": 12.84
+  },
+  {
+    "mode": "vieneu_original",
+    "status": "TIMEOUT",
+    "returncode": null,
+    "seconds": 110.14
+  },
+  {
+    "mode": "omni_clone",
+    "status": "PASS",
+    "returncode": 0,
+    "seconds": 8.76
+  },
+  {
+    "mode": "omni_auto",
+    "status": "PASS",
+    "returncode": 0,
+    "seconds": 9.17
+  },
+  {
+    "mode": "omni_design",
+    "status": "PASS",
+    "returncode": 0,
+    "seconds": 11.22
+  }
+]
