@@ -1,11 +1,19 @@
-"""Outbound CPU pilot Agent. Wuby/TTS/GPU are deliberately not enabled here."""
+"""Outbound CPU pilot Agent. Wuby/TTS/GPU are deliberately not enabled here.
+
+Deployment model (2026-10-22): the PC opens NO inbound ports. The Agent only
+initiates outbound HTTPS connections to the Command Center API on port 443
+and waits for work by claiming jobs (see validate_agent_url / run_forever).
+Plain HTTP is accepted solely for loopback URLs used in local development.
+"""
 from __future__ import annotations
 
 import argparse
 import json
 import os
 import threading
+import time
 from pathlib import Path
+from urllib.parse import urlparse
 from uuid import UUID, uuid4
 
 import httpx
@@ -16,10 +24,29 @@ from .registry import MODULE_VERSION, validate_manifest
 from .storage import checksum, storage_path, verify_file
 
 
+LOOPBACK_HOSTS = frozenset({"127.0.0.1", "localhost", "::1"})
+
+
+def validate_agent_url(url):
+    """Enforce the outbound-only rule: remote APIs are reached over HTTPS on
+    port 443 only, so the PC never needs an inbound listener or tunnel.
+    Loopback URLs keep any scheme/port for local development and tests."""
+    parsed = urlparse(url)
+    host = (parsed.hostname or "").lower()
+    if host in LOOPBACK_HOSTS:
+        if parsed.scheme in ("http", "https"):
+            return url.rstrip("/")
+        raise DomainError("TLS_REQUIRED", 422)
+    if parsed.scheme != "https":
+        raise DomainError("TLS_REQUIRED", 422)
+    if parsed.port not in (None, 443):
+        raise DomainError("OUTBOUND_443_ONLY", 422)
+    return url.rstrip("/")
+
+
 class AgentClient:
     def __init__(self, url, token):
-        if not url.startswith(("https://", "http://127.0.0.1:", "http://localhost:")):
-            raise DomainError("TLS_REQUIRED", 422)
+        validate_agent_url(url)
         self.client = httpx.Client(base_url=url.rstrip("/"), headers={"Authorization": "Bearer " + token}, timeout=15, trust_env=False)
 
     def post(self, path, **kwargs):
@@ -101,18 +128,54 @@ def run_once(client, agent_id, storage_root):
     return {"status": completion["status"], "task_id": tid}
 
 
+def run_forever(client, agent_id, storage_root, poll_interval=5.0, stop_event=None, sleep=time.sleep, once=None):
+    """Wait-for-commands loop: claim work over the outbound 443 connection,
+    back off while idle and on failures, until stop_event is set. This is the
+    normal production mode on the PC; run_once stays for tests and dev."""
+    once = once or run_once
+    stop_event = stop_event or threading.Event()
+    failures = 0
+    cycles = 0
+    while not stop_event.is_set():
+        cycles += 1
+        try:
+            result = once(client, agent_id, storage_root)
+            failures = 0
+            if result.get("status") in ("idle", "resource_busy"):
+                sleep(poll_interval)
+            else:
+                sleep(min(poll_interval, 1.0))
+        except Exception:
+            failures += 1
+            sleep(min(60.0, poll_interval * (2 ** min(failures, 4))))
+    return {"status": "stopped", "cycles": cycles}
+
+
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--url", default="http://127.0.0.1:8016")
+    parser.add_argument("--url", default=os.environ.get("CC_API_URL", "http://127.0.0.1:8016"),
+                        help="API base URL. Production: https://<api-host> (outbound 443 only).")
     parser.add_argument("--agent-id", type=UUID, required=True)
     parser.add_argument("--storage-root", type=Path, required=True)
+    parser.add_argument("--loop", action="store_true",
+                        help="Run continuously waiting for commands instead of a single claim cycle.")
+    parser.add_argument("--poll-interval", type=float,
+                        default=float(os.environ.get("CC_AGENT_POLL_SECONDS", "5")),
+                        help="Seconds to wait between claim attempts while idle (default 5).")
     args = parser.parse_args()
     token = os.environ.get("CC_AGENT_TOKEN", "")
     if len(token) < 32:
         raise SystemExit("CC_AGENT_TOKEN is required")
     try:
         client = AgentClient(args.url, token)
-        print(json.dumps(run_once(client, args.agent_id, args.storage_root.resolve())))
+        if args.loop:
+            try:
+                print(json.dumps(run_forever(client, args.agent_id, args.storage_root.resolve(),
+                                              poll_interval=args.poll_interval)))
+            except KeyboardInterrupt:
+                print(json.dumps({"status": "stopped"}))
+        else:
+            print(json.dumps(run_once(client, args.agent_id, args.storage_root.resolve())))
     except Exception:
         raise SystemExit("Agent run could not complete; no credential or raw error printed")
 
