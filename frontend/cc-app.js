@@ -99,7 +99,7 @@ const CHANNELS_8 = [
     category: 'wuby',
     badge: 'Wuby Clone v2',
     thumb: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=900&q=80',
-    hero_bg: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1600&q=80',
+    hero_bg: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1400&q=80',
   },
   {
     id: 'ch_song1minh',
