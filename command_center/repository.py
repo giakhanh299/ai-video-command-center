@@ -215,11 +215,43 @@ class Repository:
         with self.db.connect() as c:
             project(c, owner, pid)
             rows = c.execute(
-                "SELECT * FROM command_center.files WHERE project_id=%s AND verification='verified' AND kind='video' ORDER BY created_at DESC LIMIT 50",
+                "SELECT * FROM command_center.files WHERE project_id=%s AND verification='verified' AND kind='video' ORDER BY (job_id IS NULL) DESC, created_at DESC LIMIT 50",
                 (pid,),
             ).fetchall()
             return {"items": [{"id": r["id"], "kind": r["kind"], "media_type": r["media_type"], "size_bytes": r["size_bytes"],
                                "sha256": r["sha256"], "verification": r["verification"], "playback_url": None, "expires_at": None} for r in rows]}
+
+    def upload_project_file(self, owner, pid, logical_name: str, raw_bytes: bytes):
+        if not raw_bytes or len(raw_bytes) > 100 * 1024 * 1024:
+            raise DomainError("REQUEST_TOO_LARGE", 413)
+        safe_name = "".join(ch for ch in (logical_name or "upload.mp4") if ch.isalnum() or ch in ("-", "_", ".")).strip(".") or "upload.mp4"
+        if not safe_name.lower().endswith(".mp4"):
+            safe_name += ".mp4"
+        fid = uuid4()
+        rel_key = f"inputs/{fid}.mp4"
+        from .storage import storage_path
+        dest = storage_path(self.settings.storage_root, rel_key)
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_bytes(raw_bytes)
+        try:
+            inspect_video(dest)
+        except Exception:
+            if dest.exists():
+                dest.unlink()
+            raise
+        sha = hashlib.sha256(raw_bytes).hexdigest()
+        with self.db.connect() as c:
+            p = project(c, owner, pid, True)
+            if p["archived_at"]:
+                if dest.exists():
+                    dest.unlink()
+                raise DomainError("PROJECT_ARCHIVED")
+            row = c.execute(
+                "INSERT INTO command_center.files(id,project_id,logical_name,kind,media_type,size_bytes,sha256,storage_key,verification) "
+                "VALUES(%s,%s,%s,'video','video/mp4',%s,%s,%s,'verified') RETURNING *",
+                (fid, pid, safe_name[:120], len(raw_bytes), sha, rel_key),
+            ).fetchone()
+            return file_dto(row)
 
     def cancel(self, owner, jid, version):
         with self.db.connect() as c:

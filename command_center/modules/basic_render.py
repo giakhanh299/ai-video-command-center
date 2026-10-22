@@ -24,7 +24,12 @@ def run(config, source, directory, abort):
     fit_mode = config.get("fit_mode", "contain")
     blur_mode = config.get("blur_mode", "none")
     blur_subtitle = bool(config.get("blur_subtitle", False) or (blur_mode and blur_mode != "none"))
-    blur_height_ratio = round(float(config.get("blur_height_pct", 22)) / 100.0, 3)
+    blur_height_pct = int(config.get("blur_height_pct", 22))
+    blur_x_pct = int(config.get("blur_x_pct", 0))
+    blur_w_pct = int(config.get("blur_w_pct", 100))
+    blur_h_pct = int(config.get("blur_h_pct", blur_height_pct))
+    blur_y_pct = int(config.get("blur_y_pct", max(0, 100 - blur_h_pct)))
+    blur_height_ratio = round(float(blur_h_pct) / 100.0, 3)
     blur_strength = int(config.get("blur_strength", 20))
     voice_id = config.get("voice_id", "original")
     voice_speed = float(config.get("voice_speed", 1.0))
@@ -36,6 +41,9 @@ def run(config, source, directory, abort):
     text_position = config.get("text_position", "bottom")
     mirror_flip = bool(config.get("mirror_flip", False))
     color_grade = config.get("color_grade", "natural")
+    channel_id = config.get("channel_id", "")
+
+    has_custom_box = blur_subtitle and (blur_x_pct > 0 or blur_w_pct < 100 or (blur_y_pct + blur_h_pct) < 98)
 
     cfg = {
         "output_width": config["width"],
@@ -45,7 +53,7 @@ def run(config, source, directory, abort):
         "speed": 1,
         "keep_original_audio": keep_original_audio or before["has_audio"],
         "original_audio_volume": 1.0,
-        "blur_subtitle": blur_subtitle,
+        "blur_subtitle": blur_subtitle and not has_custom_box,
         "blur_subtitle_height_ratio": blur_height_ratio,
         "blur_strength": blur_strength,
     }
@@ -91,7 +99,27 @@ def run(config, source, directory, abort):
 
     command = build_render_command(source, None, target, cfg)
 
-    # Inject mirror_flip (hflip) and color_grade into -filter_complex if enabled
+    # Compute pixel rectangle for custom 2D blur box
+    out_w, out_h = int(config["width"]), int(config["height"])
+    bx = max(0, min(out_w - 16, int(round(out_w * blur_x_pct / 100.0)) // 2 * 2))
+    by = max(0, min(out_h - 16, int(round(out_h * blur_y_pct / 100.0)) // 2 * 2))
+    bw = max(16, min(out_w - bx, int(round(out_w * blur_w_pct / 100.0)) // 2 * 2))
+    bh = max(16, min(out_h - by, int(round(out_h * blur_h_pct / 100.0)) // 2 * 2))
+
+    # Inject custom 2D blur box, mirror_flip (hflip), and color_grade into -filter_complex
+    if has_custom_box and "-filter_complex" in command:
+        fc_idx = command.index("-filter_complex") + 1
+        map_idx = command.index("-map") + 1
+        cur_vlabel = command[map_idx]
+        sigma = max(4, min(35, blur_strength))
+        custom_blur_chain = (
+            f"{cur_vlabel}split[vcmain][vcsub];"
+            f"[vcsub]crop={bw}:{bh}:{bx}:{by},gblur=sigma={sigma}[vcblurred];"
+            f"[vcmain][vcblurred]overlay={bx}:{by}[vcustomblur]"
+        )
+        command[fc_idx] = command[fc_idx] + ";" + custom_blur_chain
+        command[map_idx] = "[vcustomblur]"
+
     extra_vfilters = []
     if mirror_flip:
         extra_vfilters.append("hflip")
@@ -152,6 +180,7 @@ def run(config, source, directory, abort):
         "source_sha256": checksum(source),
         "output_sha256": checksum(target),
         "preset_profile": config.get("preset_profile", "basic_render"),
+        "channel_id": channel_id,
         "render_config": config,
         "voice_config": {
             "voice_id": voice_id,
@@ -162,8 +191,15 @@ def run(config, source, directory, abort):
         "blur_config": {
             "blur_subtitle": blur_subtitle,
             "blur_mode": blur_mode if blur_subtitle else "none",
-            "blur_height_pct": int(config.get("blur_height_pct", 22)),
+            "blur_height_pct": blur_h_pct,
             "blur_strength": blur_strength,
+            "custom_blur_box": {
+                "x_pct": blur_x_pct,
+                "y_pct": blur_y_pct,
+                "w_pct": blur_w_pct,
+                "h_pct": blur_h_pct,
+                "px_rect": [bx, by, bw, bh],
+            },
         },
         "text_overlay_config": {
             "subtitle_style": subtitle_style,

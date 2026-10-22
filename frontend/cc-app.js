@@ -24,11 +24,105 @@ const I = {
   cog:     `<svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>`,
 };
 
+/* ─── 8 Fanpage Channel Profiles (Hợp nhất toàn hệ thống) ── */
+const CHANNELS_8 = [
+  {
+    id: 'ch_wuby_main',
+    name: 'Kênh 1: Wuby Thuyết Minh',
+    niche: 'Thuyết minh AI giữ nền',
+    preset_id: 'cauhinh3_wuby',
+    voice_id: 'wuby_clone_v2',
+    banner_text: 'WUBY AI STUDIO',
+    marquee_text: 'Bản thuyết minh AI độc quyền giữ âm thanh gốc',
+    blur_box: { x: 6, y: 74, w: 88, h: 16 },
+    schedule: '11:30 · 19:30 · 21:00',
+  },
+  {
+    id: 'ch_review_black',
+    name: 'Kênh 2: Review Phim Black',
+    niche: 'Review kịch tính viền đen',
+    preset_id: 'cauhinh2',
+    voice_id: 'vi_male_review_tram',
+    banner_text: 'REVIEW PHIM HAY',
+    marquee_text: 'Theo dõi kênh để xem tập tiếp theo!',
+    blur_box: { x: 8, y: 72, w: 84, h: 18 },
+    schedule: '12:00 · 18:00 · 22:00',
+  },
+  {
+    id: 'ch_movie_clone',
+    name: 'Kênh 3: Phim Ngắn 9:16',
+    niche: 'Nền mờ Gaussian + Lật gương',
+    preset_id: 'cauhinh3',
+    voice_id: 'vi_female_north_ngochuyen',
+    banner_text: 'PHIM NGẮN HOT',
+    marquee_text: 'Đừng quên thả tim và bấm theo dõi kênh nhé!',
+    blur_box: { x: 6, y: 70, w: 88, h: 18 },
+    schedule: '09:00 · 15:00 · 20:30',
+  },
+  {
+    id: 'ch_chidepdicau',
+    name: 'Kênh 4: Chị Đẹp Đi Câu',
+    niche: 'Outdoor / Câu cá giải trí',
+    preset_id: 'chidepdicau',
+    voice_id: 'vi_female_north_ngochuyen',
+    banner_text: 'CHỊ ĐẸP ĐI CÂU',
+    marquee_text: 'Hành trình săn cá khủng mỗi ngày!',
+    blur_box: { x: 5, y: 73, w: 90, h: 17 },
+    schedule: '10:30 · 17:30 · 20:00',
+  },
+  {
+    id: 'ch_song1minh',
+    name: 'Kênh 5: Sống Một Mình',
+    niche: 'Vlog Chill Lo-Fi / Healing',
+    preset_id: 'song1minhcogivui',
+    voice_id: 'vi_female_south_thaovy',
+    banner_text: 'SỐNG MỘT MÌNH CÓ GÌ VUI',
+    marquee_text: 'Nhật ký chill mỗi tối một mình',
+    blur_box: { x: 10, y: 75, w: 80, h: 14 },
+    schedule: '20:00 · 22:30',
+  },
+  {
+    id: 'ch_hoc_tieng_trung',
+    name: 'Kênh 6: Học Tiếng Trung',
+    niche: 'Edutainment / Song ngữ',
+    preset_id: 'cauhinh3',
+    voice_id: 'vi_female_north_ngochuyen',
+    banner_text: 'HỌC TIẾNG TRUNG QUA PHIM',
+    marquee_text: 'Lưu lại ngay mẫu câu giao tiếp cực chuẩn này!',
+    blur_box: { x: 6, y: 76, w: 88, h: 14 },
+    schedule: '08:00 · 12:30 · 19:00',
+  },
+  {
+    id: 'ch_drama_reels',
+    name: 'Kênh 7: Drama Tổng Tài',
+    niche: 'Series ngôn tình ngắn tập',
+    preset_id: 'cauhinh2',
+    voice_id: 'vi_male_north_minhquang',
+    banner_text: 'TẬP CUỐI: CÁI KẾT BẤT NGỜ',
+    marquee_text: 'Bấm vào trang cá nhân để xem trọn bộ Full HD!',
+    blur_box: { x: 6, y: 71, w: 88, h: 18 },
+    schedule: '11:00 · 16:00 · 21:30',
+  },
+  {
+    id: 'ch_custom_studio',
+    name: 'Kênh 8: Studio Tự Do',
+    niche: 'Tuỳ biến 100% thông số',
+    preset_id: 'basic_render',
+    voice_id: 'original',
+    banner_text: '',
+    marquee_text: '',
+    blur_box: { x: 6, y: 72, w: 88, h: 16 },
+    schedule: 'Đăng thủ công / Theo yêu cầu',
+  },
+];
+
 /* ─── State ──────────────────────────────────────────────── */
 const state = {
-  view: 'overview',          // 'overview' | 'projects' | 'project-detail' | 'new-job' | 'job-detail' | 'modules' | 'agents'
+  view: 'overview',          // 'overview' | 'projects' | 'project-detail' | 'new-job' | 'job-detail' | 'channels' | 'modules' | 'agents'
   projectId: null,
   jobId: null,
+  selectedChannelId: 'ch_review_black',
+  localVideoBlobUrl: null,
   projects: [],
   jobs: [],
   agents: [],
@@ -140,6 +234,7 @@ function navigate(view, params = {}) {
   state.view = view;
   if (params.projectId !== undefined) state.projectId = params.projectId;
   if (params.jobId !== undefined)     state.jobId     = params.jobId;
+  if (params.channelId !== undefined) state.selectedChannelId = params.channelId;
   render();
 }
 
@@ -147,7 +242,6 @@ function syncNav() {
   document.querySelectorAll('[data-nav]').forEach(el => {
     el.classList.toggle('active', el.dataset.nav === state.view
       || (state.view === 'project-detail' && el.dataset.nav === 'projects')
-      || (state.view === 'new-job' && el.dataset.nav === 'projects')
       || (state.view === 'job-detail' && el.dataset.nav === 'projects'));
   });
 }
@@ -513,7 +607,7 @@ async function renderProjectDetail() {
   });
 }
 
-// C. TẠO JOB
+// C. STUDIO ĐA CẤU HÌNH & CHỌN VÙNG BLUR TRỰC TIẾP TRÊN KHUNG VIDEO THẬT
 async function renderNewJob() {
   const main = $('main-content');
   main.innerHTML = renderLoading();
@@ -525,136 +619,200 @@ async function renderNewJob() {
     state.projects = projRes.items || [];
     state.presets  = presetRes.items || [];
   } catch(e) {
-    main.innerHTML = renderError(`Không tải được dữ liệu tạo job. ${e?.body?.error?.message || ''}`, renderNewJob);
+    main.innerHTML = renderError(`Không tải được dữ liệu Studio. ${e?.body?.error?.message || ''}`, renderNewJob);
     $('btn-err-retry')?.addEventListener('click', renderNewJob);
     return;
   }
 
   const activeProjects = state.projects.filter(p => !p.archived_at);
   const defaultProject = state.projectId || (activeProjects[0]?.id || '');
-  const defaultPreset  = state.presets.find(p => p.id === 'basic_render' && p.available) || state.presets.find(p => p.available) || state.presets[0];
+  const activeChannel  = CHANNELS_8.find(c => c.id === state.selectedChannelId) || CHANNELS_8[1];
+  const defaultPreset  = state.presets.find(p => p.id === activeChannel.preset_id && p.available)
+                      || state.presets.find(p => p.id === 'basic_render' && p.available)
+                      || state.presets.find(p => p.available)
+                      || state.presets[0];
 
   main.innerHTML = `
     <div class="page-header">
       <div>
-        <h1 class="page-title">Tạo Job Render Mới &amp; Xếp Vào Hàng Đợi</h1>
-        <p class="page-subtitle">Đóng gói cấu hình JSON gửi qua HTTPS cổng 443 vào hàng đợi PostgreSQL. ${state.isMock ? '<span class="not-impl">Dữ liệu mô phỏng</span>' : '<span style="color:var(--teal);font-weight:600">⚡ Production API Thật</span>'}</p>
+        <h1 class="page-title">🎬 Studio Hợp Nhất Đa Cấu Hình &amp; Custom Blur Trên Video Thật</h1>
+        <p class="page-subtitle">Chọn kênh Fanpage, tải video MP4 lên hoặc chọn file sẵn có, kéo thả khung Blur trực tiếp trên hình ảnh thực tế và đẩy vào hàng đợi HTTPS :443.</p>
       </div>
       <div class="page-actions">
-        <button class="btn btn-ghost" id="btn-cancel-job">← Quay lại</button>
+        <button class="btn btn-secondary btn-sm" id="btn-go-channels-view">📊 Ma trận 8 Kênh</button>
+        <button class="btn btn-ghost btn-sm" id="btn-cancel-job">← Tổng quan</button>
+      </div>
+    </div>
+
+    <!-- Thanh chọn nhanh 8 Kênh Fanpage -->
+    <div class="card mb-3">
+      <div class="card-header">
+        <span class="card-title">📺 Bước 1: Chọn Kênh Fanpage Đích (Tự động nạp Preset, Giọng đọc AI, Chạy chữ &amp; Tọa độ Blur mẫu)</span>
+        <span class="tag" id="selected-channel-tag" style="color:var(--teal);border-color:rgba(45,212,191,0.35)">${activeChannel.name}</span>
+      </div>
+      <div class="channel-strip" id="studio-channel-strip">
+        ${CHANNELS_8.map(ch => `
+          <button type="button" class="channel-pill-card ${ch.id === activeChannel.id ? 'active' : ''}" data-channel-id="${ch.id}">
+            <div class="channel-pill-top">
+              <span class="truncate">${ch.name}</span>
+              <span class="tag" style="font-size:9px;padding:1px 5px;color:var(--teal)">${ch.preset_id}</span>
+            </div>
+            <div class="channel-pill-sub truncate">${ch.niche} · Blur (${ch.blur_box.x}%,${ch.blur_box.y}%)</div>
+          </button>
+        `).join('')}
       </div>
     </div>
 
     <form id="new-job-form" novalidate>
       <div class="grid-2" style="gap:20px">
-        <!-- Left: project + input + schema overrides + JSON preview -->
+        <!-- Cột Trái: Dự án + Upload/Chọn Video + Đa Cấu Hình (A, B, C, D) -->
         <div class="flex-col" style="gap:16px">
           <div class="card">
-            <div class="card-header"><span class="card-title">${I.folder} 1. Dự án &amp; Video Đầu Vào (Đã Xác Minh SHA-256)</span></div>
+            <div class="card-header"><span class="card-title">${I.folder} Bước 2: Dự Án &amp; Tải Lên / Chọn Video Thực Tế</span></div>
             <div class="flex-col" style="gap:12px">
               <div class="form-group">
-                <label class="form-label" for="new-job-project">Chọn Dự án <span class="required">*</span></label>
+                <label class="form-label" for="new-job-project">Dự án lưu trữ <span class="required">*</span></label>
                 <select class="form-select" id="new-job-project" required aria-required="true">
                   ${activeProjects.length === 0 ? '<option value="">— Chưa có dự án nào —</option>' : ''}
                   ${activeProjects.map(p => `<option value="${p.id}" ${p.id === defaultProject ? 'selected' : ''}>${p.name} (v${p.version})</option>`).join('')}
                 </select>
               </div>
 
+              <!-- Khu vực kéo thả hoặc chọn file .mp4 từ máy tính -->
+              <div>
+                <label class="form-label mb-2" style="display:block">Tải Video MP4 mới từ máy tính (Qua cổng HTTPS :443) hoặc chọn Video bên dưới</label>
+                <div class="upload-dropzone" id="studio-upload-dropzone">
+                  <div>
+                    <div style="font-size:12px;font-weight:700;color:var(--teal)">📤 Nhấn để chọn file .MP4 hoặc kéo thả video vào đây</div>
+                    <div style="font-size:11px;color:var(--txt-3);margin-top:2px" id="upload-status-text">Video tải lên sẽ hiển thị ngay vào khung Preview bên phải để bạn kéo chọn vùng Blur.</div>
+                  </div>
+                  <span class="btn btn-secondary btn-sm">Chọn MP4…</span>
+                  <input type="file" id="studio-file-input" accept="video/mp4,video/*" class="hidden" />
+                </div>
+              </div>
+
               <div class="form-group">
-                <label class="form-label" for="new-job-input">File Video Đầu Vào (UUID Verified) <span class="required">*</span></label>
+                <label class="form-label" for="new-job-input">File Video Đầu Vào (UUID Đã Xác Minh SHA-256) <span class="required">*</span></label>
                 <input class="form-input font-mono" id="new-job-input" type="text"
                   placeholder="Ví dụ: 35326dd1-1211-41bf-937a-dca209c6c897"
                   value="${state.isMock ? 'f5d34973-487e-4794-be6b-ff927eb83218' : ''}"
                   aria-describedby="input-hint" />
                 <div id="verified-files-picker" class="file-pick-grid"></div>
-                <p class="form-hint" id="input-hint">
-                  Nhấn chọn thẻ Video đã xác minh bên trên hoặc dán File UUID hợp lệ.
-                </p>
                 <div class="form-error hidden" id="input-error">${I.alert} Cần ít nhất 1 UUID hợp lệ (36 ký tự).</div>
               </div>
             </div>
           </div>
 
           <div class="card">
-            <div class="card-header"><span class="card-title">${I.cog} 2. Cấu Hình Render (Overrides Schema)</span></div>
-            <div id="dynamic-override-container">
-              <!-- Render động theo schema của preset được chọn -->
-            </div>
-          </div>
-
-          <div class="card">
-            <div class="card-header">
-              <span class="card-title">${I.log} Bản Xem Trước Gói Tin JSON Gửi Hàng Đợi (HTTPS :443)</span>
-              <span class="tag" style="color:var(--teal);border-color:rgba(45,212,191,0.3)">POST /api/v1/jobs</span>
-            </div>
-            <pre id="live-job-payload-json" class="json-code-box"></pre>
+            <div class="card-header"><span class="card-title">${I.cog} Bước 3: Đa Cấu Hình Chi Tiết (Khung Hình · Giọng Đọc · Tọa Độ Blur · Chạy Chữ)</span></div>
+            <div id="dynamic-override-container"></div>
           </div>
         </div>
 
-        <!-- Right: Live 9:16 Studio Preview + Preset Picker -->
+        <!-- Cột Phải: KHUNG VIDEO THẬT + VÙNG CHỌN BLUR KÉO THẢ THỦ CÔNG + PRESET + JSON -->
         <div class="flex-col" style="gap:16px">
           <div class="card">
             <div class="card-header">
-              <span class="card-title">${I.film} Mô Phỏng Trực Quan Khung Hình 9:16 (Live Studio Preview)</span>
+              <span class="card-title">${I.film} Khung Video Thực Tế &amp; Kéo Thả Vùng Blur Thủ Công (2D ROI)</span>
               <span class="tag" id="studio-preview-res-badge" style="color:var(--teal)">720×1280</span>
             </div>
-            <div class="studio-preview-wrap">
-              <div class="studio-phone" id="studio-live-phone">
-                <div class="studio-phone-bg" id="studio-phone-bg"></div>
-                <div class="studio-phone-fg" id="studio-phone-fg">KHUNG VIDEO CHÍNH</div>
-                <div class="studio-phone-banner hidden" id="studio-phone-banner">REVIEW PHIM HAY</div>
-                <div class="studio-phone-badges" id="studio-phone-badges"></div>
-                <div class="studio-phone-blurzone hidden" id="studio-phone-blurzone">VÙNG CHE SUB GỐC (BLUR)</div>
-                <div class="studio-phone-sub hidden" id="studio-phone-sub">
+
+            <div class="studio-stage-outer">
+              <!-- Khung 9:16 chứa thẻ <video> thật + Hộp Blur kéo thả 8 hướng -->
+              <div class="studio-phone-interactive" id="studio-live-phone">
+                <div class="real-frame-fallback" id="studio-video-fallback">
+                  <div>🎬 Đang tải khung hình video thực tế...</div>
+                  <small style="color:rgba(255,255,255,0.65);margin-top:4px">Kéo thả khung viền xanh bên dưới để che chính xác phụ đề hoặc logo</small>
+                </div>
+                <video id="studio-real-video" class="real-frame-video" playsinline muted loop preload="metadata"></video>
+
+                <!-- Banner Hook cố định phía trên -->
+                <div class="studio-phone-banner hidden" id="studio-phone-banner" style="position:absolute;top:10px;left:10px;right:10px;margin:0;z-index:5">REVIEW PHIM HAY</div>
+
+                <!-- Badge hiển thị Voice / BGM / Flip -->
+                <div class="studio-phone-badges" id="studio-phone-badges" style="z-index:5"></div>
+
+                <!-- HỘP CHỌN VÙNG BLUR THỦ CÔNG TRÊN ẢNH THỰC TẾ (KÉO & ĐỔI KÍCH THƯỚC 8 ĐIỂM) -->
+                <div class="custom-blur-rect" id="custom-blur-rect" title="Kéo để di chuyển vùng làm mờ, kéo các góc/cạnh để thay đổi kích thước">
+                  <span class="custom-blur-label" id="custom-blur-label">BLUR: X:6% Y:72% (88×16%)</span>
+                  <div class="blur-handle nw" data-handle="nw"></div>
+                  <div class="blur-handle ne" data-handle="ne"></div>
+                  <div class="blur-handle sw" data-handle="sw"></div>
+                  <div class="blur-handle se" data-handle="se"></div>
+                  <div class="blur-handle n"  data-handle="n"></div>
+                  <div class="blur-handle s"  data-handle="s"></div>
+                  <div class="blur-handle w"  data-handle="w"></div>
+                  <div class="blur-handle e"  data-handle="e"></div>
+                </div>
+
+                <!-- Phụ đề chạy chữ đè lên trên -->
+                <div class="studio-phone-sub hidden" id="studio-phone-sub" style="position:absolute;left:8px;right:8px;bottom:14px;margin:0;z-index:7">
                   <span class="marquee-inner" id="studio-phone-sub-text">Phụ đề chạy chữ tự động...</span>
                 </div>
               </div>
+
+              <!-- Thanh tua khung hình video thực tế (Scrubber) để tìm đúng đoạn có chữ/logo -->
+              <div class="frame-scrubber-bar">
+                <button type="button" class="btn btn-secondary btn-sm" id="btn-toggle-preview-play" style="padding:3px 8px;font-size:11px">▶ Phát</button>
+                <input type="range" id="studio-video-scrubber" min="0" max="100" step="0.1" value="0" style="flex:1;accent-color:var(--teal)" title="Tua đến khung hình có phụ đề/logo để căn chỉnh vùng Blur" />
+                <span class="font-mono text-muted" id="studio-video-time" style="font-size:10px;min-width:68px;text-align:right">0.0s / 0.0s</span>
+              </div>
+
+              <!-- Nút chọn nhanh vị trí Blur mẫu -->
+              <div class="blur-preset-bar">
+                <button type="button" class="blur-preset-btn" data-box-preset="sub_bottom">🎯 Phụ đề đáy (6%, 72%, 88×16%)</button>
+                <button type="button" class="blur-preset-btn" data-box-preset="sub_high">🔼 Phụ đề cao (8%, 62%, 84×16%)</button>
+                <button type="button" class="blur-preset-btn" data-box-preset="logo_tr">🏷 Logo phải trên (66%, 4%, 28×12%)</button>
+                <button type="button" class="blur-preset-btn" data-box-preset="logo_tl">🏷 Logo trái trên (6%, 4%, 28×12%)</button>
+                <button type="button" class="blur-preset-btn" data-box-preset="center_watermark">💧 Giữa khung (15%, 42%, 70×16%)</button>
+              </div>
             </div>
-            <p class="form-hint" style="text-align:center">Khung mô phỏng cập nhật tức thì khi bạn đổi Preset, Giọng đọc, Vùng Blur hoặc Chạy chữ.</p>
+            <p class="form-hint mt-2" style="text-align:center">
+              💡 <b>Mẹo:</b> Dùng thanh trượt tua video đến đúng cảnh có phụ đề tiếng Trung hoặc logo, sau đó <b>dùng chuột kéo trực tiếp khung viền xanh</b> trên video để che khít 100%.
+            </p>
           </div>
 
           <div class="card">
-            <div class="card-header"><span class="card-title">${I.cpu} 3. Chọn Đa Cấu Hình Preset (Registry 1.0.0)</span></div>
-            <p class="form-hint mb-2">Mỗi cấu hình tự động nạp bộ thông số Giọng đọc AI, Làm mờ Sub, Chạy chữ &amp; Màu sắc tương ứng (bạn có thể tinh chỉnh thêm ở cột trái).</p>
-            <div id="preset-list" class="flex-col" style="gap:10px">
+            <div class="card-header"><span class="card-title">${I.cpu} Bước 4: Bộ Cấu Hình Preset Gốc (Registry 1.0.0)</span></div>
+            <div id="preset-list" class="flex-col" style="gap:8px">
               ${state.presets.map(p => `
-                <label class="preset-option ${p.id === defaultPreset?.id ? 'selected-card' : ''}" style="cursor:pointer;border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;transition:all .18s;${!p.available ? 'opacity:.55;' : ''}">
+                <label class="preset-option ${p.id === defaultPreset?.id ? 'selected-card' : ''}" style="cursor:pointer;border:1px solid var(--border);border-radius:10px;padding:10px 12px;display:flex;align-items:flex-start;gap:10px;transition:all .18s;${!p.available ? 'opacity:.55;' : ''}">
                   <input type="radio" name="preset" value="${p.id}" data-version="${p.version}"
                     ${p.id === defaultPreset?.id ? 'checked' : ''}
                     ${!p.available ? 'disabled' : ''}
-                    style="margin-top:3px;accent-color:var(--teal)"
-                    aria-describedby="preset-desc-${p.id}">
+                    style="margin-top:3px;accent-color:var(--teal)">
                   <div style="flex:1">
-                    <div style="font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:6px">
+                    <div style="font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:6px">
                       <span>${p.label}</span>
-                      ${p.available ? `<span class="chip succeeded" style="font-size:10px">Sẵn sàng</span>` : `<span class="chip disabled" style="font-size:10px">Chờ GPU Adapter</span>`}
+                      ${p.available ? `<span class="chip succeeded" style="font-size:9px">Sẵn sàng</span>` : `<span class="chip disabled" style="font-size:9px">Chờ GPU</span>`}
                     </div>
-                    <div style="font-size:11px;color:var(--txt-3);margin-top:3px" id="preset-desc-${p.id}">
-                      Mã cấu hình: <span class="font-mono" style="color:var(--txt-2)">${p.id}</span> · Phiên bản: <code>v${p.version}</code>
-                      ${p.available ? '' : `<br><span class="not-impl" style="margin-top:4px">${p.unavailable_reason || 'Đang tích hợp adapter'}</span>`}
-                    </div>
-                    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;align-items:center">
-                      <span style="font-size:10px;color:var(--txt-3)">Pipeline DAG:</span>
-                      ${(p.modules || []).map((m, idx) => `${idx > 0 ? '<span style="color:var(--txt-3);font-size:10px">→</span>' : ''}<span class="tag" style="color:var(--teal);border-color:rgba(45,212,191,0.28)">${m}</span>`).join('')}
+                    <div style="font-size:10px;color:var(--txt-3);margin-top:2px">
+                      ID: <code style="color:var(--teal)">${p.id}</code> · Pipeline: ${(p.modules || []).join(' → ')}
                     </div>
                   </div>
                 </label>
               `).join('')}
             </div>
+          </div>
 
-            <div id="preset-availability" class="mt-3" style="font-size:11px;color:var(--txt-3)"></div>
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">${I.log} Gói Tin JSON Gửi Hàng Đợi (Bao gồm tọa độ Custom Blur 2D)</span>
+              <span class="tag" style="color:var(--teal);border-color:rgba(45,212,191,0.3)">POST /api/v1/jobs</span>
+            </div>
+            <pre id="live-job-payload-json" class="json-code-box"></pre>
           </div>
         </div>
       </div>
 
       <!-- Summary + submit -->
       <div class="card mt-4" id="job-summary">
-        <div class="card-header"><span class="card-title">${I.check} 4. Xác Nhận Đa Cấu Hình &amp; Đẩy Vào Hàng Đợi Render</span></div>
+        <div class="card-header"><span class="card-title">${I.check} Bước 5: Xác Nhận Đa Cấu Hình &amp; Đẩy Vào Hàng Đợi Render</span></div>
         <div id="summary-body" class="dl-grid"></div>
         <div id="form-submit-error" class="form-error hidden mt-3"></div>
         <div class="modal-footer" style="padding:14px 0 0">
           <button type="submit" class="btn btn-primary btn-lg" id="btn-submit-job" aria-describedby="form-submit-error">
-            ${I.play} Xếp vào hàng đợi &amp; Bắt đầu Render
+            ${I.play} Xếp vào hàng đợi &amp; Render Vùng Blur Đã Chọn
           </button>
         </div>
       </div>
@@ -663,6 +821,7 @@ async function renderNewJob() {
 
   $('btn-cancel-job')?.addEventListener('click', () =>
     state.projectId ? navigate('project-detail') : navigate('overview'));
+  $('btn-go-channels-view')?.addEventListener('click', () => navigate('channels'));
 
   const VOICE_LABELS = {
     original: '🔊 Giữ nguyên âm thanh gốc',
@@ -676,9 +835,9 @@ async function renderNewJob() {
 
   const BLUR_LABELS = {
     none: 'Không làm mờ phụ đề',
-    gaussian_box: 'Gaussian Box Blur (Làm mờ mịn vùng sub)',
-    feather_dark: 'Feather Dark Box (Phủ mờ tối dịu mắt)',
-    ai_inpaint: 'AI Smart Inpaint (Xoá chữ giữ nền tự nhiên)',
+    gaussian_box: 'Gaussian Box Blur (Làm mờ mịn vùng chọn 2D)',
+    feather_dark: 'Feather Dark Box (Phủ mờ tối vùng chọn 2D)',
+    ai_inpaint: 'AI Smart Inpaint (Xoá chữ giữ nền vùng chọn 2D)',
   };
 
   const SUB_STYLE_LABELS = {
@@ -705,6 +864,7 @@ async function renderNewJob() {
   function collectCurrentOverrides(preset) {
     const schema = getSchemaProps(preset);
     if (!schema.width) return {};
+    const hPct = parseInt($('override-blur-h')?.value || $('override-blur-height')?.value || 16, 10);
     return {
       width: parseInt($('override-width')?.value || 720, 10),
       height: parseInt($('override-height')?.value || 1280, 10),
@@ -713,10 +873,15 @@ async function renderNewJob() {
       voice_speed: parseFloat($('override-voice-speed')?.value || '1.0'),
       keep_original_audio: Boolean($('override-keep-audio')?.checked ?? true),
       bgm_style: $('override-bgm-style')?.value || 'none',
-      blur_subtitle: Boolean($('override-blur-sub')?.checked ?? false),
-      blur_mode: $('override-blur-mode')?.value || 'none',
-      blur_height_pct: parseInt($('override-blur-height')?.value || 22, 10),
+      blur_subtitle: Boolean($('override-blur-sub')?.checked ?? true),
+      blur_mode: $('override-blur-mode')?.value || 'gaussian_box',
+      blur_height_pct: hPct,
       blur_strength: parseInt($('override-blur-strength')?.value || 20, 10),
+      blur_x_pct: parseInt($('override-blur-x')?.value ?? 6, 10),
+      blur_y_pct: parseInt($('override-blur-y')?.value ?? 72, 10),
+      blur_w_pct: parseInt($('override-blur-w')?.value ?? 88, 10),
+      blur_h_pct: hPct,
+      channel_id: state.selectedChannelId || 'ch_custom_studio',
       subtitle_style: $('override-sub-style')?.value || 'none',
       banner_text: ($('override-banner-text')?.value || '').trim(),
       marquee_text: ($('override-marquee-text')?.value || '').trim(),
@@ -727,46 +892,29 @@ async function renderNewJob() {
   }
 
   function updateLivePhonePreview(ov) {
-    const bg = $('studio-phone-bg');
-    const fg = $('studio-phone-fg');
+    const videoEl = $('studio-real-video');
     const banner = $('studio-phone-banner');
-    const blurZone = $('studio-phone-blurzone');
+    const blurRect = $('custom-blur-rect');
+    const blurLbl = $('custom-blur-label');
     const subBox = $('studio-phone-sub');
     const subText = $('studio-phone-sub-text');
     const badges = $('studio-phone-badges');
     const resBadge = $('studio-preview-res-badge');
-    if (!fg || !bg) return;
+    if (!videoEl || !blurRect) return;
 
     if (resBadge) resBadge.textContent = `${ov.width || 720}×${ov.height || 1280} · ${ov.fit_mode || 'contain'}`;
 
-    // Layout fit_mode
-    if (ov.fit_mode === 'cover') {
-      fg.style.top = '0%';
-      fg.style.height = '100%';
-      bg.style.filter = 'none';
-      fg.textContent = 'VIDEO FULL 9:16 (COVER)';
-    } else if (ov.fit_mode === 'blur_bg') {
-      fg.style.top = '20%';
-      fg.style.height = '58%';
-      bg.style.background = 'linear-gradient(145deg, #0f766e 0%, #1e3a8a 50%, #312e81 100%)';
-      bg.style.filter = 'blur(8px)';
-      fg.textContent = 'VIDEO NỀN MỜ (BLUR BG)';
-    } else {
-      fg.style.top = '22%';
-      fg.style.height = '56%';
-      bg.style.background = '#05070b';
-      bg.style.filter = 'none';
-      fg.textContent = 'VIDEO VIỀN ĐEN (CONTAIN)';
-    }
+    // Áp dụng fit_mode trực tiếp lên video thật
+    videoEl.style.objectFit = ov.fit_mode === 'cover' ? 'cover' : 'contain';
 
-    // Mirror + Color grade
+    // Mirror + Color grade trên video thật
     let filterStr = '';
     if (ov.color_grade === 'cinematic_warm') filterStr = 'sepia(0.18) saturate(1.25) contrast(1.08)';
     else if (ov.color_grade === 'film_contrast') filterStr = 'contrast(1.28) saturate(0.9)';
     else if (ov.color_grade === 'vibrant_tiktok') filterStr = 'saturate(1.45) contrast(1.12)';
     else if (ov.color_grade === 'noir_bw') filterStr = 'grayscale(1) contrast(1.25)';
-    fg.style.filter = filterStr;
-    fg.style.transform = ov.mirror_flip ? 'scaleX(-1)' : 'none';
+    videoEl.style.filter = filterStr;
+    videoEl.style.transform = ov.mirror_flip ? 'scaleX(-1)' : 'none';
 
     // Banner Hook
     if (ov.banner_text) {
@@ -776,72 +924,104 @@ async function renderNewJob() {
       banner.classList.add('hidden');
     }
 
-    // Blur subtitle zone
+    // Vùng chọn Custom Blur 2D trên khung hình thực tế
     if (ov.blur_subtitle && ov.blur_mode !== 'none') {
-      const hPct = Math.min(Math.max(ov.blur_height_pct || 22, 10), 45);
-      blurZone.style.height = `${hPct}%`;
-      blurZone.textContent = `BLUR SUB (${ov.blur_mode.toUpperCase()} · ${hPct}%)`;
-      blurZone.classList.remove('hidden');
+      const bx = Math.min(Math.max(ov.blur_x_pct ?? 6, 0), 94);
+      const by = Math.min(Math.max(ov.blur_y_pct ?? 72, 0), 94);
+      const bw = Math.min(Math.max(ov.blur_w_pct ?? 88, 6), 100 - bx);
+      const bh = Math.min(Math.max(ov.blur_h_pct ?? 16, 6), 100 - by);
+      const sigma = Math.round((ov.blur_strength || 20) * 0.55);
+
+      blurRect.style.left = `${bx}%`;
+      blurRect.style.top = `${by}%`;
+      blurRect.style.width = `${bw}%`;
+      blurRect.style.height = `${bh}%`;
+      blurRect.style.backdropFilter = `blur(${sigma}px)`;
+      blurRect.style.webkitBackdropFilter = `blur(${sigma}px)`;
+      blurRect.className = `custom-blur-rect ${ov.blur_mode || 'gaussian_box'}`;
+      if (blurLbl) {
+        blurLbl.textContent = `BLUR (${bx}%, ${by}% · ${bw}×${bh}%)`;
+      }
+      blurRect.classList.remove('hidden');
     } else {
-      blurZone.classList.add('hidden');
+      blurRect.classList.add('hidden');
     }
 
     // Running text / Subtitle style
     if ((ov.subtitle_style && ov.subtitle_style !== 'none') || ov.marquee_text) {
       subBox.classList.remove('hidden');
       subText.textContent = ov.marquee_text || '🔥 Phụ đề chạy chữ tự động theo giọng đọc AI...';
+      if (ov.text_position === 'top') {
+        subBox.style.top = '48px';
+        subBox.style.bottom = 'auto';
+      } else if (ov.text_position === 'middle') {
+        subBox.style.top = '46%';
+        subBox.style.bottom = 'auto';
+      } else {
+        subBox.style.top = 'auto';
+        subBox.style.bottom = '14px';
+      }
       if (ov.subtitle_style === 'review_yellow_box') {
         subBox.style.background = 'rgba(0,0,0,0.88)';
         subBox.style.color = '#facc15';
         subBox.style.border = '1px solid #facc15';
-        subBox.style.textShadow = 'none';
       } else if (ov.subtitle_style === 'neon_glow') {
         subBox.style.background = 'rgba(8,15,28,0.65)';
         subBox.style.color = '#38bdf8';
         subBox.style.border = '1px solid rgba(56,189,248,0.5)';
-        subBox.style.textShadow = '0 0 8px #38bdf8';
       } else if (ov.subtitle_style === 'karaoke_pop') {
         subBox.style.background = 'rgba(0,0,0,0.65)';
         subBox.style.color = '#2dd4bf';
         subBox.style.border = '1px solid rgba(45,212,191,0.5)';
-        subBox.style.textShadow = '0 1px 4px #000';
       } else {
         subBox.style.background = 'rgba(0,0,0,0.55)';
         subBox.style.color = '#ffffff';
         subBox.style.border = '1px solid rgba(255,255,255,0.2)';
-        subBox.style.textShadow = 'none';
       }
     } else {
       subBox.classList.add('hidden');
     }
 
-    // Feature badges inside phone preview
+    // Feature badges
     const pillList = [];
     if (ov.voice_id && ov.voice_id !== 'original') pillList.push(`🎙 ${ov.voice_id.replace('vi_', '').slice(0, 14)} (${ov.voice_speed || 1}x)`);
     else pillList.push('🔊 Audio Gốc');
-    if (ov.bgm_style && ov.bgm_style !== 'none') pillList.push(`🎵 BGM: ${ov.bgm_style}`);
-    if (ov.mirror_flip) pillList.push('🪞 Lật gương');
-    if (ov.color_grade && ov.color_grade !== 'natural') pillList.push(`🎨 ${ov.color_grade}`);
+    if (ov.bgm_style && ov.bgm_style !== 'none') pillList.push(`🎵 ${ov.bgm_style}`);
+    if (ov.mirror_flip) pillList.push('🪞 Flip');
     badges.innerHTML = pillList.map(p => `<span class="studio-mini-badge">${p}</span>`).join('');
   }
 
-  // Update dynamic schema override fields with full multi-config studio controls
-  function updateOverrideFields(preset) {
+  function updateOverrideFields(preset, channelOverride = null) {
     const container = $('dynamic-override-container');
     if (!container) return;
 
     const schema = getSchemaProps(preset);
     if (Object.keys(schema).length === 0) {
-      container.innerHTML = `<p class="form-hint">Preset <b>${preset?.id || ''}</b> chỉ chạy bước kiểm tra thông số gốc (<code>media.probe</code>) và xuất <code>probe.json</code>, không sử dụng bộ lọc render.</p>`;
+      container.innerHTML = `<p class="form-hint">Preset <b>${preset?.id || ''}</b> chỉ chạy bước kiểm tra thông số gốc (<code>media.probe</code>) và xuất <code>probe.json</code>.</p>`;
       return;
     }
 
-    const d = preset?.default_config || {
+    const baseCfg = preset?.default_config || {
       width: 720, height: 1280, fit_mode: 'contain',
       voice_id: 'original', voice_speed: 1.0, keep_original_audio: true, bgm_style: 'none',
-      blur_subtitle: false, blur_mode: 'none', blur_height_pct: 22, blur_strength: 18,
-      subtitle_style: 'none', banner_text: '', marquee_text: '', text_position: 'bottom',
+      blur_subtitle: true, blur_mode: 'gaussian_box', blur_height_pct: 16, blur_strength: 20,
+      blur_x_pct: 6, blur_y_pct: 72, blur_w_pct: 88, blur_h_pct: 16,
+      subtitle_style: 'review_yellow_box', banner_text: '', marquee_text: '', text_position: 'bottom',
       mirror_flip: false, color_grade: 'natural',
+    };
+
+    const ch = channelOverride || CHANNELS_8.find(c => c.id === state.selectedChannelId);
+    const d = {
+      ...baseCfg,
+      voice_id: ch?.voice_id || baseCfg.voice_id || 'original',
+      banner_text: ch?.banner_text !== undefined ? ch.banner_text : (baseCfg.banner_text || ''),
+      marquee_text: ch?.marquee_text !== undefined ? ch.marquee_text : (baseCfg.marquee_text || ''),
+      blur_x_pct: ch?.blur_box?.x ?? baseCfg.blur_x_pct ?? 6,
+      blur_y_pct: ch?.blur_box?.y ?? baseCfg.blur_y_pct ?? 72,
+      blur_w_pct: ch?.blur_box?.w ?? baseCfg.blur_w_pct ?? 88,
+      blur_h_pct: ch?.blur_box?.h ?? baseCfg.blur_h_pct ?? 16,
+      blur_subtitle: true,
+      blur_mode: baseCfg.blur_mode === 'none' ? 'gaussian_box' : (baseCfg.blur_mode || 'gaussian_box'),
     };
 
     const profiles = [
@@ -851,9 +1031,111 @@ async function renderNewJob() {
     ];
 
     container.innerHTML = `
-      <!-- A. KHUNG HÌNH & BỐ CỤC -->
+      <!-- C. VÙNG CHỌN BLUR 2D THỦ CÔNG TRÊN ẢNH THỰC TẾ (ĐẶT LÊN ĐẦU ĐỂ TIỆN THAO TÁC) -->
+      <div class="cfg-section-box" style="border-color:rgba(45,212,191,0.45)">
+        <div class="cfg-section-title">
+          <span>🎯 A. Vùng Chọn Làm Mờ Thủ Công Trên Video Thật (Custom 2D Blur Box)</span>
+          <span class="tag" style="color:var(--teal)">Kéo thả trực tiếp</span>
+        </div>
+        <label class="toggle-row mb-2">
+          <span>Bật làm mờ vùng chọn 2D trên khung hình (Che phụ đề gốc / Logo / Watermark)</span>
+          <input type="checkbox" id="override-blur-sub" ${d.blur_subtitle ? 'checked' : ''} />
+        </label>
+        <div class="grid-2" style="gap:10px;margin-bottom:10px">
+          <div class="form-group">
+            <label class="form-label" for="override-blur-mode">Thuật toán xử lý vùng chọn</label>
+            <select class="form-select" id="override-blur-mode">
+              ${Object.entries(BLUR_LABELS).map(([k, lbl]) => `<option value="${k}" ${k === (d.blur_mode || 'gaussian_box') ? 'selected' : ''}>${lbl}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="override-blur-strength">Độ mờ Gaussian (Sigma): <b id="lbl-blur-s">${d.blur_strength || 20}</b></label>
+            <input type="range" id="override-blur-strength" min="5" max="40" step="1" value="${d.blur_strength || 20}" style="accent-color:var(--teal);width:100%" />
+          </div>
+        </div>
+        <div class="grid-2" style="gap:10px">
+          <div class="form-group">
+            <label class="form-label" for="override-blur-x">Toạ độ ngang X (Trái → Phải): <b id="lbl-blur-x">${d.blur_x_pct}%</b></label>
+            <input type="range" id="override-blur-x" min="0" max="90" step="1" value="${d.blur_x_pct}" style="accent-color:var(--teal);width:100%" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="override-blur-y">Toạ độ dọc Y (Trên → Dưới): <b id="lbl-blur-y">${d.blur_y_pct}%</b></label>
+            <input type="range" id="override-blur-y" min="0" max="90" step="1" value="${d.blur_y_pct}" style="accent-color:var(--teal);width:100%" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="override-blur-w">Chiều rộng vùng Blur (Width): <b id="lbl-blur-w">${d.blur_w_pct}%</b></label>
+            <input type="range" id="override-blur-w" min="5" max="100" step="1" value="${d.blur_w_pct}" style="accent-color:var(--teal);width:100%" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="override-blur-h">Chiều cao vùng Blur (Height): <b id="lbl-blur-h">${d.blur_h_pct}%</b></label>
+            <input type="range" id="override-blur-h" min="5" max="60" step="1" value="${d.blur_h_pct}" style="accent-color:var(--teal);width:100%" />
+          </div>
+        </div>
+      </div>
+
+      <!-- B. GIỌNG ĐỌC AI & ÂM THANH -->
       <div class="cfg-section-box">
-        <div class="cfg-section-title"><span>📐 A. Độ Phân Giải, Bố Cục 9:16 &amp; Màu Sắc</span></div>
+        <div class="cfg-section-title"><span>🎙 B. Giọng Đọc AI (TTS Voice) &amp; Nhạc Nền</span></div>
+        <div class="form-group mb-2">
+          <label class="form-label" for="override-voice-id">Chọn Giọng Đọc Thuyết Minh / Lồng Tiếng</label>
+          <select class="form-select" id="override-voice-id">
+            ${Object.entries(VOICE_LABELS).map(([k, lbl]) => `<option value="${k}" ${k === (d.voice_id || 'original') ? 'selected' : ''}>${lbl}</option>`).join('')}
+          </select>
+        </div>
+        <div class="grid-2" style="gap:10px;margin-bottom:10px">
+          <div class="form-group">
+            <label class="form-label" for="override-voice-speed">Tốc độ giọng đọc: <b id="lbl-voice-speed">${d.voice_speed || 1.0}x</b></label>
+            <input type="range" id="override-voice-speed" min="0.8" max="1.4" step="0.05" value="${d.voice_speed || 1.0}" style="accent-color:var(--teal);width:100%" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="override-bgm-style">Nhạc nền trộn tự động (BGM)</label>
+            <select class="form-select" id="override-bgm-style">
+              <option value="none" ${d.bgm_style === 'none' ? 'selected' : ''}>Không chèn nhạc nền</option>
+              <option value="cinematic_tension" ${d.bgm_style === 'cinematic_tension' ? 'selected' : ''}>Kịch tính Review Phim (Tension)</option>
+              <option value="chill_lofi" ${d.bgm_style === 'chill_lofi' ? 'selected' : ''}>Chill Lo-Fi nhẹ nhàng</option>
+              <option value="upbeat_viral" ${d.bgm_style === 'upbeat_viral' ? 'selected' : ''}>Sôi động Xu hướng (Upbeat Viral)</option>
+              <option value="emotional_piano" ${d.bgm_style === 'emotional_piano' ? 'selected' : ''}>Piano cảm xúc sâu lắng</option>
+            </select>
+          </div>
+        </div>
+        <label class="toggle-row">
+          <span>🔊 Giữ âm thanh môi trường gốc (Tự động giảm âm khi có giọng đọc)</span>
+          <input type="checkbox" id="override-keep-audio" ${d.keep_original_audio !== false ? 'checked' : ''} />
+        </label>
+      </div>
+
+      <!-- C. CHẠY CHỮ KARAOKE & BANNER HOOK -->
+      <div class="cfg-section-box">
+        <div class="cfg-section-title"><span>💬 C. Chạy Chữ Phụ Đề Động &amp; Tiêu Đề Banner Hook</span></div>
+        <div class="grid-2" style="gap:10px;margin-bottom:10px">
+          <div class="form-group">
+            <label class="form-label" for="override-sub-style">Kiểu chạy chữ / Phụ đề</label>
+            <select class="form-select" id="override-sub-style">
+              ${Object.entries(SUB_STYLE_LABELS).map(([k, lbl]) => `<option value="${k}" ${k === (d.subtitle_style || 'none') ? 'selected' : ''}>${lbl}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="override-text-pos">Vị trí hiển thị phụ đề</label>
+            <select class="form-select" id="override-text-pos">
+              <option value="bottom" ${d.text_position === 'bottom' ? 'selected' : ''}>Phía dưới (Đè lên vùng Blur Sub)</option>
+              <option value="middle" ${d.text_position === 'middle' ? 'selected' : ''}>Chính giữa khung hình</option>
+              <option value="top" ${d.text_position === 'top' ? 'selected' : ''}>Phía trên</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group mb-2">
+          <label class="form-label" for="override-banner-text">Tiêu đề Hook cố định trên đầu video (Banner Text)</label>
+          <input class="form-input" id="override-banner-text" type="text" maxlength="120" value="${d.banner_text || ''}" placeholder="Ví dụ: TẬP CUỐI: CÁI KẾT KHÔNG NGỜ..." />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="override-marquee-text">Nội dung chữ chạy ngang / Phụ đề nổi bật (Marquee / Sub Text)</label>
+          <input class="form-input" id="override-marquee-text" type="text" maxlength="200" value="${d.marquee_text || ''}" placeholder="Nhập dòng chữ chạy hoặc lời bình hiển thị trên video..." />
+        </div>
+      </div>
+
+      <!-- D. KHUNG HÌNH & BỐ CỤC -->
+      <div class="cfg-section-box" style="margin-bottom:0">
+        <div class="cfg-section-title"><span>📐 D. Độ Phân Giải, Bố Cục 9:16 &amp; Màu Sắc</span></div>
         <div class="res-grid">
           ${profiles.map(pr => `
             <button type="button" class="res-card ${(d.width || 720) === pr.w && (d.height || 1280) === pr.h ? 'active' : ''}" data-res-w="${pr.w}" data-res-h="${pr.h}">
@@ -901,91 +1183,6 @@ async function renderNewJob() {
           <input type="checkbox" id="override-mirror" ${d.mirror_flip ? 'checked' : ''} />
         </label>
       </div>
-
-      <!-- B. GIỌNG ĐỌC AI & ÂM THANH -->
-      <div class="cfg-section-box">
-        <div class="cfg-section-title"><span>🎙 B. Giọng Đọc AI (TTS Voice) &amp; Nhạc Nền</span></div>
-        <div class="form-group mb-2">
-          <label class="form-label" for="override-voice-id">Chọn Giọng Đọc Thuyết Minh / Lồng Tiếng</label>
-          <select class="form-select" id="override-voice-id">
-            ${Object.entries(VOICE_LABELS).map(([k, lbl]) => `<option value="${k}" ${k === (d.voice_id || 'original') ? 'selected' : ''}>${lbl}</option>`).join('')}
-          </select>
-        </div>
-        <div class="grid-2" style="gap:10px;margin-bottom:10px">
-          <div class="form-group">
-            <label class="form-label" for="override-voice-speed">Tốc độ giọng đọc: <b id="lbl-voice-speed">${d.voice_speed || 1.0}x</b></label>
-            <input type="range" id="override-voice-speed" min="0.8" max="1.4" step="0.05" value="${d.voice_speed || 1.0}" style="accent-color:var(--teal);width:100%" />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="override-bgm-style">Nhạc nền trộn tự động (BGM)</label>
-            <select class="form-select" id="override-bgm-style">
-              <option value="none" ${d.bgm_style === 'none' ? 'selected' : ''}>Không chèn nhạc nền</option>
-              <option value="cinematic_tension" ${d.bgm_style === 'cinematic_tension' ? 'selected' : ''}>Kịch tính Review Phim (Tension)</option>
-              <option value="chill_lofi" ${d.bgm_style === 'chill_lofi' ? 'selected' : ''}>Chill Lo-Fi nhẹ nhàng</option>
-              <option value="upbeat_viral" ${d.bgm_style === 'upbeat_viral' ? 'selected' : ''}>Sôi động Xu hướng (Upbeat Viral)</option>
-              <option value="emotional_piano" ${d.bgm_style === 'emotional_piano' ? 'selected' : ''}>Piano cảm xúc sâu lắng</option>
-            </select>
-          </div>
-        </div>
-        <label class="toggle-row">
-          <span>🔊 Giữ âm thanh môi trường gốc (Tự động giảm âm khi có giọng đọc)</span>
-          <input type="checkbox" id="override-keep-audio" ${d.keep_original_audio !== false ? 'checked' : ''} />
-        </label>
-      </div>
-
-      <!-- C. LÀM MỜ / XOÁ PHỤ ĐỀ GỐC (BLUR SUBTITLE) -->
-      <div class="cfg-section-box">
-        <div class="cfg-section-title"><span>🌫 C. Làm Mờ / Xoá Phụ Đề Gốc (Blur &amp; Inpaint)</span></div>
-        <label class="toggle-row mb-2">
-          <span>Bật tự động làm mờ / che phụ đề tiếng Trung/Anh ở đáy video</span>
-          <input type="checkbox" id="override-blur-sub" ${d.blur_subtitle ? 'checked' : ''} />
-        </label>
-        <div class="form-group mb-2">
-          <label class="form-label" for="override-blur-mode">Chế độ xử lý vùng phụ đề cũ</label>
-          <select class="form-select" id="override-blur-mode">
-            ${Object.entries(BLUR_LABELS).map(([k, lbl]) => `<option value="${k}" ${k === (d.blur_mode || 'none') ? 'selected' : ''}>${lbl}</option>`).join('')}
-          </select>
-        </div>
-        <div class="grid-2" style="gap:10px">
-          <div class="form-group">
-            <label class="form-label" for="override-blur-height">Chiều cao vùng Blur đáy: <b id="lbl-blur-h">${d.blur_height_pct || 22}%</b></label>
-            <input type="range" id="override-blur-height" min="10" max="45" step="1" value="${d.blur_height_pct || 22}" style="accent-color:var(--teal);width:100%" />
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="override-blur-strength">Cường độ làm mờ (Sigma): <b id="lbl-blur-s">${d.blur_strength || 20}</b></label>
-            <input type="range" id="override-blur-strength" min="5" max="40" step="1" value="${d.blur_strength || 20}" style="accent-color:var(--teal);width:100%" />
-          </div>
-        </div>
-      </div>
-
-      <!-- D. CHẠY CHỮ KARAOKE & BANNER HOOK -->
-      <div class="cfg-section-box" style="margin-bottom:0">
-        <div class="cfg-section-title"><span>💬 D. Chạy Chữ Phụ Đề Động &amp; Tiêu Đề Banner Hook</span></div>
-        <div class="grid-2" style="gap:10px;margin-bottom:10px">
-          <div class="form-group">
-            <label class="form-label" for="override-sub-style">Kiểu chạy chữ / Phụ đề</label>
-            <select class="form-select" id="override-sub-style">
-              ${Object.entries(SUB_STYLE_LABELS).map(([k, lbl]) => `<option value="${k}" ${k === (d.subtitle_style || 'none') ? 'selected' : ''}>${lbl}</option>`).join('')}
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="override-text-pos">Vị trí hiển thị phụ đề</label>
-            <select class="form-select" id="override-text-pos">
-              <option value="bottom" ${d.text_position === 'bottom' ? 'selected' : ''}>Phía dưới (Đè lên vùng Blur Sub)</option>
-              <option value="middle" ${d.text_position === 'middle' ? 'selected' : ''}>Chính giữa khung hình</option>
-              <option value="top" ${d.text_position === 'top' ? 'selected' : ''}>Phía trên</option>
-            </select>
-          </div>
-        </div>
-        <div class="form-group mb-2">
-          <label class="form-label" for="override-banner-text">Tiêu đề Hook cố định trên đầu video (Banner Text)</label>
-          <input class="form-input" id="override-banner-text" type="text" maxlength="120" value="${d.banner_text || ''}" placeholder="Ví dụ: TẬP CUỐI: CÁI KẾT KHÔNG NGỜ..." />
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="override-marquee-text">Nội dung chữ chạy ngang / Phụ đề nổi bật (Marquee / Sub Text)</label>
-          <input class="form-input" id="override-marquee-text" type="text" maxlength="200" value="${d.marquee_text || ''}" placeholder="Nhập dòng chữ chạy hoặc lời bình hiển thị trên video..." />
-        </div>
-      </div>
     `;
 
     const syncAllControls = () => {
@@ -995,7 +1192,10 @@ async function renderNewJob() {
         btn.classList.toggle('active', parseInt(btn.dataset.resW, 10) === w && parseInt(btn.dataset.resH, 10) === h);
       });
       if ($('lbl-voice-speed')) $('lbl-voice-speed').textContent = `${$('override-voice-speed').value}x`;
-      if ($('lbl-blur-h')) $('lbl-blur-h').textContent = `${$('override-blur-height').value}%`;
+      if ($('lbl-blur-x')) $('lbl-blur-x').textContent = `${$('override-blur-x').value}%`;
+      if ($('lbl-blur-y')) $('lbl-blur-y').textContent = `${$('override-blur-y').value}%`;
+      if ($('lbl-blur-w')) $('lbl-blur-w').textContent = `${$('override-blur-w').value}%`;
+      if ($('lbl-blur-h')) $('lbl-blur-h').textContent = `${$('override-blur-h').value}%`;
       if ($('lbl-blur-s')) $('lbl-blur-s').textContent = `${$('override-blur-strength').value}`;
       updateSummaryTextOnly();
     };
@@ -1027,6 +1227,169 @@ async function renderNewJob() {
     });
   }
 
+  function setBlurBoxCoords(x, y, w, h) {
+    const bx = Math.round(Math.min(Math.max(x, 0), 92));
+    const by = Math.round(Math.min(Math.max(y, 0), 92));
+    const bw = Math.round(Math.min(Math.max(w, 6), 100 - bx));
+    const bh = Math.round(Math.min(Math.max(h, 6), 100 - by));
+    if ($('override-blur-sub')) $('override-blur-sub').checked = true;
+    if ($('override-blur-mode') && $('override-blur-mode').value === 'none') {
+      $('override-blur-mode').value = 'gaussian_box';
+    }
+    if ($('override-blur-x')) $('override-blur-x').value = bx;
+    if ($('override-blur-y')) $('override-blur-y').value = by;
+    if ($('override-blur-w')) $('override-blur-w').value = bw;
+    if ($('override-blur-h')) $('override-blur-h').value = bh;
+    if ($('lbl-blur-x')) $('lbl-blur-x').textContent = `${bx}%`;
+    if ($('lbl-blur-y')) $('lbl-blur-y').textContent = `${by}%`;
+    if ($('lbl-blur-w')) $('lbl-blur-w').textContent = `${bw}%`;
+    if ($('lbl-blur-h')) $('lbl-blur-h').textContent = `${bh}%`;
+    updateSummaryTextOnly();
+  }
+
+  // Khởi tạo thao tác kéo thả & co giãn 8 góc/cạnh trên khung hình video thật
+  function setupInteractiveBlurBox() {
+    const phone = $('studio-live-phone');
+    const rectEl = $('custom-blur-rect');
+    if (!phone || !rectEl) return;
+
+    let dragState = null;
+
+    rectEl.addEventListener('pointerdown', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      const handle = e.target.dataset?.handle || 'move';
+      const stageRect = phone.getBoundingClientRect();
+      dragState = {
+        handle,
+        startX: e.clientX,
+        startY: e.clientY,
+        stageW: stageRect.width || 270,
+        stageH: stageRect.height || 480,
+        initX: parseFloat($('override-blur-x')?.value ?? 6),
+        initY: parseFloat($('override-blur-y')?.value ?? 72),
+        initW: parseFloat($('override-blur-w')?.value ?? 88),
+        initH: parseFloat($('override-blur-h')?.value ?? 16),
+      };
+      rectEl.setPointerCapture(e.pointerId);
+    });
+
+    rectEl.addEventListener('pointermove', e => {
+      if (!dragState) return;
+      e.preventDefault();
+      const dxPct = ((e.clientX - dragState.startX) / dragState.stageW) * 100;
+      const dyPct = ((e.clientY - dragState.startY) / dragState.stageH) * 100;
+
+      let { initX: x, initY: y, initW: w, initH: h, handle } = dragState;
+      if (handle === 'move') {
+        x = Math.min(Math.max(x + dxPct, 0), 100 - w);
+        y = Math.min(Math.max(y + dyPct, 0), 100 - h);
+      } else {
+        if (handle.includes('e')) w = Math.min(Math.max(w + dxPct, 6), 100 - x);
+        if (handle.includes('s')) h = Math.min(Math.max(h + dyPct, 6), 100 - y);
+        if (handle.includes('w')) {
+          const nx = Math.min(Math.max(x + dxPct, 0), x + w - 6);
+          w = w + (x - nx);
+          x = nx;
+        }
+        if (handle.includes('n')) {
+          const ny = Math.min(Math.max(y + dyPct, 0), y + h - 6);
+          h = h + (y - ny);
+          y = ny;
+        }
+      }
+      setBlurBoxCoords(x, y, w, h);
+    });
+
+    const endDrag = e => {
+      if (!dragState) return;
+      try { rectEl.releasePointerCapture(e.pointerId); } catch {}
+      dragState = null;
+    };
+    rectEl.addEventListener('pointerup', endDrag);
+    rectEl.addEventListener('pointercancel', endDrag);
+
+    // Các nút chọn nhanh vùng Blur mẫu
+    document.querySelectorAll('[data-box-preset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const key = btn.dataset.boxPreset;
+        if (key === 'sub_bottom') setBlurBoxCoords(6, 72, 88, 16);
+        else if (key === 'sub_high') setBlurBoxCoords(8, 62, 84, 16);
+        else if (key === 'logo_tr') setBlurBoxCoords(66, 4, 28, 12);
+        else if (key === 'logo_tl') setBlurBoxCoords(6, 4, 28, 12);
+        else if (key === 'center_watermark') setBlurBoxCoords(15, 42, 70, 16);
+      });
+    });
+  }
+
+  // Điều khiển phát & tua khung hình video thực tế
+  function setupRealVideoScrubber() {
+    const videoEl = $('studio-real-video');
+    const scrubber = $('studio-video-scrubber');
+    const timeLbl = $('studio-video-time');
+    const playBtn = $('btn-toggle-preview-play');
+    const fallback = $('studio-video-fallback');
+    if (!videoEl || !scrubber) return;
+
+    const updateTimeUI = () => {
+      const dur = videoEl.duration || 0;
+      const cur = videoEl.currentTime || 0;
+      if (dur > 0) {
+        scrubber.max = dur.toFixed(2);
+        scrubber.value = cur.toFixed(2);
+        if (timeLbl) timeLbl.textContent = `${cur.toFixed(1)}s / ${dur.toFixed(1)}s`;
+      }
+    };
+
+    videoEl.addEventListener('loadeddata', () => {
+      if (fallback) fallback.classList.add('hidden');
+      updateTimeUI();
+    });
+    videoEl.addEventListener('timeupdate', updateTimeUI);
+
+    scrubber.addEventListener('input', () => {
+      videoEl.pause();
+      if (playBtn) playBtn.textContent = '▶ Phát';
+      videoEl.currentTime = parseFloat(scrubber.value || '0');
+      updateTimeUI();
+    });
+
+    playBtn?.addEventListener('click', () => {
+      if (videoEl.paused) {
+        videoEl.play().catch(() => {});
+        playBtn.textContent = '⏸ Dừng';
+      } else {
+        videoEl.pause();
+        playBtn.textContent = '▶ Phát';
+      }
+    });
+  }
+
+  async function loadRealVideoIntoStage(fileId, localBlobUrl = null) {
+    const videoEl = $('studio-real-video');
+    const fallback = $('studio-video-fallback');
+    if (!videoEl) return;
+
+    if (localBlobUrl) {
+      videoEl.src = localBlobUrl;
+      videoEl.load();
+      if (fallback) fallback.classList.add('hidden');
+      return;
+    }
+
+    if (!fileId || state.isMock || !window.CC_API.fetchFileBlobUrl) return;
+    try {
+      const blobUrl = await window.CC_API.fetchFileBlobUrl(fileId);
+      if (blobUrl) {
+        videoEl.src = blobUrl;
+        videoEl.load();
+        if (fallback) fallback.classList.add('hidden');
+      }
+    } catch {
+      // Giữ nguyên khung nền nếu chưa tải được blob
+    }
+  }
+
   function updateSummaryTextOnly() {
     const projSel   = $('new-job-project');
     const presetSel = document.querySelector('input[name="preset"]:checked');
@@ -1042,16 +1405,21 @@ async function renderNewJob() {
     updateLivePhonePreview(overridesObj);
 
     const hasRender = Object.keys(overridesObj).length > 0;
+    const blurDesc = overridesObj.blur_subtitle
+      ? `${overridesObj.blur_mode} [X:${overridesObj.blur_x_pct}%, Y:${overridesObj.blur_y_pct}%, W:${overridesObj.blur_w_pct}%, H:${overridesObj.blur_h_pct}%]`
+      : 'Tắt';
     const summaryText = hasRender
-      ? `${overridesObj.width}×${overridesObj.height} (${overridesObj.fit_mode}) · Voice: ${overridesObj.voice_id} (${overridesObj.voice_speed}x) · Blur: ${overridesObj.blur_subtitle ? overridesObj.blur_mode + ' ' + overridesObj.blur_height_pct + '%' : 'Tắt'} · Sub: ${overridesObj.subtitle_style}`
+      ? `${overridesObj.width}×${overridesObj.height} (${overridesObj.fit_mode}) · Voice: ${overridesObj.voice_id} · Blur 2D: ${blurDesc}`
       : 'Chỉ kiểm tra thông số gốc (probe.json)';
 
+    const chObj = CHANNELS_8.find(c => c.id === state.selectedChannelId);
+
     $('summary-body').innerHTML = `
-      <span class="dl-label">Dự án đích</span><span class="dl-value">${projName}</span>
+      <span class="dl-label">Kênh Fanpage Đích</span><span class="dl-value"><b style="color:var(--teal)">${chObj ? chObj.name : 'Tự do'}</b></span>
+      <span class="dl-label">Dự án lưu trữ</span><span class="dl-value">${projName}</span>
       <span class="dl-label">Preset Pipeline</span><span class="dl-value"><span class="tag" style="color:var(--teal)">${presetId}</span> (v${presetVer})</span>
       <span class="dl-label">Input Video UUID</span><span class="dl-value mono">${inputVal || '<em>Chưa chọn UUID</em>'}</span>
-      <span class="dl-label">Tóm tắt Đa cấu hình</span><span class="dl-value mono" style="color:var(--teal)">${summaryText}</span>
-      <span class="dl-label">Cổng Giao Tiếp</span><span class="dl-value mono">HTTPS :443 (/api/v1/jobs) → PostgreSQL Queue → JSON Report</span>
+      <span class="dl-label">Vùng Blur &amp; Cấu hình</span><span class="dl-value mono" style="color:var(--teal)">${summaryText}</span>
     `;
 
     const previewEl = $('live-job-payload-json');
@@ -1066,7 +1434,6 @@ async function renderNewJob() {
       }, null, 2);
     }
 
-    // Highlight selected file card
     document.querySelectorAll('[data-pick-file]').forEach(card => {
       card.classList.toggle('selected', card.dataset.pickFile === inputVal);
     });
@@ -1076,23 +1443,87 @@ async function renderNewJob() {
     if (preset && !preset.available) {
       $('btn-submit-job').innerHTML = `${I.alert} Preset chưa sẵn sàng trong registry`;
     } else {
-      $('btn-submit-job').innerHTML = `${I.play} Xếp vào hàng đợi & Bắt đầu Render`;
+      $('btn-submit-job').innerHTML = `${I.play} Xếp vào hàng đợi & Render Vùng Blur Đã Chọn`;
     }
   }
 
-  // Update summary when form changes
-  function updateSummary() {
+  function updateSummary(channelOverride = null) {
     const presetSel = document.querySelector('input[name="preset"]:checked');
     document.querySelectorAll('.preset-option').forEach(lbl => {
       const radio = lbl.querySelector('input[name="preset"]');
       lbl.classList.toggle('selected-card', Boolean(radio && radio.checked));
     });
     const preset = state.presets.find(p => p.id === (presetSel?.value || ''));
-    updateOverrideFields(preset);
+    updateOverrideFields(preset, channelOverride);
     updateSummaryTextOnly();
   }
 
-  async function loadProjectVerifiedFiles() {
+  // Sự kiện chọn 1 trong 8 Kênh Fanpage trên thanh đầu trang
+  document.querySelectorAll('[data-channel-id]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const chId = btn.dataset.channelId;
+      state.selectedChannelId = chId;
+      document.querySelectorAll('[data-channel-id]').forEach(b => b.classList.toggle('active', b.dataset.channelId === chId));
+      const ch = CHANNELS_8.find(c => c.id === chId);
+      if ($('selected-channel-tag') && ch) $('selected-channel-tag').textContent = ch.name;
+      if (ch) {
+        const targetRadio = document.querySelector(`input[name="preset"][value="${ch.preset_id}"]`);
+        if (targetRadio && !targetRadio.disabled) {
+          targetRadio.checked = true;
+        }
+        updateSummary(ch);
+        toast(`Đã nạp cấu hình & vùng Blur mẫu của ${ch.name}`, 'ok');
+      }
+    });
+  });
+
+  // Sự kiện Upload file .MP4 trực tiếp từ trình duyệt
+  const dropzone = $('studio-upload-dropzone');
+  const fileInput = $('studio-file-input');
+  const uploadStatus = $('upload-status-text');
+
+  async function handleFileUpload(file) {
+    if (!file) return;
+    const projId = $('new-job-project')?.value;
+    if (!projId) {
+      toast('Vui lòng chọn Dự án trước khi tải video lên.', 'warn');
+      return;
+    }
+    // Hiển thị ngay video vừa chọn vào khung Preview để người dùng kéo khung Blur ngay lập tức!
+    const localUrl = URL.createObjectURL(file);
+    state.localVideoBlobUrl = localUrl;
+    loadRealVideoIntoStage(null, localUrl);
+
+    if (uploadStatus) uploadStatus.textContent = `Đang tải "${file.name}" (${window.ccUtil.formatBytes(file.size)}) lên máy chủ qua HTTPS :443...`;
+    try {
+      const uploaded = await window.CC_API.uploadProjectFile(projId, file);
+      if ($('new-job-input')) $('new-job-input').value = uploaded.id;
+      if (uploadStatus) uploadStatus.innerHTML = `<span style="color:var(--status-ok)">✔ Đã tải lên &amp; xác minh SHA-256: <code>${window.ccUtil.shortId(uploaded.id)}</code> (${window.ccUtil.formatBytes(uploaded.size_bytes)})</span>`;
+      toast(`Đã tải video lên thành công! Hãy kéo khung Blur trên video.`, 'ok');
+      await loadProjectVerifiedFiles(false);
+      updateSummaryTextOnly();
+    } catch (err) {
+      const msg = err?.body?.error?.message || err?.message || 'Lỗi tải file video lên.';
+      if (uploadStatus) uploadStatus.innerHTML = `<span style="color:var(--status-failed)">✖ ${msg}</span>`;
+      toast(msg, 'err');
+    }
+  }
+
+  dropzone?.addEventListener('click', () => fileInput?.click());
+  fileInput?.addEventListener('change', e => {
+    const f = e.target.files?.[0];
+    if (f) handleFileUpload(f);
+  });
+  dropzone?.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+  dropzone?.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+  dropzone?.addEventListener('drop', e => {
+    e.preventDefault();
+    dropzone.classList.remove('dragover');
+    const f = e.dataTransfer?.files?.[0];
+    if (f) handleFileUpload(f);
+  });
+
+  async function loadProjectVerifiedFiles(autoLoadStage = true) {
     const projId = $('new-job-project')?.value;
     const picker = $('verified-files-picker');
     if (!projId || !picker || !window.CC_API.getProjectFiles) return;
@@ -1125,9 +1556,13 @@ async function renderNewJob() {
         btn.addEventListener('click', () => {
           $('new-job-input').value = btn.dataset.pickFile;
           updateSummaryTextOnly();
+          loadRealVideoIntoStage(btn.dataset.pickFile);
         });
       });
       updateSummaryTextOnly();
+      if (autoLoadStage && curVal) {
+        loadRealVideoIntoStage(curVal);
+      }
     } catch {
       picker.innerHTML = '';
     }
@@ -1138,9 +1573,12 @@ async function renderNewJob() {
     loadProjectVerifiedFiles();
   });
   $('new-job-input')?.addEventListener('input', updateSummaryTextOnly);
-  document.querySelectorAll('input[name="preset"]').forEach(r => r.addEventListener('change', updateSummary));
-  updateSummary();
-  loadProjectVerifiedFiles();
+  document.querySelectorAll('input[name="preset"]').forEach(r => r.addEventListener('change', () => updateSummary(null)));
+
+  setupInteractiveBlurBox();
+  setupRealVideoScrubber();
+  updateSummary(activeChannel);
+  loadProjectVerifiedFiles(true);
 
   // Submit
   $('new-job-form')?.addEventListener('submit', async e => {
@@ -1151,7 +1589,6 @@ async function renderNewJob() {
     const presetSel = document.querySelector('input[name="preset"]:checked');
     const inputVal  = $('new-job-input')?.value.trim();
 
-    // Validation UUID
     let valid = true;
     if (!inputVal || !/^[0-9a-f-]{36}$/i.test(inputVal)) {
       $('new-job-input')?.classList.add('invalid');
@@ -1193,8 +1630,54 @@ async function renderNewJob() {
     } finally {
       state.submitPending = false;
       $('btn-submit-job').disabled = false;
-      $('btn-submit-job').innerHTML = `${I.play} Xếp vào hàng đợi & Bắt đầu Render`;
+      $('btn-submit-job').innerHTML = `${I.play} Xếp vào hàng đợi & Render Vùng Blur Đã Chọn`;
     }
+  });
+}
+
+// C2. ĐIỀU PHỐI 8 KÊNH FANPAGE TRONG CÙNG SPA
+async function renderChannels() {
+  const main = $('main-content');
+  main.innerHTML = `
+    <div class="page-header">
+      <div>
+        <h1 class="page-title">📊 Điều Phối 8 Kênh Fanpage &amp; Cấu Hình Render Chuyên Biệt</h1>
+        <p class="page-subtitle">Tất cả 8 kênh được hợp nhất trực tiếp vào Command Center. Nhấn chọn kênh bất kỳ để mở ngay Studio với vùng Blur &amp; Giọng đọc AI của kênh đó.</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-primary btn-sm" id="btn-open-studio-from-ch">${I.plus} Mở Studio Đa Cấu Hình</button>
+      </div>
+    </div>
+
+    <div class="channel-matrix-grid">
+      ${CHANNELS_8.map(ch => `
+        <div class="channel-matrix-card">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+            <span style="font-size:14px;font-weight:700;color:var(--txt-1)">📺 ${ch.name}</span>
+            <span class="chip succeeded">${ch.preset_id}</span>
+          </div>
+          <div class="text-muted text-sm">${ch.niche} · Khung giờ đăng: <b>${ch.schedule}</b></div>
+          <div class="dl-grid" style="font-size:11px;padding-top:8px;border-top:1px solid var(--border)">
+            <span class="dl-label">Giọng đọc AI</span><span class="dl-value mono" style="color:var(--teal)">${ch.voice_id}</span>
+            <span class="dl-label">Banner Hook</span><span class="dl-value" style="color:#fde047;font-weight:700">${ch.banner_text || '—'}</span>
+            <span class="dl-label">Chữ chạy (Marquee)</span><span class="dl-value">${ch.marquee_text || '—'}</span>
+            <span class="dl-label">Tọa độ Blur mặc định</span><span class="dl-value mono">X:${ch.blur_box.x}% · Y:${ch.blur_box.y}% · W:${ch.blur_box.w}% · H:${ch.blur_box.h}%</span>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px">
+            <button type="button" class="btn btn-primary btn-sm" data-open-channel-studio="${ch.id}">
+              🎬 Mở Studio &amp; Chọn Vùng Blur cho kênh này →
+            </button>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  $('btn-open-studio-from-ch')?.addEventListener('click', () => navigate('new-job'));
+  main.querySelectorAll('[data-open-channel-studio]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      navigate('new-job', { channelId: btn.dataset.openChannelStudio });
+    });
   });
 }
 
@@ -1438,8 +1921,8 @@ async function renderJobDetail() {
                 <div class="m-val">${vc.voice_id || rc.voice_id || 'original'} (${vc.voice_speed || rc.voice_speed || 1}x)</div>
               </div>
               <div class="metric-tile">
-                <div class="m-label">Làm Mờ Sub (Blur)</div>
-                <div class="m-val">${(bc.blur_subtitle ?? rc.blur_subtitle) ? `${bc.blur_mode || rc.blur_mode || 'gaussian'} (${bc.blur_height_pct || rc.blur_height_pct || 22}%)` : 'Không bật'}</div>
+                <div class="m-label">Vùng Chọn Blur 2D</div>
+                <div class="m-val">${(bc.blur_subtitle ?? rc.blur_subtitle) ? `${bc.blur_mode || rc.blur_mode || 'gaussian'} [X:${bc.custom_blur_box?.x_pct ?? rc.blur_x_pct ?? 0}%, Y:${bc.custom_blur_box?.y_pct ?? rc.blur_y_pct ?? 72}%, ${bc.custom_blur_box?.w_pct ?? rc.blur_w_pct ?? 100}×${bc.custom_blur_box?.h_pct ?? rc.blur_h_pct ?? 16}%]` : 'Không bật'}</div>
               </div>
               <div class="metric-tile">
                 <div class="m-label">Chạy Chữ / Phụ Đề</div>
@@ -1922,6 +2405,7 @@ function render() {
     case 'projects':       renderProjects();      break;
     case 'project-detail': renderProjectDetail(); break;
     case 'new-job':        renderNewJob();        break;
+    case 'channels':       renderChannels();      break;
     case 'job-detail':     renderJobDetail();     break;
     case 'modules':        renderModules();       break;
     case 'agents':         renderAgents();        break;

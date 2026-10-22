@@ -55,7 +55,12 @@ class Overrides(Closed):
     blur_subtitle: bool | None = None
     blur_mode: Literal["none", "gaussian_box", "feather_dark", "ai_inpaint"] | None = None
     blur_height_pct: Annotated[StrictInt, Field(ge=5, le=50)] | None = None
+    blur_x_pct: Annotated[StrictInt, Field(ge=0, le=95)] | None = None
+    blur_y_pct: Annotated[StrictInt, Field(ge=0, le=95)] | None = None
+    blur_w_pct: Annotated[StrictInt, Field(ge=5, le=100)] | None = None
+    blur_h_pct: Annotated[StrictInt, Field(ge=5, le=80)] | None = None
     blur_strength: Annotated[StrictInt, Field(ge=2, le=50)] | None = None
+    channel_id: str | None = Field(default=None, max_length=64)
     subtitle_style: Literal["none", "karaoke_pop", "review_yellow_box", "neon_glow", "minimal_white"] | None = None
     banner_text: str | None = Field(default=None, max_length=120)
     marquee_text: str | None = Field(default=None, max_length=200)

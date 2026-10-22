@@ -42,10 +42,11 @@ def create_app(settings: Settings | None = None):
         request.state.request_id = uuid4().hex
         # Read through the bounded stream: handles both Content-Length and chunked bodies.
         if request.method in ("POST", "PATCH", "PUT", "DELETE"):
+            max_bytes = 100 * 1024 * 1024 if request.url.path.endswith("/upload") else 256 * 1024
             chunks, count = [], 0
             async for part in request.stream():
                 count += len(part)
-                if count > 256 * 1024:
+                if count > max_bytes:
                     return failure(request, "REQUEST_TOO_LARGE", 413)
                 chunks.append(part)
             request._body = b"".join(chunks)
@@ -148,6 +149,12 @@ def create_app(settings: Settings | None = None):
     @app.get("/api/v1/projects/{pid}/files", response_model=Items[FileDTO])
     def project_files(pid: UUID, principal=Depends(owner)):
         return repo.project_files(principal, pid)
+
+    @app.post("/api/v1/projects/{pid}/upload", status_code=201, response_model=FileDTO)
+    async def upload_project_file(pid: UUID, request: Request, principal=Depends(owner)):
+        raw = await request.body()
+        fname = request.headers.get("X-File-Name", "upload.mp4")
+        return repo.upload_project_file(principal, pid, fname, raw)
 
     @app.get("/api/v1/jobs/{jid}", response_model=JobDTO)
     def job(jid: UUID, principal=Depends(owner)):

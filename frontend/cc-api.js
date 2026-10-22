@@ -615,6 +615,20 @@ class MockApiClient {
     };
   }
 
+  async uploadProjectFile(projectId, file) {
+    await this._delay(250);
+    return {
+      id: uuid4(),
+      project_id: projectId,
+      kind: 'video',
+      media_type: 'video/mp4',
+      size_bytes: file ? file.size : 102400,
+      sha256: 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
+      verification: 'verified',
+      _mock: true,
+    };
+  }
+
   getFileContentUrl(fileId) {
     return null; // Mock mode không stream binary thật
   }
@@ -731,6 +745,23 @@ class RealApiClient {
   async getProjectFiles(projectId) {
     if (!projectId) return { items: [] };
     return this._fetch('GET', `/projects/${projectId}/files`).catch(() => ({ items: [] }));
+  }
+
+  async uploadProjectFile(projectId, file) {
+    if (!projectId || !file) throw new Error('Thiếu projectId hoặc file video.');
+    const headers = {
+      'Content-Type': file.type || 'video/mp4',
+      'X-File-Name': encodeURIComponent(file.name || 'video.mp4'),
+    };
+    if (this.token) headers['Authorization'] = `Bearer ${this.token}`;
+    const res = await fetch(`${this.base}/projects/${projectId}/upload`, {
+      method: 'POST',
+      headers,
+      body: file,
+    });
+    const json = await res.json().catch(() => null);
+    if (!res.ok) throw { status: res.status, body: json };
+    return json;
   }
 
   async getJob(id) { return this._fetch('GET', `/jobs/${id}`); }
