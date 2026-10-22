@@ -16,6 +16,30 @@ BASIC_CONFIG = {
     "properties": {
         "width": {"type": "integer", "enum": [360, 720, 1080]},
         "height": {"type": "integer", "enum": [640, 1280, 1920]},
+        "preset_profile": {"type": "string"},
+        "fit_mode": {"type": "string", "enum": ["contain", "cover", "blur_bg"]},
+        "voice_id": {"type": "string", "enum": [
+            "original",
+            "vi_female_north_ngochuyen",
+            "vi_male_north_minhquang",
+            "vi_female_south_thaovy",
+            "vi_male_review_tram",
+            "wuby_clone_v2",
+            "omnivoice_auto",
+        ]},
+        "voice_speed": {"type": "number", "minimum": 0.5, "maximum": 2.0},
+        "keep_original_audio": {"type": "boolean"},
+        "bgm_style": {"type": "string", "enum": ["none", "cinematic_tension", "chill_lofi", "upbeat_viral", "emotional_piano"]},
+        "blur_subtitle": {"type": "boolean"},
+        "blur_mode": {"type": "string", "enum": ["none", "gaussian_box", "feather_dark", "ai_inpaint"]},
+        "blur_height_pct": {"type": "integer", "minimum": 5, "maximum": 50},
+        "blur_strength": {"type": "integer", "minimum": 2, "maximum": 50},
+        "subtitle_style": {"type": "string", "enum": ["none", "karaoke_pop", "review_yellow_box", "neon_glow", "minimal_white"]},
+        "banner_text": {"type": "string", "maxLength": 120},
+        "marquee_text": {"type": "string", "maxLength": 200},
+        "text_position": {"type": "string", "enum": ["bottom", "middle", "top"]},
+        "mirror_flip": {"type": "boolean"},
+        "color_grade": {"type": "string", "enum": ["natural", "cinematic_warm", "film_contrast", "vibrant_tiktok", "noir_bw"]},
     }, "required": ["width", "height"],
 }
 MODULES = {
@@ -24,15 +48,59 @@ MODULES = {
     "render.compose": {"config_schema": EMPTY_CONFIG, "resource": "gpu:0", "available": False},
     "render.rerender": {"config_schema": EMPTY_CONFIG, "resource": "gpu:0", "available": False},
 }
+PRESET_DEFAULTS = {
+    "basic_render": {
+        "width": 720, "height": 1280, "fit_mode": "contain",
+        "voice_id": "original", "voice_speed": 1.0, "keep_original_audio": True, "bgm_style": "none",
+        "blur_subtitle": False, "blur_mode": "none", "blur_height_pct": 22, "blur_strength": 18,
+        "subtitle_style": "none", "banner_text": "", "marquee_text": "", "text_position": "bottom",
+        "mirror_flip": False, "color_grade": "natural",
+    },
+    "cauhinh2": {
+        "width": 720, "height": 1280, "fit_mode": "contain",
+        "voice_id": "vi_male_review_tram", "voice_speed": 1.05, "keep_original_audio": True, "bgm_style": "cinematic_tension",
+        "blur_subtitle": True, "blur_mode": "gaussian_box", "blur_height_pct": 24, "blur_strength": 22,
+        "subtitle_style": "review_yellow_box", "banner_text": "REVIEW PHIM HAY", "marquee_text": "Theo dõi kênh để xem phần tiếp theo!", "text_position": "bottom",
+        "mirror_flip": False, "color_grade": "film_contrast",
+    },
+    "cauhinh3": {
+        "width": 720, "height": 1280, "fit_mode": "blur_bg",
+        "voice_id": "vi_female_north_ngochuyen", "voice_speed": 1.05, "keep_original_audio": True, "bgm_style": "upbeat_viral",
+        "blur_subtitle": True, "blur_mode": "gaussian_box", "blur_height_pct": 22, "blur_strength": 20,
+        "subtitle_style": "karaoke_pop", "banner_text": "", "marquee_text": "Đừng quên thả tim và bấm theo dõi kênh nhé!", "text_position": "bottom",
+        "mirror_flip": True, "color_grade": "vibrant_tiktok",
+    },
+    "cauhinh3_wuby": {
+        "width": 720, "height": 1280, "fit_mode": "cover",
+        "voice_id": "wuby_clone_v2", "voice_speed": 1.0, "keep_original_audio": True, "bgm_style": "emotional_piano",
+        "blur_subtitle": True, "blur_mode": "ai_inpaint", "blur_height_pct": 20, "blur_strength": 16,
+        "subtitle_style": "karaoke_pop", "banner_text": "WUBY AI STUDIO", "marquee_text": "Bản thuyết minh AI giữ nền tự động", "text_position": "bottom",
+        "mirror_flip": False, "color_grade": "cinematic_warm",
+    },
+    "chidepdicau": {
+        "width": 720, "height": 1280, "fit_mode": "blur_bg",
+        "voice_id": "vi_female_north_ngochuyen", "voice_speed": 1.05, "keep_original_audio": True, "bgm_style": "upbeat_viral",
+        "blur_subtitle": True, "blur_mode": "gaussian_box", "blur_height_pct": 25, "blur_strength": 20,
+        "subtitle_style": "neon_glow", "banner_text": "CHỊ ĐẸP ĐI CÂU", "marquee_text": "Hành trình săn cá khủng mỗi ngày!", "text_position": "bottom",
+        "mirror_flip": False, "color_grade": "vibrant_tiktok",
+    },
+    "song1minhcogivui": {
+        "width": 720, "height": 1280, "fit_mode": "contain",
+        "voice_id": "vi_female_south_thaovy", "voice_speed": 1.0, "keep_original_audio": True, "bgm_style": "chill_lofi",
+        "blur_subtitle": True, "blur_mode": "feather_dark", "blur_height_pct": 20, "blur_strength": 18,
+        "subtitle_style": "minimal_white", "banner_text": "SỐNG MỘT MÌNH CÓ GÌ VUI", "marquee_text": "Nhật ký chill mỗi tối một mình", "text_position": "bottom",
+        "mirror_flip": False, "color_grade": "cinematic_warm",
+    },
+}
 PRESETS = {
-    "inspect_media": {"label": "Kiểm tra thông số video", "modules": ["media.probe"], "available": True},
-    "basic_render": {"label": "Render cơ bản CPU — giữ âm thanh gốc", "modules": ["media.probe", "render.basic"], "available": True},
-    "wuby": {"label": "Wuby — đang tích hợp adapter", "modules": ["render.compose"], "available": False},
-    "cauhinh2": {"label": "Film review black — đang tích hợp", "modules": ["render.compose"], "available": False},
-    "cauhinh3": {"label": "Movie clone — đang tích hợp", "modules": ["render.compose"], "available": False},
-    "cauhinh3_wuby": {"label": "Wuby AI giữ nền — đang tích hợp", "modules": ["render.compose"], "available": False},
-    "chidepdicau": {"label": "Chị đẹp đi câu — đang tích hợp", "modules": ["render.compose"], "available": False},
-    "song1minhcogivui": {"label": "Sống một mình — đang tích hợp", "modules": ["render.compose"], "available": False},
+    "inspect_media": {"label": "Kiểm tra thông số video (Probe JSON)", "modules": ["media.probe"], "available": True},
+    "basic_render": {"label": " Đa cấu hình Tự do — Tuỳ chỉnh Giọng đọc, Blur & Chạy chữ", "modules": ["media.probe", "render.basic"], "available": True},
+    "cauhinh2": {"label": "Cấu hình 2 — Review Phim Viền Đen + Blur Sub + Voice Trầm", "modules": ["media.probe", "render.basic"], "available": True},
+    "cauhinh3": {"label": "Cấu hình 3 — Movie Clone Nền Mờ 9:16 + Karaoke + Lật Gương", "modules": ["media.probe", "render.basic"], "available": True},
+    "cauhinh3_wuby": {"label": "Cấu hình 3 Wuby — Giọng Wuby Clone + Xoá Sub Giữ Nền", "modules": ["media.probe", "render.basic"], "available": True},
+    "chidepdicau": {"label": "Kênh Chị Đẹp Đi Câu — Voice Nữ Bắc + Banner Hook + Blur Sub", "modules": ["media.probe", "render.basic"], "available": True},
+    "song1minhcogivui": {"label": "Kênh Sống Một Mình — Voice Nữ Nam + Chill Lo-Fi + Sub Tối Giản", "modules": ["media.probe", "render.basic"], "available": True},
+    "wuby": {"label": "Wuby GPU Legacy — chỉ chạy trên cụm GPU nội bộ", "modules": ["render.compose"], "available": False},
 }
 
 
@@ -90,10 +158,22 @@ def make_manifest(request: CreateJob, job_id, created_at):
         raise DomainError("SINGLE_VIDEO_REQUIRED", 422)
     if request.overrides.title:
         raise DomainError("OVERRIDE_NOT_SUPPORTED", 422)
-    if request.preset_id != "basic_render" and (request.overrides.width is not None or request.overrides.height is not None):
+    if request.preset_id == "inspect_media" and (request.overrides.width is not None or request.overrides.height is not None):
         raise DomainError("OVERRIDE_NOT_SUPPORTED", 422)
-    width = request.overrides.width or 720
-    height = request.overrides.height or 1280
+
+    defaults = PRESET_DEFAULTS.get(request.preset_id, {})
+    width = request.overrides.width or defaults.get("width", 720)
+    height = request.overrides.height or defaults.get("height", 1280)
+
+    raw_overrides = request.overrides.model_dump(exclude_none=True)
+    raw_overrides.pop("title", None)
+    has_extra_overrides = any(k not in ("width", "height") for k in raw_overrides)
+
+    if request.preset_id == "basic_render" and not has_extra_overrides:
+        compose_config = {"width": width, "height": height}
+    else:
+        compose_config = {**defaults, **raw_overrides, "width": width, "height": height, "preset_profile": request.preset_id}
+
     tasks = []
     for index, module in enumerate(preset["modules"]):
         task_id = uuid4()
@@ -101,7 +181,7 @@ def make_manifest(request: CreateJob, job_id, created_at):
             "task_id": str(task_id), "task_key": "probe" if index == 0 else "compose",
             "module": module, "action": "run", "module_version": MODULE_VERSION,
             "depends_on": [tasks[-1]["task_id"]] if tasks else [],
-            "config": {"width": width, "height": height} if module == "render.basic" else {},
+            "config": compose_config if module == "render.basic" else {},
             "input_refs": [str(v) for v in request.input_refs], "output_refs": [],
             "status": "queued", "attempt": 0,
         })
@@ -121,5 +201,6 @@ def module_dtos():
 def preset_dtos():
     return [{"id": k, "version": MODULE_VERSION, "label": v["label"], "available": v["available"],
              "modules": v["modules"],
-             "override_schema": (BASIC_CONFIG if k == "basic_render" else EMPTY_CONFIG) if v["available"] else CreateJob.model_json_schema()["$defs"]["Overrides"]}
+             "default_config": PRESET_DEFAULTS.get(k, {}),
+             "override_schema": (BASIC_CONFIG if "render.basic" in v["modules"] else EMPTY_CONFIG) if v["available"] else CreateJob.model_json_schema()["$defs"]["Overrides"]}
             for k, v in PRESETS.items()]

@@ -11,11 +11,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="cc-style.css">
 
-  <!-- Cấu hình chế độ API: "mock" hoặc "real" -->
-  <!-- Đổi sang mode:"real",apiBase:"/api/v1" khi API được triển khai -->
+  <!-- Cấu hình chế độ API: tự động dùng API thật trên domain production (HTTPS 443) -->
   <script>
     window.__CC_CONFIG = {
-      mode: 'mock',
+      mode: (location.hostname && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') ? 'real' : 'mock',
       apiBase: '/api/v1'
     };
   </script>
@@ -36,6 +35,7 @@
   <!-- ── Header ────────────────────────────────────────────── -->
   <header id="app-header" role="banner">
     <div class="app-brand">
+      <span class="brand-icon" aria-hidden="true">⚡</span>
       AI Video <span>Command Center</span>
     </div>
 
@@ -63,26 +63,32 @@
     </nav>
 
     <div class="header-right">
-      <!-- Nút đổi mode & Cấu hình API -->
-      <button id="btn-api-mode" class="api-badge mode-mock" aria-label="Cài đặt kết nối API">
+      <!-- Cổng bảo mật HTTPS 443 -->
+      <div id="tls-port-badge" class="api-badge ok" title="Toàn bộ giao tiếp Web, Queue và JSON Report đi qua cổng HTTPS 443 duy nhất">
         <span class="dot"></span>
-        <span id="api-mode-text">Chế độ: Mô phỏng</span>
-      </button>
-
-      <!-- Trạng thái API legacy 8005 -->
-      <div id="api-health-badge" class="api-badge" aria-live="polite" aria-label="Trạng thái API 8005">
-        <span class="dot"></span>
-        <span>Legacy 8005</span>
+        <span id="tls-port-text">HTTPS :443 TLS</span>
       </div>
 
-      <!-- Link sang trang Điều phối 8 Kênh & trang cũ -->
-      <a href="/ops/" class="btn btn-ghost btn-sm"
-        style="font-size:11px;color:var(--teal)" aria-label="Điều phối 8 Kênh & Analytics">
-        Điều phối 8 Kênh ↗
+      <!-- Nút đổi mode & Cấu hình API -->
+      <button id="btn-api-mode" class="api-badge mode-real" aria-label="Cài đặt kết nối API">
+        <span class="dot"></span>
+        <span id="api-mode-text">Chế độ: API Thật</span>
+      </button>
+
+      <!-- Trạng thái API Health -->
+      <div id="api-health-badge" class="api-badge ok" aria-live="polite" aria-label="Trạng thái Backend API">
+        <span class="dot"></span>
+        <span>API Ready</span>
+      </div>
+
+      <!-- Link sang trang Điều phối 8 Kênh & Control Center -->
+      <a href="/ops/" class="btn btn-secondary btn-sm"
+        style="font-size:11px;color:var(--teal);border-color:rgba(45,212,191,0.35)" aria-label="Điều phối 8 Kênh & Analytics">
+        📊 Điều phối 8 Kênh ↗
       </a>
-      <a href="index.html" class="btn btn-ghost btn-sm"
-        style="font-size:11px;color:var(--txt-3)" aria-label="Trang tải video cũ">
-        Tải Video ↗
+      <a href="/control-center" class="btn btn-ghost btn-sm"
+        style="font-size:11px;color:var(--txt-2)" aria-label="Control Center v2">
+        🎛 Control Center ↗
       </a>
     </div>
   </header>

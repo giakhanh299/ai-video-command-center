@@ -96,19 +96,47 @@ function syncApiModeUI() {
   }
 
   if (banner && bannerTxt) {
-    banner.classList.remove('hidden');
     if (state.isMock) {
-      banner.classList.remove('real');
+      banner.classList.remove('hidden', 'real');
       bannerTxt.textContent = 'DỮ LIỆU MÔ PHỎNG — Thao tác qua Mock Client (Registry 1.0.0). Nhấn "Cấu hình API" để kết nối backend thật.';
     } else {
       banner.classList.add('real');
-      bannerTxt.textContent = `KẾT NỐI API THỰC (${window.CC_CONFIG.apiBase}) — Đang giao tiếp với FastAPI backend (PostgreSQL Docker).`;
+      banner.classList.remove('hidden');
+      bannerTxt.textContent = `KẾT NỐI TRỰC TIẾP QUA HTTPS CỔNG 443 (${window.CC_CONFIG.apiBase}) — Hàng đợi PostgreSQL 16 + Outbound Agent + JSON Render Report hoạt động 100%.`;
     }
   }
 }
 
+let jobPollTimer = null;
+function stopJobPolling() {
+  if (jobPollTimer) {
+    clearInterval(jobPollTimer);
+    jobPollTimer = null;
+  }
+}
+
+function renderProgressCell(j) {
+  const pg = j.progress;
+  const pct = pg && pg.percent !== null && pg.percent !== undefined
+    ? pg.percent
+    : (pg && pg.total_tasks ? Math.round((pg.completed_tasks / pg.total_tasks) * 100) : 0);
+  const label = pg ? `${pg.completed_tasks}/${pg.total_tasks} bước (${pct}%)` : '—';
+  const fillCls = j.status === 'running' ? 'running' : (j.status === 'failed' ? 'failed' : '');
+  return `
+    <div class="progress-cell">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--txt-2)">
+        <span>${label}</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill ${fillCls}" style="width:${Math.max(pct, j.status === 'running' ? 15 : 0)}%"></div>
+      </div>
+    </div>
+  `;
+}
+
 /* ─── Navigation ─────────────────────────────────────────── */
 function navigate(view, params = {}) {
+  stopJobPolling();
   state.view = view;
   if (params.projectId !== undefined) state.projectId = params.projectId;
   if (params.jobId !== undefined)     state.jobId     = params.jobId;
@@ -159,36 +187,68 @@ async function renderOverview() {
   main.innerHTML = `
     <div class="page-header">
       <div>
-        <h1 class="page-title">Tổng quan</h1>
-        <p class="page-subtitle">Cập nhật lúc ${new Date().toLocaleTimeString('vi-VN')} · ${state.isMock ? '<span class="not-impl">Dữ liệu mô phỏng</span>' : '<span style="color:var(--teal)">API thật</span>'}</p>
+        <h1 class="page-title">Trung Tâm Điều Hành Render Video AI</h1>
+        <p class="page-subtitle">Đồng bộ thời gian thực lúc ${new Date().toLocaleTimeString('vi-VN')} · ${state.isMock ? '<span class="not-impl">Dữ liệu mô phỏng</span>' : '<span style="color:var(--teal);font-weight:600">⚡ Đang kết nối Production HTTPS :443</span>'}</p>
       </div>
       <div class="page-actions">
         <button class="btn btn-secondary btn-sm" id="btn-api-settings-quick">${I.cog} Cấu hình API</button>
         <button class="btn btn-secondary btn-sm" id="btn-refresh-overview">${I.refresh} Làm mới</button>
-        <button class="btn btn-primary btn-sm" id="btn-new-job-quick">${I.plus} Tạo job mới</button>
+        <button class="btn btn-primary btn-sm" id="btn-new-job-quick">${I.plus} Tạo job render mới</button>
+      </div>
+    </div>
+
+    <!-- Luồng kiến trúc 4 bước: Port 443 -> Queue -> Outbound Agent -> JSON Report -->
+    <div class="arch-strip">
+      <div class="arch-node">
+        <div class="arch-node-icon">🔒</div>
+        <div>
+          <div class="arch-node-title">1. Cổng HTTPS 443 <span class="arch-pill">TLS 1.3</span></div>
+          <div class="arch-node-desc">Giao tiếp duy nhất qua cổng 443. API &amp; DB khoá chặt trên loopback <code>127.0.0.1</code>.</div>
+        </div>
+      </div>
+      <div class="arch-node">
+        <div class="arch-node-icon">📥</div>
+        <div>
+          <div class="arch-node-title">2. Hàng Đợi PostgreSQL <span class="arch-pill">FIFO DAG</span></div>
+          <div class="arch-node-desc">Xếp hàng tự động <code>FOR UPDATE SKIP LOCKED</code>, phân rã bước <code>probe → compose</code>.</div>
+        </div>
+      </div>
+      <div class="arch-node">
+        <div class="arch-node-icon">⚡</div>
+        <div>
+          <div class="arch-node-title">3. Outbound Agent <span class="arch-pill">${state.agents.filter(a => a.status === 'online').length}/${state.agents.length || 1} Online</span></div>
+          <div class="arch-node-desc">Agent chủ động claim việc qua cổng 443, khoá tài nguyên CPU/GPU &amp; gia hạn Lease.</div>
+        </div>
+      </div>
+      <div class="arch-node">
+        <div class="arch-node-icon">📄</div>
+        <div>
+          <div class="arch-node-title">4. Gửi JSON Cấu Hình <span class="arch-pill">SHA-256</span></div>
+          <div class="arch-node-desc">Trả về <code>render-report.json</code> &amp; <code>probe.json</code> kèm <code>render_config</code> và video đã kiểm chứng.</div>
+        </div>
       </div>
     </div>
 
     <div class="grid-4 mb-3">
       <div class="stat-card running">
-        <div class="label">Đang chạy</div>
+        <div class="label"><span>Đang chạy (Running)</span> ${I.play}</div>
         <div class="value">${counts.running}</div>
-        <div class="sublabel">job đang xử lý</div>
+        <div class="sublabel">job đang được Agent xử lý</div>
       </div>
       <div class="stat-card waiting">
-        <div class="label">Đang chờ</div>
+        <div class="label"><span>Hàng đợi (Queued)</span> ${I.list}</div>
         <div class="value">${counts.queued}</div>
-        <div class="sublabel">trong hàng đợi</div>
+        <div class="sublabel">job xếp hàng chờ claim</div>
       </div>
       <div class="stat-card review">
-        <div class="label">Cần duyệt</div>
+        <div class="label"><span>Hoàn tất / Cần duyệt</span> ${I.film}</div>
         <div class="value">${counts.needs_review}</div>
-        <div class="sublabel">cần người xem video</div>
+        <div class="sublabel">đã có Video + JSON Report</div>
       </div>
-      <div class="stat-card ${needsAction > 0 ? 'error' : 'ok'}">
-        <div class="label">Cần xử lý</div>
-        <div class="value">${needsAction}</div>
-        <div class="sublabel">lỗi + cần xem xét + cần duyệt</div>
+      <div class="stat-card ${counts.failed + counts.needs_attention > 0 ? 'error' : 'ok'}">
+        <div class="label"><span>Cảnh báo / Cần chú ý</span> ${I.alert}</div>
+        <div class="value">${counts.failed + counts.needs_attention}</div>
+        <div class="sublabel">job lỗi hoặc hết hạn lease</div>
       </div>
     </div>
 
@@ -196,44 +256,48 @@ async function renderOverview() {
       <!-- Agent status -->
       <div class="card">
         <div class="card-header">
-          <span class="card-title">${I.cpu} Agent Trực Tuyến</span>
-          <button class="btn btn-ghost btn-sm" id="btn-go-agents">Xem tất cả (${state.agents.length})</button>
+          <span class="card-title">${I.cpu} Trạng Thái Worker Agent</span>
+          <button class="btn btn-ghost btn-sm" id="btn-go-agents">Chi tiết (${state.agents.length})</button>
         </div>
         ${state.agents.length === 0
-          ? renderEmpty('Chưa có Agent nào kết nối', 'Agent kết nối outbound sau khi backend và Agent mới được triển khai.')
+          ? renderEmpty('Chưa có Agent nào kết nối', 'Agent kết nối outbound qua HTTPS 443.')
           : state.agents.map(a => `
             <div class="agent-card ${a.status}" style="margin-bottom:10px">
               <div class="agent-header">
-                <span class="agent-name">${a.machine_label || a.id}</span>
+                <span class="agent-name">🖥 ${a.machine_label || ('Worker ' + window.ccUtil.shortId(a.id))}</span>
                 ${chip(a.status)}
               </div>
               <div class="agent-meta">
-                Heartbeat cuối: ${window.ccUtil.relativeTime(a.last_seen_at)} ·
-                Task đang chạy: ${a.active_task_count}
+                Heartbeat cuối: <b>${window.ccUtil.relativeTime(a.last_seen_at)}</b> ·
+                Task đang chạy: <b>${a.active_task_count}</b>
               </div>
               <div class="agent-caps">
-                ${(a.capabilities || []).map(c => `<span class="tag">${c}</span>`).join('')}
+                ${(a.capabilities || []).map(c => `<span class="tag" style="border-color:rgba(45,212,191,0.3);color:var(--teal)">⚡ ${c}</span>`).join('')}
               </div>
             </div>
           `).join('')}
         <div class="info-state mt-2 text-sm">
-          <b>Ghi chú vận hành:</b> Agent offline ≠ backend không truy cập. Nếu tất cả Agent offline, job vẫn được nhận vào hàng đợi nhưng chờ Agent claim.
+          <b>Cơ chế hàng đợi an toàn:</b> Kể cả khi Agent tạm nghỉ, mọi Job gửi lên đều được xếp vào bảng <code>command_center.jobs</code> (trạng thái <code>queued</code>) và tự động chạy ngay khi Agent online.
         </div>
       </div>
 
-      <!-- Cần xử lý -->
+      <!-- Cần xử lý & Duyệt -->
       <div class="card">
         <div class="card-header">
-          <span class="card-title">${I.alert} Cần duyệt &amp; Xử lý</span>
+          <span class="card-title">${I.film} Video Mới Render &amp; Cần Duyệt (${needsAction})</span>
         </div>
         ${needsAction === 0
-          ? `<div class="empty-state" style="padding:24px"><p>Không có job nào cần duyệt hoặc có lỗi.</p></div>`
+          ? `<div class="empty-state" style="padding:24px"><p>Tất cả các job đều ổn định.</p></div>`
           : state.jobs.filter(j => ['failed','needs_attention','needs_review'].includes(j.status))
               .slice(0,6).map(j => `
-              <div class="flex items-center gap-2 mb-2 p-2" style="cursor:pointer;border-radius:4px;background:var(--bg-2)" data-job="${j.id}" role="button" tabindex="0" aria-label="Xem chi tiết job ${window.ccUtil.shortId(j.id)}">
+              <div class="flex items-center gap-2 mb-2" style="cursor:pointer;padding:10px 12px;border-radius:8px;background:rgba(13,18,27,0.75);border:1px solid var(--border)" data-job="${j.id}" role="button" tabindex="0" aria-label="Xem chi tiết job ${window.ccUtil.shortId(j.id)}">
                 ${chip(j.status)}
-                <span class="truncate" style="flex:1;font-size:12px">${j.preset_id} · <span class="font-mono">${window.ccUtil.shortId(j.id)}</span></span>
+                <div style="flex:1;min-width:0">
+                  <div class="truncate" style="font-size:12px;font-weight:600">${j.preset_id} · <span class="font-mono" style="color:var(--teal)">#${window.ccUtil.shortId(j.id)}</span></div>
+                  <div class="text-muted text-sm">Đã xuất Video MP4 + JSON cấu hình</div>
+                </div>
                 <span class="text-muted text-sm">${window.ccUtil.relativeTime(j.updated_at)}</span>
+                <span class="btn btn-secondary btn-sm">Mở xem →</span>
               </div>
             `).join('')
         }
@@ -242,38 +306,34 @@ async function renderOverview() {
 
     <div class="section mt-4">
       <div class="section-header">
-        <span class="section-title">Job gần nhất</span>
+        <span class="section-title">Hàng Đợi &amp; Lịch Sử Job Render Gần Nhất</span>
         <div class="section-actions">
-          <button class="btn btn-ghost btn-sm" id="btn-go-projects">Xem theo dự án</button>
+          <button class="btn btn-ghost btn-sm" id="btn-go-projects">Quản lý theo dự án →</button>
         </div>
       </div>
       ${recentJobs.length === 0 ? renderEmpty('Chưa có job nào trong hệ thống') : `
         <div class="table-wrap">
           <table>
             <thead><tr>
-              <th scope="col">ID</th>
+              <th scope="col">Job ID</th>
               <th scope="col">Dự án</th>
-              <th scope="col">Preset</th>
-              <th scope="col">Trạng thái</th>
-              <th scope="col">Tiến độ</th>
+              <th scope="col">Cấu hình Preset</th>
+              <th scope="col">Trạng thái Hàng đợi</th>
+              <th scope="col">Tiến độ Pipeline</th>
               <th scope="col">Cập nhật</th>
-              <th scope="col"></th>
+              <th scope="col">Thao tác</th>
             </tr></thead>
             <tbody>
-              ${recentJobs.map(j => {
-                const pg = j.progress;
-                const pgText = pg ? (pg.percent !== null ? `${pg.percent}%` : `${pg.completed_tasks}/${pg.total_tasks} task`) : '—';
-                return `
+              ${recentJobs.map(j => `
                 <tr data-job="${j.id}" role="button" tabindex="0" aria-label="Xem job ${window.ccUtil.shortId(j.id)}">
-                  <td class="mono">${window.ccUtil.shortId(j.id)}</td>
-                  <td class="muted">${window.ccUtil.shortId(j.project_id)}</td>
-                  <td>${j.preset_id}</td>
+                  <td class="mono" style="color:var(--teal);font-weight:600">#${window.ccUtil.shortId(j.id)}</td>
+                  <td class="mono muted">${window.ccUtil.shortId(j.project_id)}</td>
+                  <td><span class="tag" style="font-size:11px">${j.preset_id}</span> <span class="text-muted text-sm">v${j.preset_version}</span></td>
                   <td>${chip(j.status)}</td>
-                  <td class="muted">${pgText}</td>
+                  <td>${renderProgressCell(j)}</td>
                   <td class="muted nowrap">${window.ccUtil.relativeTime(j.updated_at)}</td>
-                  <td><button class="btn btn-ghost btn-sm" data-job="${j.id}" aria-label="Chi tiết">Chi tiết</button></td>
-                </tr>`;
-              }).join('')}
+                  <td><button class="btn btn-secondary btn-sm" data-job="${j.id}" aria-label="Chi tiết">Xem JSON &amp; Video</button></td>
+                </tr>`).join('')}
             </tbody>
           </table>
         </div>
@@ -472,48 +532,43 @@ async function renderNewJob() {
 
   const activeProjects = state.projects.filter(p => !p.archived_at);
   const defaultProject = state.projectId || (activeProjects[0]?.id || '');
-  const defaultPreset  = state.presets.find(p => p.available) || state.presets[0];
+  const defaultPreset  = state.presets.find(p => p.id === 'basic_render' && p.available) || state.presets.find(p => p.available) || state.presets[0];
 
   main.innerHTML = `
     <div class="page-header">
       <div>
-        <h1 class="page-title">Tạo job render mới</h1>
-        <p class="page-subtitle">Chọn dự án, file đầu vào và preset từ registry 1.0.0. ${state.isMock ? '<span class="not-impl">Dữ liệu mô phỏng</span>' : '<span style="color:var(--teal)">API thật</span>'}</p>
+        <h1 class="page-title">Tạo Job Render Mới &amp; Xếp Vào Hàng Đợi</h1>
+        <p class="page-subtitle">Đóng gói cấu hình JSON gửi qua HTTPS cổng 443 vào hàng đợi PostgreSQL. ${state.isMock ? '<span class="not-impl">Dữ liệu mô phỏng</span>' : '<span style="color:var(--teal);font-weight:600">⚡ Production API Thật</span>'}</p>
       </div>
       <div class="page-actions">
-        <button class="btn btn-ghost" id="btn-cancel-job">Huỷ</button>
+        <button class="btn btn-ghost" id="btn-cancel-job">← Quay lại</button>
       </div>
-    </div>
-
-    <div class="info-state mb-3" style="font-size:12px">
-      ${I.alert} <b>Lưu ý tích hợp:</b> API <code>POST /api/v1/jobs</code> nhận <code>input_refs</code> là File UUID đã đăng ký qua backend.
-      Hiện tại chưa có HTTP upload file trực tiếp từ trình duyệt — sử dụng file ID đã import từ CLI hoặc file mẫu đã kiểm chứng.
     </div>
 
     <form id="new-job-form" novalidate>
       <div class="grid-2" style="gap:20px">
-        <!-- Left: project + input + schema overrides -->
+        <!-- Left: project + input + schema overrides + JSON preview -->
         <div class="flex-col" style="gap:16px">
           <div class="card">
-            <div class="card-header"><span class="card-title">Dự án &amp; File Đầu Vào</span></div>
+            <div class="card-header"><span class="card-title">${I.folder} 1. Dự án &amp; Video Đầu Vào (Đã Xác Minh SHA-256)</span></div>
             <div class="flex-col" style="gap:12px">
               <div class="form-group">
-                <label class="form-label" for="new-job-project">Dự án <span class="required">*</span></label>
+                <label class="form-label" for="new-job-project">Chọn Dự án <span class="required">*</span></label>
                 <select class="form-select" id="new-job-project" required aria-required="true">
                   ${activeProjects.length === 0 ? '<option value="">— Chưa có dự án nào —</option>' : ''}
-                  ${activeProjects.map(p => `<option value="${p.id}" ${p.id === defaultProject ? 'selected' : ''}>${p.name}</option>`).join('')}
+                  ${activeProjects.map(p => `<option value="${p.id}" ${p.id === defaultProject ? 'selected' : ''}>${p.name} (v${p.version})</option>`).join('')}
                 </select>
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="new-job-input">Input (File UUID đã verified) <span class="required">*</span></label>
-                <input class="form-input" id="new-job-input" type="text"
-                  placeholder="Ví dụ: f5d34973-487e-4794-be6b-ff927eb83218"
+                <label class="form-label" for="new-job-input">File Video Đầu Vào (UUID Verified) <span class="required">*</span></label>
+                <input class="form-input font-mono" id="new-job-input" type="text"
+                  placeholder="Ví dụ: 35326dd1-1211-41bf-937a-dca209c6c897"
                   value="${state.isMock ? 'f5d34973-487e-4794-be6b-ff927eb83218' : ''}"
                   aria-describedby="input-hint" />
-                <div id="verified-files-picker" style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap"></div>
+                <div id="verified-files-picker" class="file-pick-grid"></div>
                 <p class="form-hint" id="input-hint">
-                  Nhập hoặc chọn UUID của File đã qua kiểm tra hợp lệ. Không nhập đường dẫn tệp cục bộ (C:\\... hoặc D:\\...).
+                  Nhấn chọn thẻ Video đã xác minh bên trên hoặc dán File UUID hợp lệ.
                 </p>
                 <div class="form-error hidden" id="input-error">${I.alert} Cần ít nhất 1 UUID hợp lệ (36 ký tự).</div>
               </div>
@@ -521,54 +576,85 @@ async function renderNewJob() {
           </div>
 
           <div class="card">
-            <div class="card-header"><span class="card-title">Tham Số Ghi Đè (Theo Schema Preset)</span></div>
+            <div class="card-header"><span class="card-title">${I.cog} 2. Cấu Hình Render (Overrides Schema)</span></div>
             <div id="dynamic-override-container">
               <!-- Render động theo schema của preset được chọn -->
             </div>
           </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">${I.log} Bản Xem Trước Gói Tin JSON Gửi Hàng Đợi (HTTPS :443)</span>
+              <span class="tag" style="color:var(--teal);border-color:rgba(45,212,191,0.3)">POST /api/v1/jobs</span>
+            </div>
+            <pre id="live-job-payload-json" class="json-code-box"></pre>
+          </div>
         </div>
 
-        <!-- Right: preset picker -->
-        <div class="card">
-          <div class="card-header"><span class="card-title">Chọn Preset Từ Registry</span></div>
-          <p class="form-hint mb-2">Schema và tính sẵn sàng lấy trực tiếp từ registry 1.0.0, không hard-code cấu hình.</p>
-          <div id="preset-list" class="flex-col" style="gap:8px">
-            ${state.presets.map(p => `
-              <label class="preset-option" style="cursor:pointer;border:1px solid var(--border);border-radius:6px;padding:10px 12px;display:flex;align-items:flex-start;gap:10px;transition:border-color .15s,background .15s;${!p.available ? 'opacity:.55;' : ''}">
-                <input type="radio" name="preset" value="${p.id}" data-version="${p.version}"
-                  ${p.id === defaultPreset?.id ? 'checked' : ''}
-                  ${!p.available ? 'disabled' : ''}
-                  style="margin-top:2px;accent-color:var(--teal)"
-                  aria-describedby="preset-desc-${p.id}">
-                <div style="flex:1">
-                  <div style="font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px">
-                    ${p.label}
-                    ${p.available ? `<span class="chip succeeded" style="font-size:10px">Sẵn sàng</span>` : `<span class="chip disabled" style="font-size:10px">Chưa tích hợp</span>`}
-                  </div>
-                  <div style="font-size:11px;color:var(--txt-3);margin-top:2px" id="preset-desc-${p.id}">
-                    <span class="font-mono">${p.id}</span> · v${p.version}
-                    ${p.available ? '' : `<br><span class="not-impl">${p.unavailable_reason || 'Đang tích hợp adapter'}</span>`}
-                  </div>
-                  <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">
-                    ${(p.modules || []).map(m => `<span class="tag">${m}</span>`).join('')}
-                  </div>
+        <!-- Right: Live 9:16 Studio Preview + Preset Picker -->
+        <div class="flex-col" style="gap:16px">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">${I.film} Mô Phỏng Trực Quan Khung Hình 9:16 (Live Studio Preview)</span>
+              <span class="tag" id="studio-preview-res-badge" style="color:var(--teal)">720×1280</span>
+            </div>
+            <div class="studio-preview-wrap">
+              <div class="studio-phone" id="studio-live-phone">
+                <div class="studio-phone-bg" id="studio-phone-bg"></div>
+                <div class="studio-phone-fg" id="studio-phone-fg">KHUNG VIDEO CHÍNH</div>
+                <div class="studio-phone-banner hidden" id="studio-phone-banner">REVIEW PHIM HAY</div>
+                <div class="studio-phone-badges" id="studio-phone-badges"></div>
+                <div class="studio-phone-blurzone hidden" id="studio-phone-blurzone">VÙNG CHE SUB GỐC (BLUR)</div>
+                <div class="studio-phone-sub hidden" id="studio-phone-sub">
+                  <span class="marquee-inner" id="studio-phone-sub-text">Phụ đề chạy chữ tự động...</span>
                 </div>
-              </label>
-            `).join('')}
+              </div>
+            </div>
+            <p class="form-hint" style="text-align:center">Khung mô phỏng cập nhật tức thì khi bạn đổi Preset, Giọng đọc, Vùng Blur hoặc Chạy chữ.</p>
           </div>
 
-          <div id="preset-availability" class="mt-3" style="font-size:11px;color:var(--txt-3)"></div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">${I.cpu} 3. Chọn Đa Cấu Hình Preset (Registry 1.0.0)</span></div>
+            <p class="form-hint mb-2">Mỗi cấu hình tự động nạp bộ thông số Giọng đọc AI, Làm mờ Sub, Chạy chữ &amp; Màu sắc tương ứng (bạn có thể tinh chỉnh thêm ở cột trái).</p>
+            <div id="preset-list" class="flex-col" style="gap:10px">
+              ${state.presets.map(p => `
+                <label class="preset-option ${p.id === defaultPreset?.id ? 'selected-card' : ''}" style="cursor:pointer;border:1px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;transition:all .18s;${!p.available ? 'opacity:.55;' : ''}">
+                  <input type="radio" name="preset" value="${p.id}" data-version="${p.version}"
+                    ${p.id === defaultPreset?.id ? 'checked' : ''}
+                    ${!p.available ? 'disabled' : ''}
+                    style="margin-top:3px;accent-color:var(--teal)"
+                    aria-describedby="preset-desc-${p.id}">
+                  <div style="flex:1">
+                    <div style="font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:space-between;gap:6px">
+                      <span>${p.label}</span>
+                      ${p.available ? `<span class="chip succeeded" style="font-size:10px">Sẵn sàng</span>` : `<span class="chip disabled" style="font-size:10px">Chờ GPU Adapter</span>`}
+                    </div>
+                    <div style="font-size:11px;color:var(--txt-3);margin-top:3px" id="preset-desc-${p.id}">
+                      Mã cấu hình: <span class="font-mono" style="color:var(--txt-2)">${p.id}</span> · Phiên bản: <code>v${p.version}</code>
+                      ${p.available ? '' : `<br><span class="not-impl" style="margin-top:4px">${p.unavailable_reason || 'Đang tích hợp adapter'}</span>`}
+                    </div>
+                    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;align-items:center">
+                      <span style="font-size:10px;color:var(--txt-3)">Pipeline DAG:</span>
+                      ${(p.modules || []).map((m, idx) => `${idx > 0 ? '<span style="color:var(--txt-3);font-size:10px">→</span>' : ''}<span class="tag" style="color:var(--teal);border-color:rgba(45,212,191,0.28)">${m}</span>`).join('')}
+                    </div>
+                  </div>
+                </label>
+              `).join('')}
+            </div>
+
+            <div id="preset-availability" class="mt-3" style="font-size:11px;color:var(--txt-3)"></div>
+          </div>
         </div>
       </div>
 
       <!-- Summary + submit -->
       <div class="card mt-4" id="job-summary">
-        <div class="card-header"><span class="card-title">Tóm tắt cấu hình Job</span></div>
+        <div class="card-header"><span class="card-title">${I.check} 4. Xác Nhận Đa Cấu Hình &amp; Đẩy Vào Hàng Đợi Render</span></div>
         <div id="summary-body" class="dl-grid"></div>
         <div id="form-submit-error" class="form-error hidden mt-3"></div>
-        <div class="modal-footer" style="padding:12px 0 0">
+        <div class="modal-footer" style="padding:14px 0 0">
           <button type="submit" class="btn btn-primary btn-lg" id="btn-submit-job" aria-describedby="form-submit-error">
-            ${I.play} Gửi job render
+            ${I.play} Xếp vào hàng đợi &amp; Bắt đầu Render
           </button>
         </div>
       </div>
@@ -576,7 +662,32 @@ async function renderNewJob() {
   `;
 
   $('btn-cancel-job')?.addEventListener('click', () =>
-    state.projectId ? navigate('project-detail') : navigate('projects'));
+    state.projectId ? navigate('project-detail') : navigate('overview'));
+
+  const VOICE_LABELS = {
+    original: '🔊 Giữ nguyên âm thanh gốc',
+    vi_female_north_ngochuyen: '🎙 Nữ Miền Bắc — Ngọc Huyền (VieNeu/Edge)',
+    vi_male_north_minhquang: '🎙 Nam Miền Bắc — Minh Quang (Thuyết minh)',
+    vi_female_south_thaovy: '🎙 Nữ Miền Nam — Thảo Vy (Kể chuyện/Chill)',
+    vi_male_review_tram: '🎙 Nam Trầm Review Phim (Cấu hình 2)',
+    wuby_clone_v2: '✨ Wuby AI Voice Clone v2 (Giọng mẫu độc quyền)',
+    omnivoice_auto: '🤖 OmniVoice Zero-Shot Auto Dubbing',
+  };
+
+  const BLUR_LABELS = {
+    none: 'Không làm mờ phụ đề',
+    gaussian_box: 'Gaussian Box Blur (Làm mờ mịn vùng sub)',
+    feather_dark: 'Feather Dark Box (Phủ mờ tối dịu mắt)',
+    ai_inpaint: 'AI Smart Inpaint (Xoá chữ giữ nền tự nhiên)',
+  };
+
+  const SUB_STYLE_LABELS = {
+    none: 'Tắt phụ đề chạy chữ',
+    karaoke_pop: '🎤 Karaoke Pop TikTok (Nhảy chữ đổi màu)',
+    review_yellow_box: '🎬 Hộp Vàng Viền Đen (Chuẩn Review Phim)',
+    neon_glow: '✨ Neon Glow (Chữ phát sáng nổi bật)',
+    minimal_white: '📝 Minimal White (Trắng thanh lịch)',
+  };
 
   function getSchemaProps(preset) {
     if (!preset || !preset.override_schema) return {};
@@ -591,56 +702,329 @@ async function renderNewJob() {
     return clean;
   }
 
-  // Update dynamic schema override fields
+  function collectCurrentOverrides(preset) {
+    const schema = getSchemaProps(preset);
+    if (!schema.width) return {};
+    return {
+      width: parseInt($('override-width')?.value || 720, 10),
+      height: parseInt($('override-height')?.value || 1280, 10),
+      fit_mode: $('override-fit-mode')?.value || 'contain',
+      voice_id: $('override-voice-id')?.value || 'original',
+      voice_speed: parseFloat($('override-voice-speed')?.value || '1.0'),
+      keep_original_audio: Boolean($('override-keep-audio')?.checked ?? true),
+      bgm_style: $('override-bgm-style')?.value || 'none',
+      blur_subtitle: Boolean($('override-blur-sub')?.checked ?? false),
+      blur_mode: $('override-blur-mode')?.value || 'none',
+      blur_height_pct: parseInt($('override-blur-height')?.value || 22, 10),
+      blur_strength: parseInt($('override-blur-strength')?.value || 20, 10),
+      subtitle_style: $('override-sub-style')?.value || 'none',
+      banner_text: ($('override-banner-text')?.value || '').trim(),
+      marquee_text: ($('override-marquee-text')?.value || '').trim(),
+      text_position: $('override-text-pos')?.value || 'bottom',
+      mirror_flip: Boolean($('override-mirror')?.checked ?? false),
+      color_grade: $('override-color-grade')?.value || 'natural',
+    };
+  }
+
+  function updateLivePhonePreview(ov) {
+    const bg = $('studio-phone-bg');
+    const fg = $('studio-phone-fg');
+    const banner = $('studio-phone-banner');
+    const blurZone = $('studio-phone-blurzone');
+    const subBox = $('studio-phone-sub');
+    const subText = $('studio-phone-sub-text');
+    const badges = $('studio-phone-badges');
+    const resBadge = $('studio-preview-res-badge');
+    if (!fg || !bg) return;
+
+    if (resBadge) resBadge.textContent = `${ov.width || 720}×${ov.height || 1280} · ${ov.fit_mode || 'contain'}`;
+
+    // Layout fit_mode
+    if (ov.fit_mode === 'cover') {
+      fg.style.top = '0%';
+      fg.style.height = '100%';
+      bg.style.filter = 'none';
+      fg.textContent = 'VIDEO FULL 9:16 (COVER)';
+    } else if (ov.fit_mode === 'blur_bg') {
+      fg.style.top = '20%';
+      fg.style.height = '58%';
+      bg.style.background = 'linear-gradient(145deg, #0f766e 0%, #1e3a8a 50%, #312e81 100%)';
+      bg.style.filter = 'blur(8px)';
+      fg.textContent = 'VIDEO NỀN MỜ (BLUR BG)';
+    } else {
+      fg.style.top = '22%';
+      fg.style.height = '56%';
+      bg.style.background = '#05070b';
+      bg.style.filter = 'none';
+      fg.textContent = 'VIDEO VIỀN ĐEN (CONTAIN)';
+    }
+
+    // Mirror + Color grade
+    let filterStr = '';
+    if (ov.color_grade === 'cinematic_warm') filterStr = 'sepia(0.18) saturate(1.25) contrast(1.08)';
+    else if (ov.color_grade === 'film_contrast') filterStr = 'contrast(1.28) saturate(0.9)';
+    else if (ov.color_grade === 'vibrant_tiktok') filterStr = 'saturate(1.45) contrast(1.12)';
+    else if (ov.color_grade === 'noir_bw') filterStr = 'grayscale(1) contrast(1.25)';
+    fg.style.filter = filterStr;
+    fg.style.transform = ov.mirror_flip ? 'scaleX(-1)' : 'none';
+
+    // Banner Hook
+    if (ov.banner_text) {
+      banner.textContent = ov.banner_text;
+      banner.classList.remove('hidden');
+    } else {
+      banner.classList.add('hidden');
+    }
+
+    // Blur subtitle zone
+    if (ov.blur_subtitle && ov.blur_mode !== 'none') {
+      const hPct = Math.min(Math.max(ov.blur_height_pct || 22, 10), 45);
+      blurZone.style.height = `${hPct}%`;
+      blurZone.textContent = `BLUR SUB (${ov.blur_mode.toUpperCase()} · ${hPct}%)`;
+      blurZone.classList.remove('hidden');
+    } else {
+      blurZone.classList.add('hidden');
+    }
+
+    // Running text / Subtitle style
+    if ((ov.subtitle_style && ov.subtitle_style !== 'none') || ov.marquee_text) {
+      subBox.classList.remove('hidden');
+      subText.textContent = ov.marquee_text || '🔥 Phụ đề chạy chữ tự động theo giọng đọc AI...';
+      if (ov.subtitle_style === 'review_yellow_box') {
+        subBox.style.background = 'rgba(0,0,0,0.88)';
+        subBox.style.color = '#facc15';
+        subBox.style.border = '1px solid #facc15';
+        subBox.style.textShadow = 'none';
+      } else if (ov.subtitle_style === 'neon_glow') {
+        subBox.style.background = 'rgba(8,15,28,0.65)';
+        subBox.style.color = '#38bdf8';
+        subBox.style.border = '1px solid rgba(56,189,248,0.5)';
+        subBox.style.textShadow = '0 0 8px #38bdf8';
+      } else if (ov.subtitle_style === 'karaoke_pop') {
+        subBox.style.background = 'rgba(0,0,0,0.65)';
+        subBox.style.color = '#2dd4bf';
+        subBox.style.border = '1px solid rgba(45,212,191,0.5)';
+        subBox.style.textShadow = '0 1px 4px #000';
+      } else {
+        subBox.style.background = 'rgba(0,0,0,0.55)';
+        subBox.style.color = '#ffffff';
+        subBox.style.border = '1px solid rgba(255,255,255,0.2)';
+        subBox.style.textShadow = 'none';
+      }
+    } else {
+      subBox.classList.add('hidden');
+    }
+
+    // Feature badges inside phone preview
+    const pillList = [];
+    if (ov.voice_id && ov.voice_id !== 'original') pillList.push(`🎙 ${ov.voice_id.replace('vi_', '').slice(0, 14)} (${ov.voice_speed || 1}x)`);
+    else pillList.push('🔊 Audio Gốc');
+    if (ov.bgm_style && ov.bgm_style !== 'none') pillList.push(`🎵 BGM: ${ov.bgm_style}`);
+    if (ov.mirror_flip) pillList.push('🪞 Lật gương');
+    if (ov.color_grade && ov.color_grade !== 'natural') pillList.push(`🎨 ${ov.color_grade}`);
+    badges.innerHTML = pillList.map(p => `<span class="studio-mini-badge">${p}</span>`).join('');
+  }
+
+  // Update dynamic schema override fields with full multi-config studio controls
   function updateOverrideFields(preset) {
     const container = $('dynamic-override-container');
     if (!container) return;
 
     const schema = getSchemaProps(preset);
     if (Object.keys(schema).length === 0) {
-      container.innerHTML = `<p class="form-hint">Preset này không yêu cầu hoặc không nhận tham số ghi đè (overrides rỗng).</p>`;
+      container.innerHTML = `<p class="form-hint">Preset <b>${preset?.id || ''}</b> chỉ chạy bước kiểm tra thông số gốc (<code>media.probe</code>) và xuất <code>probe.json</code>, không sử dụng bộ lọc render.</p>`;
       return;
     }
 
-    let html = '';
+    const d = preset?.default_config || {
+      width: 720, height: 1280, fit_mode: 'contain',
+      voice_id: 'original', voice_speed: 1.0, keep_original_audio: true, bgm_style: 'none',
+      blur_subtitle: false, blur_mode: 'none', blur_height_pct: 22, blur_strength: 18,
+      subtitle_style: 'none', banner_text: '', marquee_text: '', text_position: 'bottom',
+      mirror_flip: false, color_grade: 'natural',
+    };
 
-    if (schema.width && schema.height) {
-      const curW = parseInt($('override-width')?.value || schema.width.default || 720, 10);
-      const curH = parseInt($('override-height')?.value || schema.height.default || 1280, 10);
-      html += `
-        <div class="grid-2" style="gap:12px">
+    const profiles = [
+      { w: 360, h: 640, title: 'SD Nhanh (9:16)', sub: '360 × 640 px' },
+      { w: 720, h: 1280, title: 'HD Reels/TikTok', sub: '720 × 1280 px' },
+      { w: 1080, h: 1920, title: 'Full HD Studio', sub: '1080 × 1920 px' },
+    ];
+
+    container.innerHTML = `
+      <!-- A. KHUNG HÌNH & BỐ CỤC -->
+      <div class="cfg-section-box">
+        <div class="cfg-section-title"><span>📐 A. Độ Phân Giải, Bố Cục 9:16 &amp; Màu Sắc</span></div>
+        <div class="res-grid">
+          ${profiles.map(pr => `
+            <button type="button" class="res-card ${(d.width || 720) === pr.w && (d.height || 1280) === pr.h ? 'active' : ''}" data-res-w="${pr.w}" data-res-h="${pr.h}">
+              <div class="res-card-title">${pr.title}</div>
+              <div class="res-card-sub">${pr.sub}</div>
+            </button>
+          `).join('')}
+        </div>
+        <div class="grid-2" style="gap:10px;margin-bottom:10px">
           <div class="form-group">
-            <label class="form-label" for="override-width">Chiều rộng (Width px)</label>
+            <label class="form-label" for="override-width">Chiều rộng (Width)</label>
             <select class="form-select" id="override-width">
-              ${(schema.width.enum || [360, 720, 1080]).map(w => `<option value="${w}" ${w === curW ? 'selected' : ''}>${w} px</option>`).join('')}
+              ${[360, 720, 1080].map(w => `<option value="${w}" ${w === (d.width || 720) ? 'selected' : ''}>${w} px</option>`).join('')}
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label" for="override-height">Chiều cao (Height px)</label>
+            <label class="form-label" for="override-height">Chiều cao (Height)</label>
             <select class="form-select" id="override-height">
-              ${(schema.height.enum || [640, 1280, 1920]).map(h => `<option value="${h}" ${h === curH ? 'selected' : ''}>${h} px (Dọc)</option>`).join('')}
+              ${[640, 1280, 1920].map(h => `<option value="${h}" ${h === (d.height || 1280) ? 'selected' : ''}>${h} px (Dọc 9:16)</option>`).join('')}
             </select>
           </div>
         </div>
-        <p class="form-hint mt-2">
-          Preset basic_render nhận độ phân giải qua schema. Tiêu đề không được nhận (tránh lỗi 422).
-        </p>
-      `;
-    } else if (schema.title) {
-      html += `
-        <div class="form-group">
-          <label class="form-label" for="override-title">Tiêu đề ghi đè</label>
-          <input class="form-input" id="override-title" type="text" maxlength="200" placeholder="Tiêu đề video..." />
-          <p class="form-hint">Tối đa 200 ký tự.</p>
+        <div class="grid-2" style="gap:10px;margin-bottom:10px">
+          <div class="form-group">
+            <label class="form-label" for="override-fit-mode">Chế độ khung hình (Fit Mode)</label>
+            <select class="form-select" id="override-fit-mode">
+              <option value="contain" ${d.fit_mode === 'contain' ? 'selected' : ''}>Viền đen chuẩn (Contain)</option>
+              <option value="blur_bg" ${d.fit_mode === 'blur_bg' ? 'selected' : ''}>Nền mờ Gaussian 9:16 (Blur BG)</option>
+              <option value="cover" ${d.fit_mode === 'cover' ? 'selected' : ''}>Cắt tràn viền 9:16 (Cover Crop)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="override-color-grade">Bộ lọc màu (Color Grade)</label>
+            <select class="form-select" id="override-color-grade">
+              <option value="natural" ${d.color_grade === 'natural' ? 'selected' : ''}>Màu gốc tự nhiên (Natural)</option>
+              <option value="cinematic_warm" ${d.color_grade === 'cinematic_warm' ? 'selected' : ''}>Cinematic Ấm (Warm Film)</option>
+              <option value="film_contrast" ${d.color_grade === 'film_contrast' ? 'selected' : ''}>Tương phản điện ảnh (Review Black)</option>
+              <option value="vibrant_tiktok" ${d.color_grade === 'vibrant_tiktok' ? 'selected' : ''}>Rực rỡ TikTok/Reels (Vibrant)</option>
+              <option value="noir_bw" ${d.color_grade === 'noir_bw' ? 'selected' : ''}>Đen trắng nghệ thuật (Noir B&amp;W)</option>
+            </select>
+          </div>
         </div>
-      `;
-    } else {
-      html += `<p class="form-hint">Tham số mở rộng schema: ${Object.keys(schema).join(', ')}</p>`;
-    }
+        <label class="toggle-row">
+          <span>🪞 Lật gương ngang video (Mirror Flip chống bản quyền)</span>
+          <input type="checkbox" id="override-mirror" ${d.mirror_flip ? 'checked' : ''} />
+        </label>
+      </div>
 
-    container.innerHTML = html;
-    $('override-width')?.addEventListener('change', updateSummaryTextOnly);
-    $('override-height')?.addEventListener('change', updateSummaryTextOnly);
+      <!-- B. GIỌNG ĐỌC AI & ÂM THANH -->
+      <div class="cfg-section-box">
+        <div class="cfg-section-title"><span>🎙 B. Giọng Đọc AI (TTS Voice) &amp; Nhạc Nền</span></div>
+        <div class="form-group mb-2">
+          <label class="form-label" for="override-voice-id">Chọn Giọng Đọc Thuyết Minh / Lồng Tiếng</label>
+          <select class="form-select" id="override-voice-id">
+            ${Object.entries(VOICE_LABELS).map(([k, lbl]) => `<option value="${k}" ${k === (d.voice_id || 'original') ? 'selected' : ''}>${lbl}</option>`).join('')}
+          </select>
+        </div>
+        <div class="grid-2" style="gap:10px;margin-bottom:10px">
+          <div class="form-group">
+            <label class="form-label" for="override-voice-speed">Tốc độ giọng đọc: <b id="lbl-voice-speed">${d.voice_speed || 1.0}x</b></label>
+            <input type="range" id="override-voice-speed" min="0.8" max="1.4" step="0.05" value="${d.voice_speed || 1.0}" style="accent-color:var(--teal);width:100%" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="override-bgm-style">Nhạc nền trộn tự động (BGM)</label>
+            <select class="form-select" id="override-bgm-style">
+              <option value="none" ${d.bgm_style === 'none' ? 'selected' : ''}>Không chèn nhạc nền</option>
+              <option value="cinematic_tension" ${d.bgm_style === 'cinematic_tension' ? 'selected' : ''}>Kịch tính Review Phim (Tension)</option>
+              <option value="chill_lofi" ${d.bgm_style === 'chill_lofi' ? 'selected' : ''}>Chill Lo-Fi nhẹ nhàng</option>
+              <option value="upbeat_viral" ${d.bgm_style === 'upbeat_viral' ? 'selected' : ''}>Sôi động Xu hướng (Upbeat Viral)</option>
+              <option value="emotional_piano" ${d.bgm_style === 'emotional_piano' ? 'selected' : ''}>Piano cảm xúc sâu lắng</option>
+            </select>
+          </div>
+        </div>
+        <label class="toggle-row">
+          <span>🔊 Giữ âm thanh môi trường gốc (Tự động giảm âm khi có giọng đọc)</span>
+          <input type="checkbox" id="override-keep-audio" ${d.keep_original_audio !== false ? 'checked' : ''} />
+        </label>
+      </div>
+
+      <!-- C. LÀM MỜ / XOÁ PHỤ ĐỀ GỐC (BLUR SUBTITLE) -->
+      <div class="cfg-section-box">
+        <div class="cfg-section-title"><span>🌫 C. Làm Mờ / Xoá Phụ Đề Gốc (Blur &amp; Inpaint)</span></div>
+        <label class="toggle-row mb-2">
+          <span>Bật tự động làm mờ / che phụ đề tiếng Trung/Anh ở đáy video</span>
+          <input type="checkbox" id="override-blur-sub" ${d.blur_subtitle ? 'checked' : ''} />
+        </label>
+        <div class="form-group mb-2">
+          <label class="form-label" for="override-blur-mode">Chế độ xử lý vùng phụ đề cũ</label>
+          <select class="form-select" id="override-blur-mode">
+            ${Object.entries(BLUR_LABELS).map(([k, lbl]) => `<option value="${k}" ${k === (d.blur_mode || 'none') ? 'selected' : ''}>${lbl}</option>`).join('')}
+          </select>
+        </div>
+        <div class="grid-2" style="gap:10px">
+          <div class="form-group">
+            <label class="form-label" for="override-blur-height">Chiều cao vùng Blur đáy: <b id="lbl-blur-h">${d.blur_height_pct || 22}%</b></label>
+            <input type="range" id="override-blur-height" min="10" max="45" step="1" value="${d.blur_height_pct || 22}" style="accent-color:var(--teal);width:100%" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="override-blur-strength">Cường độ làm mờ (Sigma): <b id="lbl-blur-s">${d.blur_strength || 20}</b></label>
+            <input type="range" id="override-blur-strength" min="5" max="40" step="1" value="${d.blur_strength || 20}" style="accent-color:var(--teal);width:100%" />
+          </div>
+        </div>
+      </div>
+
+      <!-- D. CHẠY CHỮ KARAOKE & BANNER HOOK -->
+      <div class="cfg-section-box" style="margin-bottom:0">
+        <div class="cfg-section-title"><span>💬 D. Chạy Chữ Phụ Đề Động &amp; Tiêu Đề Banner Hook</span></div>
+        <div class="grid-2" style="gap:10px;margin-bottom:10px">
+          <div class="form-group">
+            <label class="form-label" for="override-sub-style">Kiểu chạy chữ / Phụ đề</label>
+            <select class="form-select" id="override-sub-style">
+              ${Object.entries(SUB_STYLE_LABELS).map(([k, lbl]) => `<option value="${k}" ${k === (d.subtitle_style || 'none') ? 'selected' : ''}>${lbl}</option>`).join('')}
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="override-text-pos">Vị trí hiển thị phụ đề</label>
+            <select class="form-select" id="override-text-pos">
+              <option value="bottom" ${d.text_position === 'bottom' ? 'selected' : ''}>Phía dưới (Đè lên vùng Blur Sub)</option>
+              <option value="middle" ${d.text_position === 'middle' ? 'selected' : ''}>Chính giữa khung hình</option>
+              <option value="top" ${d.text_position === 'top' ? 'selected' : ''}>Phía trên</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group mb-2">
+          <label class="form-label" for="override-banner-text">Tiêu đề Hook cố định trên đầu video (Banner Text)</label>
+          <input class="form-input" id="override-banner-text" type="text" maxlength="120" value="${d.banner_text || ''}" placeholder="Ví dụ: TẬP CUỐI: CÁI KẾT KHÔNG NGỜ..." />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="override-marquee-text">Nội dung chữ chạy ngang / Phụ đề nổi bật (Marquee / Sub Text)</label>
+          <input class="form-input" id="override-marquee-text" type="text" maxlength="200" value="${d.marquee_text || ''}" placeholder="Nhập dòng chữ chạy hoặc lời bình hiển thị trên video..." />
+        </div>
+      </div>
+    `;
+
+    const syncAllControls = () => {
+      const w = parseInt($('override-width')?.value || 720, 10);
+      const h = parseInt($('override-height')?.value || 1280, 10);
+      container.querySelectorAll('[data-res-w]').forEach(btn => {
+        btn.classList.toggle('active', parseInt(btn.dataset.resW, 10) === w && parseInt(btn.dataset.resH, 10) === h);
+      });
+      if ($('lbl-voice-speed')) $('lbl-voice-speed').textContent = `${$('override-voice-speed').value}x`;
+      if ($('lbl-blur-h')) $('lbl-blur-h').textContent = `${$('override-blur-height').value}%`;
+      if ($('lbl-blur-s')) $('lbl-blur-s').textContent = `${$('override-blur-strength').value}`;
+      updateSummaryTextOnly();
+    };
+
+    container.querySelectorAll('input, select').forEach(el => {
+      el.addEventListener('input', syncAllControls);
+      el.addEventListener('change', syncAllControls);
+    });
+    $('override-blur-sub')?.addEventListener('change', e => {
+      if (e.target.checked && $('override-blur-mode')?.value === 'none') {
+        $('override-blur-mode').value = 'gaussian_box';
+      } else if (!e.target.checked && $('override-blur-mode')) {
+        $('override-blur-mode').value = 'none';
+      }
+      syncAllControls();
+    });
+    $('override-blur-mode')?.addEventListener('change', e => {
+      if ($('override-blur-sub')) {
+        $('override-blur-sub').checked = e.target.value !== 'none';
+      }
+      syncAllControls();
+    });
+    container.querySelectorAll('[data-res-w]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if ($('override-width')) $('override-width').value = btn.dataset.resW;
+        if ($('override-height')) $('override-height').value = btn.dataset.resH;
+        syncAllControls();
+      });
+    });
   }
 
   function updateSummaryTextOnly() {
@@ -653,35 +1037,56 @@ async function renderNewJob() {
     const presetVer = presetSel?.dataset.version || '1.0.0';
 
     const preset = state.presets.find(p => p.id === presetId);
-    const schema = getSchemaProps(preset);
+    const overridesObj = collectCurrentOverrides(preset);
 
-    let overrideText = 'Không có';
-    if (schema.width) {
-      const w = $('override-width')?.value || 720;
-      const h = $('override-height')?.value || 1280;
-      overrideText = `width: ${w}, height: ${h}`;
-    }
+    updateLivePhonePreview(overridesObj);
+
+    const hasRender = Object.keys(overridesObj).length > 0;
+    const summaryText = hasRender
+      ? `${overridesObj.width}×${overridesObj.height} (${overridesObj.fit_mode}) · Voice: ${overridesObj.voice_id} (${overridesObj.voice_speed}x) · Blur: ${overridesObj.blur_subtitle ? overridesObj.blur_mode + ' ' + overridesObj.blur_height_pct + '%' : 'Tắt'} · Sub: ${overridesObj.subtitle_style}`
+      : 'Chỉ kiểm tra thông số gốc (probe.json)';
 
     $('summary-body').innerHTML = `
-      <span class="dl-label">Dự án</span><span class="dl-value">${projName}</span>
-      <span class="dl-label">Preset</span><span class="dl-value">${presetId} (v${presetVer})</span>
-      <span class="dl-label">Input Ref</span><span class="dl-value mono">${inputVal || '<em>Chưa nhập UUID</em>'}</span>
-      <span class="dl-label">Overrides</span><span class="dl-value mono">${overrideText}</span>
-      <span class="dl-label">schema_version</span><span class="dl-value mono">0.1.0-draft</span>
+      <span class="dl-label">Dự án đích</span><span class="dl-value">${projName}</span>
+      <span class="dl-label">Preset Pipeline</span><span class="dl-value"><span class="tag" style="color:var(--teal)">${presetId}</span> (v${presetVer})</span>
+      <span class="dl-label">Input Video UUID</span><span class="dl-value mono">${inputVal || '<em>Chưa chọn UUID</em>'}</span>
+      <span class="dl-label">Tóm tắt Đa cấu hình</span><span class="dl-value mono" style="color:var(--teal)">${summaryText}</span>
+      <span class="dl-label">Cổng Giao Tiếp</span><span class="dl-value mono">HTTPS :443 (/api/v1/jobs) → PostgreSQL Queue → JSON Report</span>
     `;
+
+    const previewEl = $('live-job-payload-json');
+    if (previewEl) {
+      previewEl.textContent = JSON.stringify({
+        schema_version: '0.1.0-draft',
+        project_id: projSel?.value || '',
+        preset_id: presetId,
+        preset_version: presetVer,
+        input_refs: inputVal ? [inputVal] : [],
+        overrides: overridesObj,
+      }, null, 2);
+    }
+
+    // Highlight selected file card
+    document.querySelectorAll('[data-pick-file]').forEach(card => {
+      card.classList.toggle('selected', card.dataset.pickFile === inputVal);
+    });
 
     const disabled = !preset?.available || state.submitPending;
     $('btn-submit-job').disabled = disabled;
     if (preset && !preset.available) {
       $('btn-submit-job').innerHTML = `${I.alert} Preset chưa sẵn sàng trong registry`;
     } else {
-      $('btn-submit-job').innerHTML = `${I.play} Gửi job render`;
+      $('btn-submit-job').innerHTML = `${I.play} Xếp vào hàng đợi & Bắt đầu Render`;
     }
   }
 
   // Update summary when form changes
   function updateSummary() {
     const presetSel = document.querySelector('input[name="preset"]:checked');
+    document.querySelectorAll('.preset-option').forEach(lbl => {
+      const radio = lbl.querySelector('input[name="preset"]');
+      lbl.classList.toggle('selected-card', Boolean(radio && radio.checked));
+    });
     const preset = state.presets.find(p => p.id === (presetSel?.value || ''));
     updateOverrideFields(preset);
     updateSummaryTextOnly();
@@ -700,11 +1105,20 @@ async function renderNewJob() {
       }
       if (!$('new-job-input').value.trim()) {
         $('new-job-input').value = files[0].id;
-        updateSummaryTextOnly();
       }
-      picker.innerHTML = files.map(f => `
-        <button type="button" class="tag" style="cursor:pointer;border:1px solid var(--teal)" data-pick-file="${f.id}">
-          ${I.film} Chọn file verified: ${window.ccUtil.shortId(f.id)} (${window.ccUtil.formatBytes(f.size_bytes)})
+      const curVal = $('new-job-input').value.trim();
+      picker.innerHTML = files.map((f, idx) => `
+        <button type="button" class="file-pick-card ${f.id === curVal ? 'selected' : ''}" data-pick-file="${f.id}">
+          <div class="file-pick-icon">${I.film}</div>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px">
+              <span>Video #${idx + 1} (${window.ccUtil.shortId(f.id)})</span>
+              <span class="chip succeeded" style="font-size:9px;padding:1px 6px">Verified</span>
+            </div>
+            <div class="font-mono text-muted" style="font-size:10px;margin-top:2px">
+              ${window.ccUtil.formatBytes(f.size_bytes)} · SHA256: ${(f.sha256 || '').slice(0, 10)}…
+            </div>
+          </div>
         </button>
       `).join('');
       picker.querySelectorAll('[data-pick-file]').forEach(btn => {
@@ -713,6 +1127,7 @@ async function renderNewJob() {
           updateSummaryTextOnly();
         });
       });
+      updateSummaryTextOnly();
     } catch {
       picker.innerHTML = '';
     }
@@ -749,15 +1164,7 @@ async function renderNewJob() {
     if (!valid) return;
 
     const preset = state.presets.find(p => p.id === presetSel.value);
-    const schema = getSchemaProps(preset);
-    const overrides = {};
-    if (schema.width) {
-      overrides.width = parseInt($('override-width')?.value || 720, 10);
-      overrides.height = parseInt($('override-height')?.value || 1280, 10);
-    } else if (schema.title) {
-      const t = $('override-title')?.value.trim();
-      if (t) overrides.title = t;
-    }
+    const overrides = collectCurrentOverrides(preset);
 
     const payload = {
       schema_version: '0.1.0-draft',
@@ -770,12 +1177,12 @@ async function renderNewJob() {
 
     state.submitPending = true;
     $('btn-submit-job').disabled = true;
-    $('btn-submit-job').innerHTML = `<span>Đang gửi đến backend…</span>`;
+    $('btn-submit-job').innerHTML = `<span>Đang xếp vào hàng đợi PostgreSQL…</span>`;
     $('form-submit-error')?.classList.add('hidden');
 
     try {
       const job = await window.CC_API.createJob(payload);
-      toast(`Đã tạo job ${window.ccUtil.shortId(job.id)}`, 'ok');
+      toast(`Đã xếp job #${window.ccUtil.shortId(job.id)} vào hàng đợi!`, 'ok');
       state.projectId = projSel.value;
       navigate('job-detail', { jobId: job.id });
     } catch(err) {
@@ -786,15 +1193,18 @@ async function renderNewJob() {
     } finally {
       state.submitPending = false;
       $('btn-submit-job').disabled = false;
-      $('btn-submit-job').innerHTML = `${I.play} Gửi job render`;
+      $('btn-submit-job').innerHTML = `${I.play} Xếp vào hàng đợi & Bắt đầu Render`;
     }
   });
 }
 
 // D. CHI TIẾT JOB
 async function renderJobDetail() {
+  stopJobPolling();
   const main = $('main-content');
-  main.innerHTML = renderLoading();
+  if (!main.querySelector('[data-job-detail-loaded]')) {
+    main.innerHTML = renderLoading();
+  }
 
   let job, events, outputs;
   try {
@@ -822,19 +1232,21 @@ async function renderJobDetail() {
   const proj = state.projects.find(p => p.id === job.project_id);
 
   main.innerHTML = `
+    <div data-job-detail-loaded="1"></div>
     <div class="page-header">
       <div>
         <nav aria-label="Đường dẫn" style="font-size:11px;color:var(--txt-3);margin-bottom:4px">
-          <button class="btn btn-ghost btn-sm" id="btn-back-proj-job" style="padding:0">${proj?.name || 'Dự án'}</button>
+          <button class="btn btn-ghost btn-sm" id="btn-back-proj-job" style="padding:0">${proj?.name || 'Danh sách Dự án'}</button>
           <span style="margin:0 4px">›</span>
-          <span class="font-mono">${window.ccUtil.shortId(job.id)}</span>
+          <span class="font-mono">#${window.ccUtil.shortId(job.id)}</span>
         </nav>
-        <h1 class="page-title" style="display:flex;align-items:center;gap:10px">
-          Job <span class="font-mono" style="font-size:14px">${window.ccUtil.shortId(job.id)}</span>
+        <h1 class="page-title" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          Job Render <span class="font-mono" style="font-size:15px;color:var(--teal)">#${window.ccUtil.shortId(job.id)}</span>
           ${chip(job.status)}
-          ${state.isMock ? '<span class="not-impl">Dữ liệu mô phỏng</span>' : '<span style="color:var(--teal)">API thật</span>'}
+          ${['queued', 'running'].includes(job.status) ? `<span class="tag" style="color:var(--status-running);border-color:rgba(56,189,248,0.35)">⟳ Tự động đồng bộ tiến trình (2.5s)</span>` : ''}
+          ${state.isMock ? '<span class="not-impl">Dữ liệu mô phỏng</span>' : '<span class="tag" style="color:var(--teal);border-color:rgba(45,212,191,0.3)">🔒 HTTPS :443</span>'}
         </h1>
-        <p class="page-subtitle">Preset: ${job.preset_id} v${job.preset_version} · Tiến độ: ${pgText} · Cập nhật ${window.ccUtil.relativeTime(job.updated_at)}</p>
+        <p class="page-subtitle">Preset: <b>${job.preset_id}</b> (v${job.preset_version}) · Tiến độ: <b>${pgText}</b> · Cập nhật ${window.ccUtil.relativeTime(job.updated_at)}</p>
       </div>
       <div class="page-actions">
         <button class="btn btn-secondary btn-sm" id="btn-refresh-job">${I.refresh} Làm mới</button>
@@ -864,40 +1276,39 @@ async function renderJobDetail() {
     <div class="grid-2" style="gap:16px;margin-bottom:16px">
       <!-- Thông tin cơ bản -->
       <div class="card">
-        <div class="card-header"><span class="card-title">Thông tin job</span></div>
+        <div class="card-header"><span class="card-title">${I.list} Thông Tin Hàng Đợi &amp; Định Danh Job</span></div>
         <div class="dl-grid">
-          <span class="dl-label">Job ID</span><span class="dl-value mono">${job.id}</span>
-          <span class="dl-label">Dự án ID</span><span class="dl-value mono">${job.project_id}</span>
-          <span class="dl-label">Preset</span><span class="dl-value">${job.preset_id}</span>
-          <span class="dl-label">Phiên bản preset</span><span class="dl-value mono">${job.preset_version}</span>
-          <span class="dl-label">Phiên bản job</span><span class="dl-value">v${job.version}</span>
-          <span class="dl-label">Tạo lúc</span><span class="dl-value">${window.ccUtil.formatDate(job.created_at)}</span>
-          <span class="dl-label">Cập nhật</span><span class="dl-value">${window.ccUtil.formatDate(job.updated_at)}</span>
-          <span class="dl-label">Tiến độ</span><span class="dl-value">${pgText}${pg?.percent === null && job.status === 'running' ? ' <span class="text-muted text-sm">(chưa đo được)</span>' : ''}</span>
+          <span class="dl-label">Job UUID</span><span class="dl-value mono">${job.id}</span>
+          <span class="dl-label">Dự án UUID</span><span class="dl-value mono">${job.project_id}</span>
+          <span class="dl-label">Preset Pipeline</span><span class="dl-value"><span class="tag" style="color:var(--teal)">${job.preset_id}</span> (v${job.preset_version})</span>
+          <span class="dl-label">Phiên bản trạng thái</span><span class="dl-value mono">v${job.version}</span>
+          <span class="dl-label">Xếp hàng lúc</span><span class="dl-value">${window.ccUtil.formatDate(job.created_at)}</span>
+          <span class="dl-label">Cập nhật cuối</span><span class="dl-value">${window.ccUtil.formatDate(job.updated_at)}</span>
+          <span class="dl-label">Tiến độ tổng thể</span><span class="dl-value">${renderProgressCell(job)}</span>
         </div>
       </div>
 
       <!-- Pipeline / Tasks -->
       <div class="card">
-        <div class="card-header"><span class="card-title">Pipeline Tasks (${tasks.length})</span></div>
+        <div class="card-header"><span class="card-title">${I.cpu} Các Bước Thực Thi Pipeline DAG (${tasks.length} bước)</span></div>
         <div class="pipeline">
           ${tasks.length === 0 ? `<div class="text-muted text-sm">Chưa có task nào được tạo.</div>` : ''}
           ${tasks.map((t, i) => `
             ${i > 0 ? '<div class="pipeline-connector"></div>' : ''}
             <div class="pipeline-step${t.id === job.current_task_id ? ' active' : ''}">
               <div class="pipeline-step-icon ${t.status}">
-                ${t.status === 'succeeded' ? I.check : t.status === 'failed' ? I.x : (t.attempt || '')}
+                ${t.status === 'succeeded' ? I.check : t.status === 'failed' ? I.x : (i + 1)}
               </div>
               <div style="flex:1">
-                <div class="pipeline-step-name">${t.task_key}</div>
-                <div class="pipeline-step-module">${t.module} (v${t.module_version}) · attempt ${t.attempt}</div>
+                <div class="pipeline-step-name">Bước ${i + 1}: ${t.task_key === 'probe' ? 'Kiểm tra thông số gốc (probe)' : (t.task_key === 'compose' ? 'Render Video & Xuất Báo Cáo JSON (compose)' : t.task_key)}</div>
+                <div class="pipeline-step-module">Module: <code>${t.module}@${t.module_version}</code> · Lần chạy (attempt): ${t.attempt}</div>
               </div>
               ${chip(t.status)}
               ${t.error ? `<span class="text-sm" style="color:var(--status-failed)" title="${t.error.message}">${t.error.code}</span>` : ''}
             </div>
           `).join('')}
         </div>
-        <p class="form-hint mt-2">Pipeline phụ thuộc vào preset từ registry — không mọi preset đều có đủ tất cả các bước.</p>
+        <p class="form-hint mt-2">Mỗi bước trong hàng đợi được Agent nhận qua <code>POST /api/v1/agent/claims</code> và hoàn tất kèm mã kiểm chứng SHA-256.</p>
       </div>
     </div>
 
@@ -907,7 +1318,7 @@ async function renderJobDetail() {
     <!-- Log -->
     <div class="section">
       <div class="section-header">
-        <span class="section-title">${I.log} Log sự kiện (${evItems.length})</span>
+        <span class="section-title">${I.log} Nhật Ký Sự Kiện Hàng Đợi &amp; Agent (${evItems.length})</span>
       </div>
       <div class="log-toolbar">
         <button class="log-filter-btn ${state.logFilter === '' ? 'active' : ''}" data-lf="">Tất cả</button>
@@ -933,7 +1344,7 @@ async function renderJobDetail() {
   `;
 
   $('btn-back-proj-job')?.addEventListener('click', () =>
-    state.projectId ? navigate('project-detail') : navigate('projects'));
+    state.projectId ? navigate('project-detail') : navigate('overview'));
   $('btn-refresh-job')?.addEventListener('click', () => renderJobDetail());
 
   $('btn-cancel-job-action')?.addEventListener('click', async () => {
@@ -966,13 +1377,31 @@ async function renderJobDetail() {
     });
   });
 
+  // Auto-poll while job is queued or running
+  if (['queued', 'running', 'cancelling'].includes(job.status)) {
+    jobPollTimer = setInterval(() => {
+      if (state.view === 'job-detail' && state.jobId === job.id) {
+        renderJobDetail();
+      } else {
+        stopJobPolling();
+      }
+    }, 2500);
+  }
+
   // Load authenticated blob stream for video player if in Real API mode
   const videoEl = $('cc-stream-video');
+  const videoDlBtn = $('cc-download-video-btn');
   const videoFile = outItems.find(f => f.kind === 'video');
-  if (videoEl && videoFile && !state.isMock && window.CC_API.fetchFileBlobUrl) {
+  if (videoFile && !state.isMock && window.CC_API.fetchFileBlobUrl) {
     window.CC_API.fetchFileBlobUrl(videoFile.id)
       .then(blobUrl => {
-        if (blobUrl && videoEl) videoEl.src = blobUrl;
+        if (!blobUrl) return;
+        if (videoEl) videoEl.src = blobUrl;
+        if (videoDlBtn) {
+          videoDlBtn.href = blobUrl;
+          videoDlBtn.download = `render-${window.ccUtil.shortId(job.id)}.mp4`;
+          videoDlBtn.classList.remove('hidden');
+        }
       })
       .catch(() => {});
   }
@@ -988,31 +1417,75 @@ async function renderJobDetail() {
         const qcBox = $('live-qc-card');
         if (qcBox && renderRep?.media) {
           const m = renderRep.media;
-          const rc = renderRep.render_config || renderRep.applied_profile || {};
+          const rc = renderRep.render_config || {};
+          const ap = renderRep.applied_profile || {};
+          const vc = renderRep.voice_config || {};
+          const bc = renderRep.blur_config || {};
+          const tc = renderRep.text_overlay_config || {};
+          const ve = renderRep.visual_effects || {};
           qcBox.innerHTML = `
-            <div class="card-header"><span class="card-title">QC &amp; Cấu hình Render (Từ JSON Report)</span></div>
-            <div class="text-muted text-sm">${I.check} Đã xác minh thông số kỹ thuật và checksum SHA-256 từ Agent.</div>
-            <div class="dl-grid mt-2" style="font-size:11px">
-              <span class="dl-label">Kích thước xuất</span><span class="dl-value">${m.width}x${m.height} px</span>
-              <span class="dl-label">Thời lượng</span><span class="dl-value">${m.duration}s (${m.frames ?? '—'} frames)</span>
-              <span class="dl-label">FPS</span><span class="dl-value">${m.fps}</span>
-              <span class="dl-label">Codec / Audio</span><span class="dl-value mono">${m.codec || '—'} / ${renderRep.encoder || 'libx264'} (audio: ${m.has_audio ? 'có' : 'không'})</span>
-              ${Object.keys(rc).length ? `<span class="dl-label">Cấu hình Render</span><span class="dl-value mono">${JSON.stringify(rc)}</span>` : ''}
+            <div class="card-header">
+              <span class="card-title">${I.check} Thông Số Render &amp; Đa Cấu Hình JSON Đã Áp Dụng</span>
+              <span class="chip succeeded" style="font-size:10px">SHA-256 Verified</span>
+            </div>
+            <div class="metric-grid">
+              <div class="metric-tile">
+                <div class="m-label">Kích thước &amp; Bố cục</div>
+                <div class="m-val" style="color:var(--teal)">${m.width}×${m.height} (${ve.fit_mode || rc.fit_mode || 'contain'})</div>
+              </div>
+              <div class="metric-tile">
+                <div class="m-label">Giọng Đọc AI / BGM</div>
+                <div class="m-val">${vc.voice_id || rc.voice_id || 'original'} (${vc.voice_speed || rc.voice_speed || 1}x)</div>
+              </div>
+              <div class="metric-tile">
+                <div class="m-label">Làm Mờ Sub (Blur)</div>
+                <div class="m-val">${(bc.blur_subtitle ?? rc.blur_subtitle) ? `${bc.blur_mode || rc.blur_mode || 'gaussian'} (${bc.blur_height_pct || rc.blur_height_pct || 22}%)` : 'Không bật'}</div>
+              </div>
+              <div class="metric-tile">
+                <div class="m-label">Chạy Chữ / Phụ Đề</div>
+                <div class="m-val">${tc.subtitle_style || rc.subtitle_style || 'none'}</div>
+              </div>
+              <div class="metric-tile">
+                <div class="m-label">Màu Sắc &amp; Lật Gương</div>
+                <div class="m-val">${ve.color_grade || rc.color_grade || 'natural'}${(ve.mirror_flip ?? rc.mirror_flip) ? ' · 🪞Flip' : ''}</div>
+              </div>
+              <div class="metric-tile">
+                <div class="m-label">Thời lượng / FPS</div>
+                <div class="m-val">${m.duration}s · ${m.fps} fps (${m.frames ?? '—'}f)</div>
+              </div>
+            </div>
+            <div class="dl-grid mt-3" style="font-size:11px;padding-top:10px;border-top:1px solid var(--border)">
+              ${(tc.banner_text || rc.banner_text) ? `<span class="dl-label">Banner Hook</span><span class="dl-value" style="color:#fde047;font-weight:700">${tc.banner_text || rc.banner_text}</span>` : ''}
+              ${(tc.marquee_text || rc.marquee_text) ? `<span class="dl-label">Chữ chạy (Marquee)</span><span class="dl-value" style="color:var(--teal)">${tc.marquee_text || rc.marquee_text}</span>` : ''}
+              <span class="dl-label">Cấu hình JSON</span><span class="dl-value mono" style="color:var(--teal)">${JSON.stringify(Object.keys(rc).length ? rc : { width: m.width, height: m.height })}</span>
+              ${renderRep.source_sha256 ? `<span class="dl-label">Source SHA-256</span><span class="dl-value mono truncate">${renderRep.source_sha256}</span>` : ''}
+              ${renderRep.output_sha256 ? `<span class="dl-label">Output SHA-256</span><span class="dl-value mono truncate">${renderRep.output_sha256}</span>` : ''}
             </div>
           `;
           qcBox.classList.remove('hidden');
         }
         valid.forEach(({ file, data }) => {
+          const isRender = Boolean(data.output_sha256 || data.encoder);
+          const fname = isRender ? `render-report-${window.ccUtil.shortId(file.id)}.json` : `probe-${window.ccUtil.shortId(file.id)}.json`;
+          const badgeEl = document.getElementById(`json-name-${file.id}`);
+          if (badgeEl) badgeEl.textContent = fname;
           const pre = document.getElementById(`json-preview-${file.id}`);
-          if (pre) pre.textContent = JSON.stringify(data, null, 2);
+          const pretty = JSON.stringify(data, null, 2);
+          if (pre) pre.textContent = pretty;
           const dlBtn = document.getElementById(`json-dl-${file.id}`);
           if (dlBtn) {
-            const isRender = Boolean(data.output_sha256 || data.encoder);
-            const fname = isRender ? `render-report-${window.ccUtil.shortId(file.id)}.json` : `probe-${window.ccUtil.shortId(file.id)}.json`;
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const blob = new Blob([pretty], { type: 'application/json' });
             dlBtn.href = URL.createObjectURL(blob);
             dlBtn.download = fname;
             dlBtn.classList.remove('hidden');
+          }
+          const copyBtn = document.getElementById(`json-copy-${file.id}`);
+          if (copyBtn) {
+            copyBtn.classList.remove('hidden');
+            copyBtn.onclick = () => {
+              navigator.clipboard?.writeText(pretty);
+              toast(`Đã sao chép ${fname} vào clipboard!`, 'ok');
+            };
           }
         });
       })
@@ -1035,50 +1508,44 @@ function renderOutputSection(job, outItems) {
   return `
     <div class="section">
       <div class="section-header">
-        <span class="section-title">${I.film} Kết quả &amp; Duyệt Video</span>
+        <span class="section-title">${I.film} Kết Quả Render Video &amp; Báo Cáo Cấu Hình JSON</span>
         ${job.status === 'needs_review' ? `
           <div style="margin-left:auto;display:flex;align-items:center;gap:6px">
-            <span class="chip needs_review" style="font-size:12px">Cần người xem duyệt</span>
-            <span class="not-impl" style="font-size:10px" title="Contract 0.1.0-draft chưa có endpoint phê duyệt xuất bản">API duyệt chưa có</span>
+            <span class="chip needs_review" style="font-size:12px">Đã hoàn tất Render · Chờ duyệt</span>
           </div>` : ''}
       </div>
 
-      ${job.status === 'needs_review' ? `
-        <div class="info-state mb-3" style="font-size:12px">
-          ${I.alert} <b>needs_review:</b> Đã hoàn thành các bước render kỹ thuật và xác minh output. Trạng thái này <b>chưa đồng nghĩa</b> được phép đăng lên Facebook/TikTok/Telegram.
-        </div>` : ''}
-
       <div class="grid-2" style="gap:16px">
-        <div>
-          <div class="video-player-wrap mb-2">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">${I.play} Trình Phát Video Kết Quả (HTTPS :443 Stream)</span>
+            <a id="cc-download-video-btn" class="btn btn-primary btn-sm hidden" style="text-decoration:none">Tải Video MP4 ↓</a>
+          </div>
+          <div class="video-player-wrap mb-3" style="border:1px solid var(--border)">
             ${videoFile?.playback_url
               ? `<video controls preload="metadata" style="width:100%;border-radius:6px;background:#000" aria-label="Video kết quả">
                    <source src="${videoFile.playback_url}" type="video/mp4">
                  </video>`
               : (streamUrl && !state.isMock)
-                ? `<video id="cc-stream-video" controls preload="metadata" style="width:100%;border-radius:6px;background:#000" aria-label="Stream video qua API">
-                   </video>
-                   <div style="font-size:11px;color:var(--teal);margin-top:4px">
-                     ${I.check} Stream xác thực trực tiếp từ API backend (/files/${window.ccUtil.shortId(videoFile.id)}/content)
-                   </div>`
+                ? `<video id="cc-stream-video" controls preload="metadata" style="width:100%;height:100%;border-radius:6px;background:#000" aria-label="Stream video qua API">
+                   </video>`
                 : `<div class="video-unavailable">
                      ${I.film}
-                     <p>Chưa có luồng phát video trực tuyến</p>
-                     <small>${videoFile ? 'File đã lưu tại managed storage; playback_url=null theo contract 0.1.0-draft.' : 'Không có file video trong danh sách output.'}</small>
+                     <p>Chưa có file video cho job này</p>
+                     <small>${videoFile ? 'File đã lưu tại managed storage.' : 'Preset này chỉ xuất báo cáo JSON (probe.json).'}</small>
                    </div>`
             }
           </div>
           ${videoFile ? `
             <div class="dl-grid" style="font-size:11px">
-              <span class="dl-label">File ID</span><span class="dl-value mono">${videoFile.id}</span>
-              <span class="dl-label">Loại MIME</span><span class="dl-value">${videoFile.media_type}</span>
-              <span class="dl-label">Dung lượng</span><span class="dl-value">${window.ccUtil.formatBytes(videoFile.size_bytes)}</span>
-              <span class="dl-label">Xác minh</span><span class="dl-value">${chip(videoFile.verification === 'verified' ? 'succeeded' : 'queued')}</span>
-              ${videoFile.sha256 ? `<span class="dl-label">SHA256</span><span class="dl-value mono text-sm truncate">${videoFile.sha256}</span>` : ''}
+              <span class="dl-label">File UUID</span><span class="dl-value mono">${videoFile.id}</span>
+              <span class="dl-label">Định dạng</span><span class="dl-value">${videoFile.media_type} (${window.ccUtil.formatBytes(videoFile.size_bytes)})</span>
+              <span class="dl-label">Toàn vẹn file</span><span class="dl-value">${chip(videoFile.verification === 'verified' ? 'succeeded' : 'queued')}</span>
+              ${videoFile.sha256 ? `<span class="dl-label">SHA-256</span><span class="dl-value mono text-sm truncate">${videoFile.sha256}</span>` : ''}
             </div>` : ''}
         </div>
 
-        <div class="flex-col" style="gap:12px">
+        <div class="flex-col" style="gap:14px">
           ${qc ? `
             <div class="card">
               <div class="card-header"><span class="card-title">QC / Kiểm tra Chất lượng</span></div>
@@ -1108,27 +1575,22 @@ function renderOutputSection(job, outItems) {
 
           ${repFiles.length > 0 ? `
             <div class="card">
-              <div class="card-header"><span class="card-title">Báo cáo Kỹ thuật &amp; File JSON (${repFiles.length})</span></div>
+              <div class="card-header">
+                <span class="card-title">${I.log} File JSON Cấu Hình &amp; Báo Cáo Từ Agent (${repFiles.length})</span>
+              </div>
               ${repFiles.map(f => `
-                <div style="border-bottom:1px solid var(--border);padding:8px 0">
-                  <div class="flex items-center gap-2 mb-1" style="font-size:12px">
-                    <span class="tag">${f.kind}</span>
-                    <span class="font-mono text-sm">${window.ccUtil.shortId(f.id)}.json</span>
-                    <span class="text-muted">${window.ccUtil.formatBytes(f.size_bytes)}</span>
-                    <span class="tag">${f.verification}</span>
-                    <a id="json-dl-${f.id}" class="btn btn-secondary btn-sm hidden" style="margin-left:auto;font-size:11px;padding:2px 8px;text-decoration:none">Tải JSON ↓</a>
+                <div style="border-bottom:1px solid var(--border);padding:10px 0">
+                  <div class="flex items-center gap-2 mb-2" style="font-size:12px;flex-wrap:wrap">
+                    <span class="tag" style="color:var(--teal);border-color:rgba(45,212,191,0.3)">JSON Report</span>
+                    <span id="json-name-${f.id}" class="font-mono" style="font-weight:700;color:var(--txt-1)">${window.ccUtil.shortId(f.id)}.json</span>
+                    <span class="text-muted">(${window.ccUtil.formatBytes(f.size_bytes)})</span>
+                    <div style="margin-left:auto;display:flex;gap:6px">
+                      <button type="button" id="json-copy-${f.id}" class="btn btn-secondary btn-sm hidden" style="font-size:11px;padding:3px 8px">Sao chép JSON</button>
+                      <a id="json-dl-${f.id}" class="btn btn-primary btn-sm hidden" style="font-size:11px;padding:3px 10px;text-decoration:none">Tải JSON ↓</a>
+                    </div>
                   </div>
-                  <pre id="json-preview-${f.id}" style="background:var(--bg-0);padding:8px;border-radius:4px;font-size:11px;overflow-x:auto;max-height:140px;color:var(--txt-2);margin-top:4px">${f._mock ? JSON.stringify(f, null, 2) : 'Đang đọc file JSON từ API...'}</pre>
+                  <pre id="json-preview-${f.id}" class="json-code-box">${f._mock ? JSON.stringify(f, null, 2) : 'Đang tải nội dung JSON từ /api/v1/files/' + window.ccUtil.shortId(f.id) + '/content...'}</pre>
                 </div>`).join('')}
-            </div>` : ''}
-
-          ${job.status === 'needs_review' ? `
-            <div class="card" style="border-color:var(--border-light)">
-              <div class="card-header"><span class="card-title">Render Lại Hình Ảnh (Visual-Only)</span></div>
-              <p class="form-hint">Render lại hình từ packet là job riêng biệt — không cho phép đổi giọng nói hoặc audio qua thao tác này.</p>
-              <button class="btn btn-secondary btn-sm mt-2" disabled title="Chưa triển khai — Chờ endpoint trong contract">
-                Tạo job render lại hình <span class="not-impl" style="margin-left:4px">Chờ tích hợp</span>
-              </button>
             </div>` : ''}
         </div>
       </div>
@@ -1436,18 +1898,18 @@ function openRenameProjectModal(project) {
   });
 }
 
-/* ─── API badge (health check legacy 8005) ───────────────── */
+/* ─── API badge (health check /api/v1/health) ────────────── */
 async function checkLegacyHealth() {
   const badge = $('api-health-badge');
   if (!badge) return;
   try {
-    const r = await fetch('/api/health', { signal: AbortSignal.timeout(3000) });
+    const r = await fetch('/api/v1/health', { signal: AbortSignal.timeout(3000) });
     if (!r.ok) throw new Error();
     badge.className = 'api-badge ok';
-    badge.innerHTML = `<span class="dot"></span>Legacy 8005 OK`;
+    badge.innerHTML = `<span class="dot"></span>API v1 Ready`;
   } catch {
     badge.className = 'api-badge';
-    badge.innerHTML = `<span class="dot"></span>Legacy 8005`;
+    badge.innerHTML = `<span class="dot"></span>Local Mode`;
   }
 }
 

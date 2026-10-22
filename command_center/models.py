@@ -39,6 +39,29 @@ class Overrides(Closed):
     title: str = Field(default="", max_length=200)
     width: Literal[360, 720, 1080] | None = None
     height: Literal[640, 1280, 1920] | None = None
+    fit_mode: Literal["contain", "cover", "blur_bg"] | None = None
+    voice_id: Literal[
+        "original",
+        "vi_female_north_ngochuyen",
+        "vi_male_north_minhquang",
+        "vi_female_south_thaovy",
+        "vi_male_review_tram",
+        "wuby_clone_v2",
+        "omnivoice_auto",
+    ] | None = None
+    voice_speed: float | None = Field(default=None, ge=0.5, le=2.0)
+    keep_original_audio: bool | None = None
+    bgm_style: Literal["none", "cinematic_tension", "chill_lofi", "upbeat_viral", "emotional_piano"] | None = None
+    blur_subtitle: bool | None = None
+    blur_mode: Literal["none", "gaussian_box", "feather_dark", "ai_inpaint"] | None = None
+    blur_height_pct: Annotated[StrictInt, Field(ge=5, le=50)] | None = None
+    blur_strength: Annotated[StrictInt, Field(ge=2, le=50)] | None = None
+    subtitle_style: Literal["none", "karaoke_pop", "review_yellow_box", "neon_glow", "minimal_white"] | None = None
+    banner_text: str | None = Field(default=None, max_length=120)
+    marquee_text: str | None = Field(default=None, max_length=200)
+    text_position: Literal["bottom", "middle", "top"] | None = None
+    mirror_flip: bool | None = None
+    color_grade: Literal["natural", "cinematic_warm", "film_contrast", "vibrant_tiktok", "noir_bw"] | None = None
 
 
 class CreateJob(Closed):
