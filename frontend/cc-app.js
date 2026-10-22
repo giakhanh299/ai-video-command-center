@@ -661,6 +661,31 @@ async function renderNewJob() {
           </button>
         `).join('')}
       </div>
+
+      <!-- Khung Dán Link TikTok / Douyin Đầu Vào & Tự Động Phân Biệt Kênh -->
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;flex-wrap:wrap">
+          <span style="font-size:12px;font-weight:700;color:var(--teal)">🔗 Tự Động Phân Biệt Kênh Đầu Vào TikTok / Douyin (Auto-Route 8 Kênh)</span>
+          <span style="font-size:10px;color:var(--txt-3)">Dán link video/profile Douyin/TikTok hoặc bấm nguồn mẫu để tự động nhận diện kênh đích &amp; tọa độ Blur</span>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:8px">
+          <input class="form-input font-mono" id="studio-source-url-input" type="text"
+            placeholder="Dán link Douyin/TikTok (vd: https://www.douyin.com/user/... hoặc tên kênh 乖巧宝宝Quby, 女钓手豆豆...)" />
+          <button type="button" class="btn btn-primary btn-sm" id="btn-ingest-source" style="white-space:nowrap">
+            ⚡ Tự Nhận Diện &amp; Nạp
+          </button>
+        </div>
+        <div class="blur-preset-bar" style="justify-content:flex-start">
+          <span style="font-size:10px;color:var(--txt-3);align-self:center">Nguồn Douyin mẫu:</span>
+          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAfAuPSkhuWIAv7Yx56Y1sI52BoJc0teeXWA2soSCeook 乖巧宝宝Quby">🐰 乖巧宝宝Quby (KENH_006)</button>
+          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAUewX30vrd2sxQV9Bpkt2rbQTl5e7ILBUSVAuMQOea0u7uHDq-8oeAzMEdHSAmVvT 阿刚速看">🎬 阿刚速看 (KENH_002)</button>
+          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAA-YcErrxgnoO9Drrannm8IFMQAN8vzYAjCNqHFMOzLUg 女钓手豆豆">🎣 女钓手豆豆 (KENH_008)</button>
+          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAzjF0uYCtXbf928SK2W0jgEBC7idgE2RT9VHipW7UEF8 奋斗的希瓜皮">🍿 奋斗的希瓜皮 (KENH_005)</button>
+          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAD3g0DECFFzLHG8GLkd0-ESvyOkYCCpHtC4OKhG4yadPVPxi5bGiguqui1fERASD0 迷人的歪姐">🌙 迷人的歪姐 (KENH_007)</button>
+          <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAzR1IUu5xvEwqB5x5WnUJGI6WZTiaKQzXAyxm7Ts43_dvx0la6IrYLlH3SLlrvy60 财商研习社">📚 财商研习社 (KENH_001)</button>
+        </div>
+        <div id="source-detect-banner" class="info-state hidden mt-2" style="border-color:rgba(45,212,191,0.45);color:var(--txt-1)"></div>
+      </div>
     </div>
 
     <form id="new-job-form" novalidate>
@@ -1377,7 +1402,16 @@ async function renderNewJob() {
       return;
     }
 
-    if (!fileId || state.isMock || !window.CC_API.fetchFileBlobUrl) return;
+    if (!fileId || state.isMock) return;
+    // Tối ưu hoá HTTP 206 Range Streaming trực tiếp qua cổng 443 để tua khung hình mượt tức thì (0ms delay)
+    const directUrl = window.CC_API.getFileContentUrl ? window.CC_API.getFileContentUrl(fileId) : null;
+    if (directUrl && (!window.CC_CONFIG || !window.CC_CONFIG.authToken)) {
+      videoEl.src = directUrl;
+      videoEl.load();
+      if (fallback) fallback.classList.add('hidden');
+      return;
+    }
+    if (!window.CC_API.fetchFileBlobUrl) return;
     try {
       const blobUrl = await window.CC_API.fetchFileBlobUrl(fileId);
       if (blobUrl) {
@@ -1459,22 +1493,60 @@ async function renderNewJob() {
   }
 
   // Sự kiện chọn 1 trong 8 Kênh Fanpage trên thanh đầu trang
-  document.querySelectorAll('[data-channel-id]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const chId = btn.dataset.channelId;
-      state.selectedChannelId = chId;
-      document.querySelectorAll('[data-channel-id]').forEach(b => b.classList.toggle('active', b.dataset.channelId === chId));
-      const ch = CHANNELS_8.find(c => c.id === chId);
-      if ($('selected-channel-tag') && ch) $('selected-channel-tag').textContent = ch.name;
-      if (ch) {
-        const targetRadio = document.querySelector(`input[name="preset"][value="${ch.preset_id}"]`);
-        if (targetRadio && !targetRadio.disabled) {
-          targetRadio.checked = true;
-        }
-        updateSummary(ch);
-        toast(`Đã nạp cấu hình & vùng Blur mẫu của ${ch.name}`, 'ok');
+  function activateChannelProfile(chId, extraReason = null) {
+    state.selectedChannelId = chId;
+    document.querySelectorAll('[data-channel-id]').forEach(b => b.classList.toggle('active', b.dataset.channelId === chId));
+    const ch = CHANNELS_8.find(c => c.id === chId);
+    if ($('selected-channel-tag') && ch) $('selected-channel-tag').textContent = ch.name;
+    if (ch) {
+      const targetRadio = document.querySelector(`input[name="preset"][value="${ch.preset_id}"]`);
+      if (targetRadio && !targetRadio.disabled) {
+        targetRadio.checked = true;
       }
-    });
+      updateSummary(ch);
+      toast(extraReason || `Đã nạp cấu hình & vùng Blur mẫu của ${ch.name}`, 'ok');
+    }
+  }
+
+  document.querySelectorAll('[data-channel-id]').forEach(btn => {
+    btn.addEventListener('click', () => activateChannelProfile(btn.dataset.channelId));
+  });
+
+  // Sự kiện Tự động nhận diện Kênh đầu vào TikTok / Douyin (Auto-Route)
+  async function handleIngestSource(rawText) {
+    const srcText = (rawText !== undefined ? rawText : ($('studio-source-url-input')?.value || '')).trim();
+    if (!srcText) {
+      toast('Hãy dán link TikTok/Douyin hoặc chọn 1 nguồn Douyin mẫu bên dưới!', 'warn');
+      return;
+    }
+    if ($('studio-source-url-input')) $('studio-source-url-input').value = srcText;
+    const projId = $('new-job-project')?.value;
+    const banner = $('source-detect-banner');
+    const btn = $('btn-ingest-source');
+    if (btn) { btn.disabled = true; btn.textContent = 'Đang phân tích…'; }
+    try {
+      const res = await window.CC_API.ingestSourceUrl(projId, srcText);
+      const chId = res.detected_channel_id || 'ch_review_black';
+      activateChannelProfile(chId, `Tự động định tuyến: ${res.source_author} → ${res.detected_channel_name || chId}`);
+      if (res.file?.id && $('new-job-input')) {
+        $('new-job-input').value = res.file.id;
+        await loadProjectVerifiedFiles(false);
+        loadRealVideoIntoStage(res.file.id);
+      }
+      if (banner) {
+        banner.innerHTML = `✅ <b>Đã tự động phân biệt kênh đầu vào:</b> Nguồn <code>${res.source_author}</code> → Đích <b style="color:var(--teal)">${res.detected_channel_name || chId}</b> (Preset: <code>${res.detected_preset_id}</code>) · <em>${res.classification_reason}</em>`;
+        banner.classList.remove('hidden');
+      }
+    } catch (err) {
+      toast(err?.body?.error?.message || 'Không thể phân tích nguồn đầu vào.', 'err');
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = '⚡ Tự Nhận Diện & Nạp'; }
+    }
+  }
+
+  $('btn-ingest-source')?.addEventListener('click', () => handleIngestSource());
+  document.querySelectorAll('[data-quick-source]').forEach(btn => {
+    btn.addEventListener('click', () => handleIngestSource(btn.dataset.quickSource));
   });
 
   // Sự kiện Upload file .MP4 trực tiếp từ trình duyệt

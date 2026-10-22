@@ -629,6 +629,38 @@ class MockApiClient {
     };
   }
 
+  async ingestSourceUrl(projectId, sourceInput) {
+    await this._delay(220);
+    const s = (sourceInput || '').toLowerCase();
+    let chId = 'ch_review_black';
+    let author = '阿刚速看';
+    let presetId = 'cauhinh2';
+    let reason = 'Khớp chữ ký kênh nguồn Review Phim (阿刚速看)';
+    if (s.includes('quby') || s.includes('wuby') || s.includes('乖巧宝宝')) {
+      chId = 'ch_wuby_main'; author = '乖巧宝宝Quby'; presetId = 'cauhinh3_wuby';
+      reason = 'Khớp kênh nguồn Hoạt hình 乖巧宝宝Quby (KENH_006)';
+    } else if (s.includes('钓') || s.includes('豆豆') || s.includes('câu')) {
+      chId = 'ch_chidepdicau'; author = '女钓手豆豆 / 娜小娜爱钓鱼'; presetId = 'chidepdicau';
+      reason = 'Khớp kênh nguồn Nữ Cần Thủ Douyin (KENH_008)';
+    } else if (s.includes('希瓜皮') || s.includes('短剧')) {
+      chId = 'ch_movie_clone'; author = '奋斗的希瓜皮'; presetId = 'cauhinh3';
+      reason = 'Khớp kênh nguồn Vũ Trụ Cày Phim (KENH_005)';
+    } else if (s.includes('歪姐') || s.includes('chill')) {
+      chId = 'ch_song1minh'; author = '迷人的歪姐'; presetId = 'song1minhcogivui';
+      reason = 'Khớp kênh nguồn Vlog Chill (KENH_007)';
+    } else if (s.includes('财商') || s.includes('财智')) {
+      chId = 'ch_hoc_tieng_trung'; author = '财商研习社'; presetId = 'cauhinh3';
+      reason = 'Khớp kênh nguồn Tư duy Tài chính & Tiếng Trung (KENH_001)';
+    }
+    return {
+      detected_channel_id: chId,
+      detected_preset_id: presetId,
+      source_author: author,
+      classification_reason: reason,
+      file: { id: 'f5d34973-487e-4794-be6b-ff927eb83218' },
+    };
+  }
+
   getFileContentUrl(fileId) {
     return null; // Mock mode không stream binary thật
   }
@@ -762,6 +794,10 @@ class RealApiClient {
     const json = await res.json().catch(() => null);
     if (!res.ok) throw { status: res.status, body: json };
     return json;
+  }
+
+  async ingestSourceUrl(projectId, sourceInput) {
+    return this._fetch('POST', `/projects/${projectId}/ingest-source`, { source_input: sourceInput });
   }
 
   async getJob(id) { return this._fetch('GET', `/jobs/${id}`); }

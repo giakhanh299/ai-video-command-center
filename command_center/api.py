@@ -156,6 +156,11 @@ def create_app(settings: Settings | None = None):
         fname = request.headers.get("X-File-Name", "upload.mp4")
         return repo.upload_project_file(principal, pid, fname, raw)
 
+    @app.post("/api/v1/projects/{pid}/ingest-source")
+    async def ingest_source(pid: UUID, request: Request, principal=Depends(owner)):
+        body = await request.json()
+        return repo.ingest_source_url(principal, pid, body.get("source_input", ""))
+
     @app.get("/api/v1/jobs/{jid}", response_model=JobDTO)
     def job(jid: UUID, principal=Depends(owner)):
         return repo.get_job(principal, jid)

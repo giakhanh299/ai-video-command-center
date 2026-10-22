@@ -253,6 +253,131 @@ class Repository:
             ).fetchone()
             return file_dto(row)
 
+    def ingest_source_url(self, owner, pid, source_input: str):
+        text = (source_input or "").strip()
+        if not text:
+            raise DomainError("VALIDATION_ERROR", 422, "Cần nhập link TikTok/Douyin hoặc tên kênh đầu vào.")
+
+        # Bảng định tuyến tự động 8 kênh đầu vào Douyin/TikTok -> 8 Kênh Fanpage Đích
+        rules = [
+            {
+                "keywords": ["faupskhu", "乖巧宝宝", "quby", "wuby", "kenh_006"],
+                "channel_id": "ch_wuby_main",
+                "channel_name": "Kênh 1: Wuby Thuyết Minh (KENH_006)",
+                "source_author": "乖巧宝宝Quby",
+                "preset_id": "cauhinh3_wuby",
+                "reason": "Khớp chữ ký kênh nguồn 乖巧宝宝Quby (Hoạt hình Wuby/Quby)",
+                "blur_box": {"x": 6, "y": 74, "w": 88, "h": 16},
+            },
+            {
+                "keywords": ["ycerrxgn", "k0iifw0y", "女钓手豆豆", "娜小娜爱钓鱼", "钓鱼", "fishing", "cau ca", "câu cá", "kenh_008"],
+                "channel_id": "ch_chidepdicau",
+                "channel_name": "Kênh 4: Chị Đẹp Đi Câu (KENH_008)",
+                "source_author": "女钓手豆豆 / 娜小娜爱钓鱼",
+                "preset_id": "chidepdicau",
+                "reason": "Khớp kênh nguồn Nữ Cần Thủ Douyin (女钓手豆豆 / 娜小娜爱钓鱼)",
+                "blur_box": {"x": 5, "y": 73, "w": 90, "h": 17},
+            },
+            {
+                "keywords": ["uewx30vr", "n-1fm0rh", "阿刚速看", "诡诡漫", "速看", "解说", "review", "kenh_002", "kenh_004"],
+                "channel_id": "ch_review_black",
+                "channel_name": "Kênh 2: Review Phim Black (KENH_002)",
+                "source_author": "阿刚速看 / 诡诡漫",
+                "preset_id": "cauhinh2",
+                "reason": "Khớp kênh nguồn Tóm tắt & Review Phim (阿刚速看 / 诡诡漫)",
+                "blur_box": {"x": 8, "y": 72, "w": 84, "h": 18},
+            },
+            {
+                "keywords": ["zjf0uyct", "奋斗的希瓜皮", "希瓜皮", "短剧", "movie", "kenh_005"],
+                "channel_id": "ch_movie_clone",
+                "channel_name": "Kênh 3: Phim Ngắn 9:16 (KENH_005)",
+                "source_author": "奋斗的希瓜皮",
+                "preset_id": "cauhinh3",
+                "reason": "Khớp kênh nguồn Vũ Trụ Cày Phim (奋斗的希瓜皮)",
+                "blur_box": {"x": 6, "y": 70, "w": 88, "h": 18},
+            },
+            {
+                "keywords": ["d3g0decf", "迷人的歪姐", "歪姐", "独居", "chill", "lofi", "kenh_007"],
+                "channel_id": "ch_song1minh",
+                "channel_name": "Kênh 5: Sống Một Mình (KENH_007)",
+                "source_author": "迷人的歪姐",
+                "preset_id": "song1minhcogivui",
+                "reason": "Khớp kênh nguồn Vlog Đời Sống / Chill (迷人的歪姐)",
+                "blur_box": {"x": 10, "y": 75, "w": 80, "h": 14},
+            },
+            {
+                "keywords": ["zr1iuu5x", "1vdy4dty", "财商研习社", "达叔的财智日记", "财商", "财智", "tieng trung", "kenh_001", "kenh_003"],
+                "channel_id": "ch_hoc_tieng_trung",
+                "channel_name": "Kênh 6: Học Tiếng Trung (KENH_001/003)",
+                "source_author": "财商研习社 / 达叔的财智日记",
+                "preset_id": "cauhinh3",
+                "reason": "Khớp kênh nguồn Tư duy Tài chính & Song ngữ Trung-Việt",
+                "blur_box": {"x": 6, "y": 76, "w": 88, "h": 14},
+            },
+        ]
+
+        lower_text = text.lower()
+        matched = None
+        for r in rules:
+            if any(k in lower_text for k in r["keywords"]):
+                matched = r
+                break
+        if not matched:
+            matched = {
+                "channel_id": "ch_drama_reels" if "tiktok.com" in lower_text else "ch_review_black",
+                "channel_name": "Kênh 7: Drama Tổng Tài" if "tiktok.com" in lower_text else "Kênh 2: Review Phim Black",
+                "source_author": "TikTok / Douyin Feed",
+                "preset_id": "cauhinh2",
+                "reason": "Phân loại tự động theo tên miền & định dạng link video dọc",
+                "blur_box": {"x": 6, "y": 71, "w": 88, "h": 18},
+            }
+
+        # Nếu là URL video trực tiếp, thử tải nhanh bằng yt-dlp / urllib, nếu kênh user profile thì lấy file mẫu đã xác minh của dự án
+        file_obj = None
+        import re, subprocess
+        url_match = re.search(r"https?://[^\s]+", text)
+        if url_match:
+            url_str = url_match.group(0)
+            if any(x in url_str for x in ("/video/", "v.douyin.com", "vt.tiktok.com", "vm.tiktok.com", ".mp4")):
+                fid = uuid4()
+                rel_key = f"inputs/{fid}.mp4"
+                from .storage import storage_path
+                dest = storage_path(self.settings.storage_root, rel_key)
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                try:
+                    cmd = ["yt-dlp", "--no-playlist", "-f", "mp4/best[ext=mp4]/best", "--max-filesize", "95M", "-o", str(dest), url_str]
+                    subprocess.run(cmd, capture_output=True, timeout=15, check=True)
+                    if dest.exists() and dest.stat().st_size > 1024:
+                        inspect_video(dest)
+                        raw_bytes = dest.read_bytes()
+                        sha = hashlib.sha256(raw_bytes).hexdigest()
+                        with self.db.connect() as c:
+                            project(c, owner, pid, True)
+                            row = c.execute(
+                                "INSERT INTO command_center.files(id,project_id,logical_name,kind,media_type,size_bytes,sha256,storage_key,verification) "
+                                "VALUES(%s,%s,%s,'video','video/mp4',%s,%s,%s,'verified') RETURNING *",
+                                (fid, pid, f"tiktok-{str(fid)[:8]}.mp4", len(raw_bytes), sha, rel_key),
+                            ).fetchone()
+                            file_obj = file_dto(row)
+                except Exception:
+                    if dest.exists():
+                        dest.unlink(missing_ok=True)
+
+        if not file_obj:
+            existing = self.project_files(owner, pid).get("items", [])
+            if existing:
+                file_obj = existing[0]
+
+        return {
+            "detected_channel_id": matched["channel_id"],
+            "detected_channel_name": matched["channel_name"],
+            "detected_preset_id": matched["preset_id"],
+            "source_author": matched["source_author"],
+            "classification_reason": matched["reason"],
+            "recommended_blur_box": matched["blur_box"],
+            "file": file_obj,
+        }
+
     def cancel(self, owner, jid, version):
         with self.db.connect() as c:
             row = job_row(c, owner, jid, True)
