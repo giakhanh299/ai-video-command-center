@@ -976,6 +976,48 @@ async function renderJobDetail() {
       })
       .catch(() => {});
   }
+
+  // Load JSON reports (render-report.json / probe.json) from API and populate QC + JSON download
+  const repFiles = outItems.filter(f => f.kind === 'report');
+  if (repFiles.length > 0 && !state.isMock && window.CC_API.fetchFileJson) {
+    Promise.all(repFiles.map(async f => ({ file: f, data: await window.CC_API.fetchFileJson(f.id).catch(() => null) })))
+      .then(results => {
+        const valid = results.filter(r => r.data);
+        if (valid.length === 0) return;
+        const renderRep = valid.find(r => r.data.output_sha256 || r.data.encoder)?.data || valid[0].data;
+        const qcBox = $('live-qc-card');
+        if (qcBox && renderRep?.media) {
+          const m = renderRep.media;
+          const rc = renderRep.render_config || renderRep.applied_profile || {};
+          qcBox.innerHTML = `
+            <div class="card-header"><span class="card-title">QC &amp; Cấu hình Render (Từ JSON Report)</span></div>
+            <div class="text-muted text-sm">${I.check} Đã xác minh thông số kỹ thuật và checksum SHA-256 từ Agent.</div>
+            <div class="dl-grid mt-2" style="font-size:11px">
+              <span class="dl-label">Kích thước xuất</span><span class="dl-value">${m.width}x${m.height} px</span>
+              <span class="dl-label">Thời lượng</span><span class="dl-value">${m.duration}s (${m.frames ?? '—'} frames)</span>
+              <span class="dl-label">FPS</span><span class="dl-value">${m.fps}</span>
+              <span class="dl-label">Codec / Audio</span><span class="dl-value mono">${m.codec || '—'} / ${renderRep.encoder || 'libx264'} (audio: ${m.has_audio ? 'có' : 'không'})</span>
+              ${Object.keys(rc).length ? `<span class="dl-label">Cấu hình Render</span><span class="dl-value mono">${JSON.stringify(rc)}</span>` : ''}
+            </div>
+          `;
+          qcBox.classList.remove('hidden');
+        }
+        valid.forEach(({ file, data }) => {
+          const pre = document.getElementById(`json-preview-${file.id}`);
+          if (pre) pre.textContent = JSON.stringify(data, null, 2);
+          const dlBtn = document.getElementById(`json-dl-${file.id}`);
+          if (dlBtn) {
+            const isRender = Boolean(data.output_sha256 || data.encoder);
+            const fname = isRender ? `render-report-${window.ccUtil.shortId(file.id)}.json` : `probe-${window.ccUtil.shortId(file.id)}.json`;
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            dlBtn.href = URL.createObjectURL(blob);
+            dlBtn.download = fname;
+            dlBtn.classList.remove('hidden');
+          }
+        });
+      })
+      .catch(() => {});
+  }
 }
 
 function renderOutputSection(job, outItems) {
@@ -1051,7 +1093,7 @@ function renderOutputSection(job, outItems) {
                   <span class="dl-label">Codec / Audio</span><span class="dl-value mono">${qc.media.codec || '—'} (audio: ${qc.media.has_audio ? 'có' : 'không'})</span>
                 </div>
               ` : ''}
-            </div>` : ''}
+            </div>` : `<div class="card hidden" id="live-qc-card"></div>`}
 
           ${subtFiles.length > 0 ? `
             <div class="card">
@@ -1066,12 +1108,17 @@ function renderOutputSection(job, outItems) {
 
           ${repFiles.length > 0 ? `
             <div class="card">
-              <div class="card-header"><span class="card-title">Báo cáo Kỹ thuật</span></div>
+              <div class="card-header"><span class="card-title">Báo cáo Kỹ thuật &amp; File JSON (${repFiles.length})</span></div>
               ${repFiles.map(f => `
-                <div class="flex items-center gap-2 mb-1" style="font-size:12px">
-                  <span class="tag">${f.kind}</span>
-                  <span class="text-muted">${window.ccUtil.formatBytes(f.size_bytes)}</span>
-                  <span class="tag">${f.verification}</span>
+                <div style="border-bottom:1px solid var(--border);padding:8px 0">
+                  <div class="flex items-center gap-2 mb-1" style="font-size:12px">
+                    <span class="tag">${f.kind}</span>
+                    <span class="font-mono text-sm">${window.ccUtil.shortId(f.id)}.json</span>
+                    <span class="text-muted">${window.ccUtil.formatBytes(f.size_bytes)}</span>
+                    <span class="tag">${f.verification}</span>
+                    <a id="json-dl-${f.id}" class="btn btn-secondary btn-sm hidden" style="margin-left:auto;font-size:11px;padding:2px 8px;text-decoration:none">Tải JSON ↓</a>
+                  </div>
+                  <pre id="json-preview-${f.id}" style="background:var(--bg-0);padding:8px;border-radius:4px;font-size:11px;overflow-x:auto;max-height:140px;color:var(--txt-2);margin-top:4px">${f._mock ? JSON.stringify(f, null, 2) : 'Đang đọc file JSON từ API...'}</pre>
                 </div>`).join('')}
             </div>` : ''}
 

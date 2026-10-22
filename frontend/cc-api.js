@@ -25,8 +25,8 @@ const savedConfig = (() => {
 const CC_CONFIG = {
   /** "mock" | "real" */
   mode: (savedConfig && savedConfig.mode) || (window.__CC_CONFIG && window.__CC_CONFIG.mode) || 'mock',
-  /** Base URL của API mới — chỉ dùng khi mode=real */
-  apiBase: (savedConfig && savedConfig.apiBase) || (window.__CC_CONFIG && window.__CC_CONFIG.apiBase) || 'http://127.0.0.1:8016/api/v1',
+  /** Base URL của API mới — mặc định same-origin /api/v1 qua cổng 443 HTTPS */
+  apiBase: (savedConfig && savedConfig.apiBase) || (window.__CC_CONFIG && window.__CC_CONFIG.apiBase) || '/api/v1',
   /** Opaque Bearer token cho local owner */
   authToken: (savedConfig && savedConfig.authToken) || (window.__CC_CONFIG && window.__CC_CONFIG.authToken) || '',
 };
@@ -558,6 +558,10 @@ class MockApiClient {
   async fetchFileBlobUrl(fileId) {
     return null;
   }
+
+  async fetchFileJson(fileId) {
+    return null;
+  }
 }
 
 /* ────────────────────────────────────────────────────────────
@@ -686,6 +690,16 @@ class RealApiClient {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const blob = await res.blob();
     return URL.createObjectURL(blob);
+  }
+
+  async fetchFileJson(fileId) {
+    const url = this.getFileContentUrl(fileId);
+    if (!url) return null;
+    const headers = {};
+    if (this.token) headers['Authorization'] = `Bearer ${this.token}`;
+    const res = await fetch(url, { headers });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
   }
 }
 

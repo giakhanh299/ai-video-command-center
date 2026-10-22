@@ -48,5 +48,6 @@ def run(config, source, directory, abort):
     report = directory / "render-report.json"
     with report.open("x", encoding="utf-8") as f:
         json.dump({"schema_version": MODULE_VERSION, "source_sha256": checksum(source), "output_sha256": checksum(target),
+                   "render_config": config, "applied_profile": cfg,
                    "media": after, "encoder": "libx264", "status": "needs_review", "tts_run": False, "ocr_run": False}, f)
     return [(target, "video", "video/mp4"), (report, "report", "application/json")]
