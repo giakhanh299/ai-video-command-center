@@ -32,57 +32,49 @@
     <button type="button" class="btn-banner-action" id="btn-banner-settings">Cấu hình API ⚙</button>
   </div>
 
-  <!-- ── Header ────────────────────────────────────────────── -->
+  <!-- ── Header (Phong cách BytePlus Lumina) ─────────────────── -->
   <header id="app-header" role="banner">
-    <div class="app-brand">
-      <span class="brand-icon" aria-hidden="true">⚡</span>
-      AI Video <span>Command Center</span>
+    <div class="app-brand" style="gap:10px">
+      <span class="lumina-logo-orb" aria-hidden="true"></span>
+      <span style="font-size:17px;font-weight:700;letter-spacing:-0.02em;color:#fff">Lumina</span>
+      <span style="font-size:11px;color:var(--txt-3);padding-left:6px;border-left:1px solid rgba(255,255,255,0.12)">AI Video Canvas</span>
     </div>
 
     <nav class="app-nav" role="navigation" aria-label="Điều hướng chính">
+      <a href="#" class="nav-item" data-nav="new-job" aria-label="AI Canvas & Workspace">
+        ✨ AI Canvas
+      </a>
       <a href="#" class="nav-item" data-nav="overview" aria-label="Tổng quan" id="nav-overview">
-        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h4a1 1 0 001-1v-3h2v3a1 1 0 001 1h4a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
         Tổng quan
       </a>
-      <a href="#" class="nav-item" data-nav="new-job" aria-label="Studio Đa Cấu Hình">
-        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"/></svg>
-        🎬 Studio Render &amp; Custom Blur
-      </a>
-      <a href="#" class="nav-item" data-nav="channels" aria-label="Điều phối 8 Kênh">
-        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zm6-4a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zm6-3a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
-        8 Kênh Fanpage
+      <a href="#" class="nav-item" data-nav="channels" aria-label="Điều phối Kênh">
+        7 Kênh &amp; Chuyện Hai Đứa
       </a>
       <a href="#" class="nav-item" data-nav="projects" aria-label="Dự án">
-        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg>
         Dự án &amp; Hàng đợi
       </a>
       <a href="#" class="nav-item" data-nav="modules" aria-label="Module Registry">
-        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M13 7H7v6h6V7z"/><path fill-rule="evenodd" d="M7 2a1 1 0 012 0v1h2V2a1 1 0 112 0v1h1a2 2 0 012 2v1h1a1 1 0 110 2h-1v2h1a1 1 0 110 2h-1v1a2 2 0 01-2 2h-1v1a1 1 0 11-2 0v-1H9v1a1 1 0 11-2 0v-1H6a2 2 0 01-2-2v-1H3a1 1 0 110-2h1V9H3a1 1 0 010-2h1V6a2 2 0 012-2h1V2zM6 6h8v8H6V6z" clip-rule="evenodd"/></svg>
         Module
       </a>
       <a href="#" class="nav-item" data-nav="agents" aria-label="Agent">
-        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293 1.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L7.586 10 5.293 7.707a1 1 0 010-1.414zM11 12a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
         Agent
       </a>
     </nav>
 
     <div class="header-right">
-      <!-- Cổng bảo mật HTTPS 443 -->
       <div id="tls-port-badge" class="api-badge ok" title="Toàn bộ giao tiếp Web, Queue và JSON Report đi qua cổng HTTPS 443 duy nhất">
         <span class="dot"></span>
-        <span id="tls-port-text">HTTPS :443 TLS</span>
+        <span id="tls-port-text">HTTPS :443</span>
       </div>
 
-      <!-- Nút đổi mode & Cấu hình API -->
       <button id="btn-api-mode" class="api-badge mode-real" aria-label="Cài đặt kết nối API">
         <span class="dot"></span>
-        <span id="api-mode-text">Chế độ: API Thật</span>
+        <span id="api-mode-text">API Thật</span>
       </button>
 
-      <!-- Trạng thái API Health -->
       <div id="api-health-badge" class="api-badge ok" aria-live="polite" aria-label="Trạng thái Backend API">
         <span class="dot"></span>
-        <span>API Ready</span>
+        <span>Online</span>
       </div>
     </div>
   </header>
@@ -90,35 +82,56 @@
   <!-- ── App Body ───────────────────────────────────────────── -->
   <div id="app-body">
 
-    <!-- Sidebar -->
-    <aside class="sidebar" role="complementary" aria-label="Thanh bên">
-      <div class="sidebar-section-title">Không gian hợp nhất</div>
-      <a href="#" class="sidebar-item" data-nav="overview" aria-label="Tổng quan">
+    <!-- Sidebar chuẩn giao diện BytePlus Lumina -->
+    <aside class="sidebar lumina-sidebar" role="complementary" aria-label="Thanh bên">
+      <a href="#" class="sidebar-item" data-nav="overview" aria-label="Home">
         <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h4a1 1 0 001-1v-3h2v3a1 1 0 001 1h4a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
-        Tổng quan Hệ thống
-      </a>
-      <a href="#" class="sidebar-item" data-nav="new-job" aria-label="Studio Đa Cấu Hình & Custom Blur">
-        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"/></svg>
-        Studio &amp; Custom Blur
-      </a>
-      <a href="#" class="sidebar-item" data-nav="channels" aria-label="Điều phối 8 Kênh Fanpage">
-        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zm6-4a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zm6-3a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
-        Điều phối 8 Kênh
-      </a>
-      <a href="#" class="sidebar-item" data-nav="projects" aria-label="Dự án">
-        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg>
-        Dự án &amp; Hàng đợi
+        Home (Tổng quan)
       </a>
 
-      <div class="sep" style="margin:12px 0"></div>
-      <div class="sidebar-section-title">Hạ tầng &amp; Worker</div>
-      <a href="#" class="sidebar-item" data-nav="modules" aria-label="Module Registry">
-        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M13 7H7v6h6V7z"/><path fill-rule="evenodd" d="M7 2a1 1 0 012 0v1h2V2a1 1 0 112 0v1h1a2 2 0 012 2v1h1a1 1 0 110 2h-1v2h1a1 1 0 110 2h-1v1a2 2 0 01-2 2h-1v1a1 1 0 11-2 0v-1H9v1a1 1 0 11-2 0v-1H6a2 2 0 01-2-2v-1H3a1 1 0 110-2h1V9H3a1 1 0 010-2h1V6a2 2 0 012-2h1V2zM6 6h8v8H6V6z" clip-rule="evenodd"/></svg>
-        Module Registry
+      <!-- Khối New Features phát sáng màu xanh ngọc y hệt Lumina -->
+      <div class="lumina-feature-card">
+        <div class="lumina-feature-head">New Features</div>
+        <a href="#" class="lumina-feature-link" data-nav="new-job" data-canvas-mode="workspace">
+          <span>✨</span> <span>Auto-Route Agent</span>
+        </a>
+        <a href="#" class="lumina-feature-link" data-nav="new-job" data-canvas-mode="workspace">
+          <span>🎯</span> <span>Layer Blur 2D ROI</span>
+        </a>
+      </div>
+
+      <div class="sidebar-section-title">CREATION</div>
+      <a href="#" class="sidebar-item" data-nav="new-job" data-canvas-mode="workspace" aria-label="Video Studio">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm12.553 1.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg>
+        <span style="flex:1">Video Render</span>
+        <span class="lumina-badge-hot">Hot</span>
       </a>
-      <a href="#" class="sidebar-item" data-nav="agents" aria-label="Agent">
-        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293 1.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L7.586 10 5.293 7.707a1 1 0 010-1.414zM11 12a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
-        Worker Agent
+      <a href="#" class="sidebar-item" data-nav="channels" aria-label="Chuyện Hai Đứa & 7 Kênh">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zm6-4a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zm6-3a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/></svg>
+        <span style="flex:1">Kênh &amp; Đa Giọng</span>
+        <span class="lumina-badge-new">New</span>
+      </a>
+      <a href="#" class="sidebar-item" data-nav="agents" aria-label="Worker Agent">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293 1.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L7.586 10 5.293 7.707a1 1 0 010-1.414zM11 12a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
+        <span style="flex:1">Agent :443</span>
+        <span class="lumina-badge-new">New</span>
+      </a>
+      <a href="#" class="sidebar-item" data-nav="modules" aria-label="Audio & Modules">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M13 7H7v6h6V7z"/><path fill-rule="evenodd" d="M7 2a1 1 0 012 0v1h2V2a1 1 0 112 0v1h1a2 2 0 012 2v1h1a1 1 0 110 2h-1v2h1a1 1 0 110 2h-1v1a2 2 0 01-2 2h-1v1a1 1 0 11-2 0v-1H9v1a1 1 0 11-2 0v-1H6a2 2 0 01-2-2v-1H3a1 1 0 110-2h1V9H3a1 1 0 010-2h1V6a2 2 0 012-2h1V2zM6 6h8v8H6V6z" clip-rule="evenodd"/></svg>
+        <span>Audio 5.1 &amp; Modules</span>
+      </a>
+
+      <div class="sidebar-section-title" style="margin-top:14px">TOOLS</div>
+      <a href="#" class="sidebar-item" data-nav="new-job" data-canvas-mode="gallery" aria-label="Canvas">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+        <span style="flex:1;font-weight:700;color:#fff">Canvas</span>
+        <span class="lumina-badge-new">New</span>
+      </a>
+
+      <div class="sep" style="margin:auto 0 10px 0"></div>
+      <a href="#" class="sidebar-item" data-nav="projects" aria-label="Assets">
+        <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg>
+        <span>Assets (Dự án &amp; File)</span>
       </a>
     </aside>
 

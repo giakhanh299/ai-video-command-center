@@ -24,8 +24,23 @@ const I = {
   cog:     `<svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>`,
 };
 
-/* ─── Danh sách Kênh Fanpage Tự Động Render (Đã xoá KENH_001 & KENH_003 tự sản xuất) ── */
+/* ─── Danh sách Kênh Fanpage Tự Động Render (Lồng ảnh thực tế kiểu BytePlus Lumina) ── */
 const CHANNELS_8 = [
+  {
+    id: 'ch_chuyen_hai_dua',
+    name: 'Chuyện Hai Đứa (@ChuyenHaiDua)',
+    niche: 'Tình yêu nam nữ · Đa giọng Character-Lock + 5.1 Smart SFX (Thử nghiệm)',
+    preset_id: 'chuyen_hai_dua',
+    voice_id: 'omnivoice_auto',
+    banner_text: 'CHUYỆN HAI ĐỨA',
+    marquee_text: '@ChuyenHaiDua · Lồng tiếng Đa nhân vật Nam/Nữ giữ nền 5.1',
+    blur_box: { x: 6, y: 73, w: 88, h: 16 },
+    schedule: 'RENDER-ONLY · Chờ duyệt Output & Voice',
+    category: 'voice51',
+    badge: 'Multi-Voice 5.1',
+    thumb: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80',
+    hero_bg: 'https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=1600&q=80',
+  },
   {
     id: 'ch_review_black',
     name: 'KENH_002: Review Phim (阿刚速看)',
@@ -36,6 +51,10 @@ const CHANNELS_8 = [
     marquee_text: 'Theo dõi kênh để xem tập tiếp theo!',
     blur_box: { x: 8, y: 72, w: 84, h: 18 },
     schedule: '12:00 · 18:00 · 22:00',
+    category: 'video',
+    badge: 'Review Black',
+    thumb: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80',
+    hero_bg: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1600&q=80',
   },
   {
     id: 'ch_guiguiman',
@@ -47,6 +66,10 @@ const CHANNELS_8 = [
     marquee_text: 'Bấm theo dõi kênh để xem phần tiếp theo!',
     blur_box: { x: 6, y: 71, w: 88, h: 18 },
     schedule: '11:00 · 16:00 · 21:30',
+    category: 'video',
+    badge: 'Mystery AI',
+    thumb: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=900&q=80',
+    hero_bg: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1600&q=80',
   },
   {
     id: 'ch_movie_clone',
@@ -58,6 +81,10 @@ const CHANNELS_8 = [
     marquee_text: 'Đừng quên thả tim và bấm theo dõi kênh nhé!',
     blur_box: { x: 6, y: 70, w: 88, h: 18 },
     schedule: '09:00 · 15:00 · 20:30',
+    category: 'video',
+    badge: 'Blur BG 9:16',
+    thumb: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=900&q=80',
+    hero_bg: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=1600&q=80',
   },
   {
     id: 'ch_wuby_main',
@@ -69,6 +96,10 @@ const CHANNELS_8 = [
     marquee_text: 'Bản thuyết minh AI độc quyền giữ âm thanh gốc',
     blur_box: { x: 6, y: 74, w: 88, h: 16 },
     schedule: '11:30 · 19:30 · 21:00',
+    category: 'wuby',
+    badge: 'Wuby Clone v2',
+    thumb: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=900&q=80',
+    hero_bg: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1600&q=80',
   },
   {
     id: 'ch_song1minh',
@@ -80,6 +111,10 @@ const CHANNELS_8 = [
     marquee_text: 'Nhật ký chill mỗi tối một mình',
     blur_box: { x: 10, y: 75, w: 80, h: 14 },
     schedule: '20:00 · 22:30',
+    category: 'chill',
+    badge: 'Chill Lo-Fi',
+    thumb: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80',
+    hero_bg: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80',
   },
   {
     id: 'ch_chidepdicau',
@@ -91,37 +126,174 @@ const CHANNELS_8 = [
     marquee_text: 'Hành trình săn cá khủng mỗi ngày!',
     blur_box: { x: 5, y: 73, w: 90, h: 17 },
     schedule: '10:30 · 17:30 · 20:00',
-  },
-  {
-    id: 'ch_chuyen_hai_dua',
-    name: 'Chuyện Hai Đứa (@ChuyenHaiDua)',
-    niche: 'Tình yêu nam nữ · Đa giọng Character-Lock + 5.1 Smart SFX (Thử nghiệm)',
-    preset_id: 'chuyen_hai_dua',
-    voice_id: 'omnivoice_auto',
-    banner_text: 'CHUYỆN HAI ĐỨA',
-    marquee_text: '@ChuyenHaiDua · Lồng tiếng Đa nhân vật Nam/Nữ giữ nền 5.1',
-    blur_box: { x: 6, y: 73, w: 88, h: 16 },
-    schedule: 'RENDER-ONLY · Chờ duyệt Output & Voice',
+    category: 'chill',
+    badge: 'Outdoor 60fps',
+    thumb: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80',
+    hero_bg: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80',
   },
   {
     id: 'ch_custom_studio',
     name: 'Studio Tự Do (Tự Render)',
-    niche: 'Tuỳ biến 100% thông số',
+    niche: 'Tuỳ biến 100% thông số & Kéo thả Blur 2D',
     preset_id: 'basic_render',
     voice_id: 'original',
     banner_text: '',
     marquee_text: '',
     blur_box: { x: 6, y: 72, w: 88, h: 16 },
     schedule: 'Đăng thủ công / Theo yêu cầu',
+    category: 'tool',
+    badge: 'Custom 2D ROI',
+    thumb: 'https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&w=900&q=80',
+    hero_bg: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1600&q=80',
+  },
+];
+
+/* ─── Bộ 12 Template Lồng Ảnh Thực Tế (Giống hệt BytePlus Lumina Canvas) ── */
+const LUMINA_TEMPLATES_12 = [
+  {
+    id: 'tpl_chuyen_hai_dua',
+    title: 'Chuyện Hai Đứa — Đa Giọng 5.1',
+    sub: 'Character-Lock 3 Giọng Nam/Nữ + Tách nền SFX',
+    channel_id: 'ch_chuyen_hai_dua',
+    preset_id: 'chuyen_hai_dua',
+    category: 'voice51',
+    tag_left: '5.1 Smart',
+    tag_right: 'Hot',
+    thumb: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'tpl_agang_review',
+    title: 'Cinematic Review Black (阿刚速看)',
+    sub: 'KENH_002 · Viền đen điện ảnh + Nam Trầm Review',
+    channel_id: 'ch_review_black',
+    preset_id: 'cauhinh2',
+    category: 'video',
+    tag_left: 'KENH_002',
+    tag_right: 'cauhinh2',
+    thumb: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'tpl_guiguiman',
+    title: 'Mystery Anime Dubbing (诡诡漫)',
+    sub: 'KENH_004 · Tách thoại kỳ bí + Giọng Minh Quang',
+    channel_id: 'ch_guiguiman',
+    preset_id: 'cauhinh2',
+    category: 'video',
+    tag_left: 'KENH_004',
+    tag_right: 'Mystery',
+    thumb: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'tpl_xiguapi',
+    title: 'Vũ Trụ Cày Phim 9:16 (奋斗的希瓜皮)',
+    sub: 'KENH_005 · Khung 9:16 nền mờ Gaussian + Ngọc Huyền',
+    channel_id: 'ch_movie_clone',
+    preset_id: 'cauhinh3',
+    category: 'video',
+    tag_left: 'KENH_005',
+    tag_right: 'cauhinh3',
+    thumb: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'tpl_quby_wuby',
+    title: 'Wuby Animation Studio (乖巧宝宝Quby)',
+    sub: 'KENH_006 · Giọng Wuby Clone v2 độc quyền giữ SFX',
+    channel_id: 'ch_wuby_main',
+    preset_id: 'cauhinh3_wuby',
+    category: 'wuby',
+    tag_left: 'KENH_006',
+    tag_right: 'Wuby AI',
+    thumb: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'tpl_waijie_lofi',
+    title: 'Sống Một Mình Chill Lo-Fi (迷人的歪姐)',
+    sub: 'KENH_007 · Vlog ấm áp + Giọng Thảo Vy Miền Nam',
+    channel_id: 'ch_song1minh',
+    preset_id: 'song1minhcogivui',
+    category: 'chill',
+    tag_left: 'KENH_007',
+    tag_right: 'Chill Vlog',
+    thumb: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'tpl_doudou_fishing',
+    title: 'Chị Đẹp Đi Câu Outdoor (女钓手豆豆)',
+    sub: 'KENH_008 · Màu rực rỡ TikTok + Khử tiếng gió',
+    channel_id: 'ch_chidepdicau',
+    preset_id: 'chidepdicau',
+    category: 'chill',
+    tag_left: 'KENH_008',
+    tag_right: 'Outdoor',
+    thumb: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'tpl_layer_blur_2d',
+    title: 'Layer Blur 2D & Smart Inpaint',
+    sub: 'Kéo thả 8 điểm che khít Sub Trung & Watermark trên ảnh thật',
+    channel_id: 'ch_custom_studio',
+    preset_id: 'basic_render',
+    category: 'tool',
+    tag_left: '2D ROI Tool',
+    tag_right: 'New',
+    thumb: 'https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'tpl_karaoke_pop',
+    title: 'Karaoke Pop Viral Subtitle',
+    sub: 'Chữ chạy nhảy màu theo nhịp giọng đọc AI chuẩn Reels',
+    channel_id: 'ch_movie_clone',
+    preset_id: 'cauhinh3',
+    category: 'tool',
+    tag_left: 'Sub Engine',
+    tag_right: 'Viral',
+    thumb: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'tpl_surround_demucs',
+    title: '5.1 Surround Center Remove & Demucs',
+    sub: 'Tách sạch lời tiếng Trung giữ nguyên tiếng cười & nhạc nền',
+    channel_id: 'ch_chuyen_hai_dua',
+    preset_id: 'wuby',
+    category: 'voice51',
+    tag_left: 'Audio 5.1',
+    tag_right: 'Pro',
+    thumb: 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'tpl_autoroute_agent',
+    title: 'Auto-Route Douyin/TikTok Agent',
+    sub: 'Dán link bất kỳ tự động phân biệt tác giả & nạp tọa độ Blur',
+    channel_id: 'ch_review_black',
+    preset_id: 'cauhinh2',
+    category: 'tool',
+    tag_left: 'AI Agent',
+    tag_right: 'Auto',
+    thumb: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80',
+  },
+  {
+    id: 'tpl_probe_inspector',
+    title: 'Media Probe & SHA-256 Inspector',
+    sub: 'Kiểm tra nhanh Codec, FPS, Bitrate và băm SHA-256',
+    channel_id: 'ch_custom_studio',
+    preset_id: 'inspect_media',
+    category: 'tool',
+    tag_left: 'Inspector',
+    tag_right: 'Fast',
+    thumb: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80',
   },
 ];
 
 /* ─── State ──────────────────────────────────────────────── */
 const state = {
-  view: 'overview',          // 'overview' | 'projects' | 'project-detail' | 'new-job' | 'job-detail' | 'channels' | 'modules' | 'agents'
+  view: 'new-job',           // Mở thẳng trang AI Canvas VIP giống BytePlus Lumina khi vào web
   projectId: null,
   jobId: null,
-  selectedChannelId: 'ch_review_black',
+  selectedChannelId: 'ch_chuyen_hai_dua',
+  canvasSubTab: 'all',       // 'all' | 'workspace' | 'gallery'
+  templateFilter: 'all',
+  templateSearch: '',
+  heroSlideIdx: 0,
   localVideoBlobUrl: null,
   projects: [],
   jobs: [],
@@ -633,25 +805,123 @@ async function renderNewJob() {
                       || state.presets[0];
 
   main.innerHTML = `
-    <div class="page-header" style="margin-bottom:12px">
-      <div>
-        <h1 class="page-title" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-          <span>✨ Seedance / BytePlus Lumina AI Canvas Studio</span>
-          <span class="tag" style="color:var(--teal);border-color:rgba(45,212,191,0.4)">Dot-Grid Node Workspace</span>
-        </h1>
-        <p class="page-subtitle">Bố cục 3 cột trực quan kiểu Lumina AI Canvas: Chọn Kênh / Nguồn bên trái · Kéo thả khung Blur 2D trên video thật ở giữa · Chỉnh 4 Tab thông số bên phải không cần cuộn trang.</p>
-      </div>
-      <div class="page-actions">
-        <button class="btn btn-secondary btn-sm" id="btn-go-channels-view">📊 Ma trận Kênh</button>
-        <button class="btn btn-ghost btn-sm" id="btn-cancel-job">← Tổng quan</button>
+    <!-- TOP HEADER KIỂU LUMINA CANVAS (Giống ảnh 1: Canvas + Nút trắng + Create Project) -->
+    <div class="lumina-canvas-header">
+      <h1 class="lumina-canvas-big-title">Canvas</h1>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button type="button" class="btn btn-secondary btn-sm" id="btn-go-channels-view">📊 8 Kênh &amp; Chuyện Hai Đứa</button>
+        <button type="button" class="lumina-btn-white-pill" id="btn-lumina-create-proj">
+          <span>+</span> <span>Create Project</span>
+        </button>
       </div>
     </div>
 
-    <div class="lumina-canvas-shell">
-      <!-- TOP FLOATING DOCK: Chọn Kênh + Auto-Route + Chuỗi Node Pipeline -->
+    <!-- THANH UNDERLINE TABS: Canvas (Template + Hero) | Workspace (Sân khấu Blur 2D) -->
+    <div class="lumina-subnav-bar">
+      <div class="lumina-underline-tabs" id="lumina-top-utabs">
+        <button type="button" class="lumina-utab ${state.canvasSubTab === 'all' ? 'active' : ''}" data-utab="all">Canvas &amp; Studio</button>
+        <button type="button" class="lumina-utab ${state.canvasSubTab === 'workspace' ? 'active' : ''}" data-utab="workspace">Workspace (Kéo Thả Blur 2D)</button>
+        <button type="button" class="lumina-utab ${state.canvasSubTab === 'gallery' ? 'active' : ''}" data-utab="gallery">Template Gallery (12 Mẫu)</button>
+      </div>
+      <span class="tag" id="selected-channel-tag" style="color:var(--teal);border-color:rgba(45,212,191,0.45)">Đang chọn: ${activeChannel.name}</span>
+    </div>
+
+    <!-- HERO BANNER LỒNG ẢNH THỰC TẾ VIP (Giống hệt ảnh 2: Turn your ideas into videos) -->
+    <div class="lumina-hero-banner" id="lumina-hero-section">
+      <div class="lumina-hero-bg" id="lumina-hero-bg" style="background-image:url('${activeChannel.hero_bg || CHANNELS_8[0].hero_bg}')"></div>
+      <div class="lumina-hero-overlay"></div>
+
+      <div class="lumina-hero-content">
+        <h2 class="lumina-hero-title">Turn your ideas into videos</h2>
+
+        <!-- Hộp kính mờ Frosted Glass + Ô lồng ảnh/MP4 nghiêng + 4 Pill dưới đáy + Nút ✦ -->
+        <div class="lumina-glass-box">
+          <div class="lumina-glass-top">
+            <div class="lumina-img-tile" id="btn-hero-upload-tile" title="Nhấn để tải file Video MP4 từ máy tính lên sân khấu Blur 2D">
+              <span style="font-size:18px;line-height:1">🖼</span>
+              <span style="margin-top:3px">MP4/Ảnh</span>
+            </div>
+            <textarea class="lumina-glass-input" id="studio-source-url-input" rows="2"
+              placeholder="Dán link Douyin / TikTok (vd: 乖巧宝宝Quby, 女钓手豆豆, Chuyện Hai Đứa...) hoặc nhập ý tưởng để AI tự phân biệt kênh &amp; tọa độ Blur..."></textarea>
+          </div>
+
+          <div class="lumina-glass-bottom">
+            <div class="lumina-glass-pills">
+              <button type="button" class="lumina-glass-pill" data-quick-jump-tab="tab-frame">📱 9:16 ⌄</button>
+              <button type="button" class="lumina-glass-pill" data-quick-jump-tab="tab-blur">🎯 Blur 2D (${activeChannel.blur_box.x}%,${activeChannel.blur_box.y}%) ⌄</button>
+              <button type="button" class="lumina-glass-pill" data-quick-jump-tab="tab-voice">🎙 Style: ${activeChannel.preset_id} ⌄</button>
+              <button type="button" class="lumina-glass-pill" data-quick-jump-tab="tab-text">💬 Language: Tiếng Việt AI ⌄</button>
+            </div>
+            <button type="button" class="lumina-spark-btn" id="btn-ingest-source" title="Tự động nhận diện kênh & nạp vào Sân khấu">✦</button>
+          </div>
+        </div>
+
+        <!-- Try An Idea: Các nút thử nhanh nguồn Douyin & Chuyện Hai Đứa -->
+        <div class="lumina-try-row">
+          <span class="lumina-try-label">Try An Idea:</span>
+          <button type="button" class="lumina-idea-pill" data-quick-source="https://www.douyin.com/chuyen_hai_dua Chuyện Hai Đứa tình yêu">💑 Chuyện Hai Đứa 5.1 ↗</button>
+          <button type="button" class="lumina-idea-pill" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAUewX30vrd2sxQV9Bpkt2rbQTl5e7ILBUSVAuMQOea0u7uHDq-8oeAzMEdHSAmVvT 阿刚速看">🎬 阿刚速看 Review ↗</button>
+          <button type="button" class="lumina-idea-pill" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAfAuPSkhuWIAv7Yx56Y1sI52BoJc0teeXWA2soSCeook 乖巧宝宝Quby">🐰 乖巧宝宝Quby ↗</button>
+          <button type="button" class="lumina-idea-pill" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAA-YcErrxgnoO9Drrannm8IFMQAN8vzYAjCNqHFMOzLUg 女钓手豆豆">🎣 女钓手豆豆 ↗</button>
+          <button type="button" class="lumina-idea-pill" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAN-1fM0RHuDRh5s783UTZPUyOSn7yxIglA5LjqCfAXI6MWnxXZ7d_jiPrfEPLGWNt 诡诡漫">👻 诡诡漫 Kỳ Bí ↗</button>
+        </div>
+        <div id="source-detect-banner" class="info-state hidden mt-2" style="border-color:rgba(45,212,191,0.45);color:var(--txt-1);padding:6px 12px;font-size:11px;background:rgba(6,10,18,0.85)"></div>
+      </div>
+
+      <!-- 5 Tab Danh Mục Dưới Đáy Hero Banner (Giống hệt General | Music Video | Explainer Video...) -->
+      <div class="lumina-hero-tabs" id="lumina-hero-cat-tabs">
+        <button type="button" class="lumina-hero-tab active" data-hero-cat="all">✨ General (Tất cả)</button>
+        <button type="button" class="lumina-hero-tab" data-hero-cat="voice51">💑 Chuyện Hai Đứa 5.1</button>
+        <button type="button" class="lumina-hero-tab" data-hero-cat="video">🎬 Review Phim &amp; Kỳ Bí</button>
+        <button type="button" class="lumina-hero-tab" data-hero-cat="wuby">🐰 Hoạt Hình Wuby AI</button>
+        <button type="button" class="lumina-hero-tab" data-hero-cat="chill">🎣 Chill &amp; Câu Cá Outdoor</button>
+      </div>
+    </div>
+
+    <!-- KHU VỰC 1: TEMPLATE GALLERY LỒNG ẢNH THỰC TẾ 16:9 (Giống hệt ảnh 1: ai-canvas Template) -->
+    <div id="lumina-gallery-section" class="${state.canvasSubTab === 'workspace' ? 'hidden' : ''}">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <h3 style="font-size:18px;font-weight:800;color:#ffffff;margin:0">Template</h3>
+        <span style="font-size:11px;color:var(--txt-3)">Nhấn vào bất kỳ card ảnh nào để nạp ngay cấu hình &amp; mở Sân khấu Kéo Thả Blur 2D bên dưới</span>
+      </div>
+
+      <div class="lumina-filter-row">
+        <div class="lumina-filter-pills" id="lumina-tpl-filter-pills">
+          <button type="button" class="lumina-fpill active" data-tpl-filter="all">All</button>
+          <button type="button" class="lumina-fpill" data-tpl-filter="video">Video</button>
+          <button type="button" class="lumina-fpill" data-tpl-filter="voice51">Voice 5.1</button>
+          <button type="button" class="lumina-fpill" data-tpl-filter="wuby">Wuby AI</button>
+          <button type="button" class="lumina-fpill" data-tpl-filter="chill">Lifestyle</button>
+          <button type="button" class="lumina-fpill" data-tpl-filter="tool">Tool</button>
+        </div>
+        <input type="search" class="lumina-search-box" id="lumina-tpl-search" placeholder="Search template, kênh, preset... 🔍" />
+      </div>
+
+      <div class="lumina-template-grid" id="lumina-template-grid">
+        ${LUMINA_TEMPLATES_12.map(t => `
+          <div class="lumina-tpl-card" data-tpl-id="${t.id}" data-tpl-channel="${t.channel_id}" data-tpl-preset="${t.preset_id}" data-tpl-cat="${t.category}">
+            <div class="lumina-tpl-thumb">
+              <img src="${t.thumb}" alt="${t.title}" loading="lazy" />
+              <span class="lumina-tpl-badge-left">${t.tag_left}</span>
+              <span class="lumina-tpl-badge-right">${t.tag_right}</span>
+              <div class="lumina-tpl-bottom-overlay">
+                <span>▶ Nạp Studio</span>
+                <span class="font-mono" style="color:#2dd4bf">${t.preset_id}</span>
+              </div>
+            </div>
+            <div class="lumina-tpl-title">${t.title}</div>
+            <div class="lumina-tpl-sub">${t.sub}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- KHU VỰC 2: WORKSPACE 3 CỘT SEEDANCE & SÂN KHẤU VIDEO THẬT KÉO THẢ BLUR 2D -->
+    <div class="lumina-canvas-shell ${state.canvasSubTab === 'gallery' ? 'hidden' : ''}" id="lumina-workspace-section">
+      <!-- TOP FLOATING DOCK: Chọn Kênh + Chuỗi Node Pipeline -->
       <div class="lumina-top-dock">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">
-          <div class="lumina-node-chain" id="lumina-pipeline-nodes">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+          <div class="lumina-node-chain" id="lumina-pipeline-nodes" style="margin:0">
             <span class="lumina-node active" data-goto-tab="tab-blur"><span class="lumina-node-dot"></span> 1. Nguồn &amp; Kênh Đích</span>
             <span class="lumina-node-arrow">──●──►</span>
             <span class="lumina-node" data-goto-tab="tab-blur"><span class="lumina-node-dot"></span> 2. Vùng Blur 2D Trên Video</span>
@@ -660,41 +930,24 @@ async function renderNewJob() {
             <span class="lumina-node-arrow">──●──►</span>
             <span class="lumina-node" data-goto-tab="tab-text"><span class="lumina-node-dot"></span> 4. Chạy Chữ &amp; Khung 9:16</span>
           </div>
-          <span class="tag" id="selected-channel-tag" style="color:var(--teal);border-color:rgba(45,212,191,0.4)">${activeChannel.name}</span>
+          <span style="font-size:11px;color:var(--teal);font-weight:700">⚡ Sân khấu Tương tác Thời gian thực</span>
         </div>
 
-        <!-- Thanh Kênh Fanpage (Gồm 6 Kênh Douyin + Chuyện Hai Đứa + Studio Tự Do) -->
+        <!-- Thanh Kênh Fanpage có ảnh thu nhỏ tròn -->
         <div class="channel-strip" id="studio-channel-strip" style="margin:0">
           ${CHANNELS_8.map(ch => `
-            <button type="button" class="channel-pill-card ${ch.id === activeChannel.id ? 'active' : ''}" data-channel-id="${ch.id}">
-              <div class="channel-pill-top">
-                <span class="truncate">${ch.name}</span>
-                <span class="tag" style="font-size:9px;padding:1px 5px;color:var(--teal)">${ch.preset_id}</span>
+            <button type="button" class="channel-pill-card ${ch.id === activeChannel.id ? 'active' : ''}" data-channel-id="${ch.id}" style="display:flex;align-items:center;gap:9px">
+              <img src="${ch.thumb}" alt="" style="width:34px;height:34px;border-radius:8px;object-fit:cover;flex-shrink:0;border:1px solid rgba(255,255,255,0.16)" />
+              <div style="min-width:0;flex:1">
+                <div class="channel-pill-top">
+                  <span class="truncate">${ch.name}</span>
+                  <span class="tag" style="font-size:9px;padding:1px 5px;color:var(--teal)">${ch.preset_id}</span>
+                </div>
+                <div class="channel-pill-sub truncate">${ch.niche}</div>
               </div>
-              <div class="channel-pill-sub truncate">${ch.niche}</div>
             </button>
           `).join('')}
         </div>
-
-        <!-- Thanh Dán Link TikTok / Douyin Auto-Route gọn trên Top Dock -->
-        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding-top:6px;border-top:1px solid rgba(148,163,184,0.12)">
-          <span style="font-size:11px;font-weight:700;color:var(--teal);white-space:nowrap">🔗 Auto-Route Kênh:</span>
-          <input class="form-input font-mono" id="studio-source-url-input" type="text" style="flex:1;min-width:220px;padding:5px 10px;font-size:11px"
-            placeholder="Dán link Douyin/TikTok hoặc tên kênh (vd: 乖巧宝宝Quby, 女钓手豆豆, Chuyện Hai Đứa...)" />
-          <button type="button" class="btn btn-primary btn-sm" id="btn-ingest-source" style="white-space:nowrap;padding:5px 12px">
-            ⚡ Tự Nhận Diện
-          </button>
-          <div class="blur-preset-bar" style="margin:0">
-            <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAUewX30vrd2sxQV9Bpkt2rbQTl5e7ILBUSVAuMQOea0u7uHDq-8oeAzMEdHSAmVvT 阿刚速看">🎬 阿刚速看</button>
-            <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAN-1fM0RHuDRh5s783UTZPUyOSn7yxIglA5LjqCfAXI6MWnxXZ7d_jiPrfEPLGWNt 诡诡漫">👻 诡诡漫</button>
-            <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAzjF0uYCtXbf928SK2W0jgEBC7idgE2RT9VHipW7UEF8 奋斗的希瓜皮">🍿 奋斗的希瓜皮</button>
-            <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAfAuPSkhuWIAv7Yx56Y1sI52BoJc0teeXWA2soSCeook 乖巧宝宝Quby">🐰 Quby</button>
-            <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAAD3g0DECFFzLHG8GLkd0-ESvyOkYCCpHtC4OKhG4yadPVPxi5bGiguqui1fERASD0 迷人的歪姐">🌙 迷人的歪姐</button>
-            <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/user/MS4wLjABAAAA-YcErrxgnoO9Drrannm8IFMQAN8vzYAjCNqHFMOzLUg 女钓手豆豆">🎣 女钓手豆豆</button>
-            <button type="button" class="blur-preset-btn" data-quick-source="https://www.douyin.com/chuyen_hai_dua Chuyện Hai Đứa tình yêu">💑 Chuyện Hai Đứa</button>
-          </div>
-        </div>
-        <div id="source-detect-banner" class="info-state hidden" style="border-color:rgba(45,212,191,0.45);color:var(--txt-1);padding:6px 10px;font-size:11px"></div>
       </div>
 
       <!-- 3-COLUMN SEEDANCE / LUMINA WORKSPACE -->
@@ -847,6 +1100,167 @@ async function renderNewJob() {
           </div>
         </div>
       </form>
+    </div>
+
+    <!-- KHU VỰC 3: MADE WITH AI AGENTS — BENTO MASONRY GRID LỒNG ẢNH THỰC TẾ DỌC & NGANG (Giống hệt ảnh 3) -->
+    <div style="margin-top:34px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+        <h3 style="font-size:19px;font-weight:800;color:#ffffff;margin:0">Made with AI Agents</h3>
+        <span style="font-size:11px;color:var(--txt-3)">Bấm vào bất kỳ tác phẩm dọc/ngang nào để nạp ngay cấu hình Kênh, Giọng đọc &amp; tọa độ Blur 2D</span>
+      </div>
+
+      <div class="lumina-filter-pills mb-3" id="lumina-bento-filter-pills">
+        <button type="button" class="lumina-fpill active" data-bento-filter="all">All</button>
+        <button type="button" class="lumina-fpill" data-bento-filter="voice51">Chuyện Hai Đứa 5.1</button>
+        <button type="button" class="lumina-fpill" data-bento-filter="video">Review &amp; Kỳ Bí</button>
+        <button type="button" class="lumina-fpill" data-bento-filter="wuby">Wuby AI</button>
+        <button type="button" class="lumina-fpill" data-bento-filter="chill">UGC &amp; Outdoor</button>
+      </div>
+
+      <!-- Bố cục Bento bất đối xứng 5 cột (Tall 9:16 xen kẽ Wide 16:9 y hệt ảnh 3) -->
+      <div class="lumina-bento-grid" id="lumina-bento-showcase">
+        <!-- Cột 1 trên: 16:9 -->
+        <div class="lumina-bento-card" data-bento-channel="ch_review_black" data-bento-cat="video">
+          <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=900&q=80" alt="KENH_002 Review Phim" loading="lazy" />
+          <span class="lumina-bento-ai-badge">AI</span>
+          <span class="lumina-bento-cat-pill">Review Black</span>
+          <div class="lumina-bento-info">
+            <div class="lumina-bento-title">KENH_002: Điện Ảnh Viền Đen (阿刚速看)</div>
+            <div class="lumina-bento-sub">cauhinh2 · Nam Trầm Review · Blur (8%,72%)</div>
+          </div>
+        </div>
+
+        <!-- Cột 2: TALL 9:16 (Span 2 rows) -->
+        <div class="lumina-bento-card tall" data-bento-channel="ch_chuyen_hai_dua" data-bento-cat="voice51">
+          <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80" alt="Chuyện Hai Đứa" loading="lazy" />
+          <span class="lumina-bento-ai-badge">AI</span>
+          <span class="lumina-bento-cat-pill">Multi-Voice 5.1</span>
+          <div class="lumina-bento-info">
+            <div class="lumina-bento-title">Chuyện Hai Đứa (@ChuyenHaiDua)</div>
+            <div class="lumina-bento-sub">chuyen_hai_dua · 3 Giọng Nam/Nữ + Tách nền 5.1</div>
+          </div>
+        </div>
+
+        <!-- Cột 3: TALL 9:16 (Span 2 rows) -->
+        <div class="lumina-bento-card tall" data-bento-channel="ch_chidepdicau" data-bento-cat="chill">
+          <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=80" alt="Chị Đẹp Đi Câu" loading="lazy" />
+          <span class="lumina-bento-ai-badge">AI</span>
+          <span class="lumina-bento-cat-pill">UGC Outdoor</span>
+          <div class="lumina-bento-info">
+            <div class="lumina-bento-title">KENH_008: Chị Đẹp Đi Câu (女钓手豆豆)</div>
+            <div class="lumina-bento-sub">chidepdicau · Ngọc Huyền · Blur (5%,73%)</div>
+          </div>
+        </div>
+
+        <!-- Cột 4 trên: 16:9 -->
+        <div class="lumina-bento-card" data-bento-channel="ch_guiguiman" data-bento-cat="video">
+          <img src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=900&q=80" alt="Truyện Kỳ Bí" loading="lazy" />
+          <span class="lumina-bento-ai-badge">AI</span>
+          <span class="lumina-bento-cat-pill">Explainer Mystery</span>
+          <div class="lumina-bento-info">
+            <div class="lumina-bento-title">KENH_004: Truyện Kỳ Bí (诡诡漫)</div>
+            <div class="lumina-bento-sub">cauhinh2 · Tách thoại AI + Minh Quang</div>
+          </div>
+        </div>
+
+        <!-- Cột 5 trên: 16:9 -->
+        <div class="lumina-bento-card" data-bento-channel="ch_song1minh" data-bento-cat="chill">
+          <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80" alt="Sống Một Mình" loading="lazy" />
+          <span class="lumina-bento-ai-badge">AI</span>
+          <span class="lumina-bento-cat-pill">Chill Lo-Fi Vlog</span>
+          <div class="lumina-bento-info">
+            <div class="lumina-bento-title">KENH_007: Sống Một Mình (迷人的歪姐)</div>
+            <div class="lumina-bento-sub">song1minhcogivui · Thảo Vy · Blur (10%,75%)</div>
+          </div>
+        </div>
+
+        <!-- Cột 1 giữa: 16:9 -->
+        <div class="lumina-bento-card" data-bento-channel="ch_movie_clone" data-bento-cat="video">
+          <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=900&q=80" alt="Vũ Trụ Cày Phim" loading="lazy" />
+          <span class="lumina-bento-ai-badge">AI</span>
+          <span class="lumina-bento-cat-pill">Movie Clone 9:16</span>
+          <div class="lumina-bento-info">
+            <div class="lumina-bento-title">KENH_005: Vũ Trụ Cày Phim (奋斗的希瓜皮)</div>
+            <div class="lumina-bento-sub">cauhinh3 · Nền mờ Gaussian + Karaoke Pop</div>
+          </div>
+        </div>
+
+        <!-- Cột 4 giữa: 16:9 -->
+        <div class="lumina-bento-card" data-bento-channel="ch_chuyen_hai_dua" data-bento-cat="voice51">
+          <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=900&q=80" alt="Character Lock" loading="lazy" />
+          <span class="lumina-bento-ai-badge">AI</span>
+          <span class="lumina-bento-cat-pill">WeSpeaker + Light-ASD</span>
+          <div class="lumina-bento-info">
+            <div class="lumina-bento-title">Character-Lock Đa Nhân Vật Nam / Nữ</div>
+            <div class="lumina-bento-sub">130.1Hz Nam · 225.4Hz Nữ Cảm Xúc · 217.7Hz Dịu Dàng</div>
+          </div>
+        </div>
+
+        <!-- Cột 5 dưới: TALL 9:16 (Span 2 rows) -->
+        <div class="lumina-bento-card tall" data-bento-channel="ch_wuby_main" data-bento-cat="wuby">
+          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=900&q=80" alt="Wuby Hoạt Hình" loading="lazy" />
+          <span class="lumina-bento-ai-badge">AI</span>
+          <span class="lumina-bento-cat-pill">Animation Studio</span>
+          <div class="lumina-bento-info">
+            <div class="lumina-bento-title">KENH_006: Wuby Hoạt Hình (乖巧宝宝Quby)</div>
+            <div class="lumina-bento-sub">cauhinh3_wuby · Wuby Clone v2 · Giữ SFX gốc</div>
+          </div>
+        </div>
+
+        <!-- Cột 1 dưới: TALL 9:16 -->
+        <div class="lumina-bento-card" data-bento-channel="ch_custom_studio" data-bento-cat="video">
+          <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?auto=format&fit=crop&w=900&q=80" alt="Custom Blur 2D" loading="lazy" />
+          <span class="lumina-bento-ai-badge">AI</span>
+          <span class="lumina-bento-cat-pill">2D Blur ROI</span>
+          <div class="lumina-bento-info">
+            <div class="lumina-bento-title">Studio Tự Do — Kéo Thả Vùng Blur 2D</div>
+            <div class="lumina-bento-sub">basic_render · 8 điểm neo trực tiếp trên ảnh thật</div>
+          </div>
+        </div>
+
+        <!-- Cột 2 dưới: 16:9 -->
+        <div class="lumina-bento-card" data-bento-channel="ch_song1minh" data-bento-cat="chill">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80" alt="Silent Heart Chill" loading="lazy" />
+          <span class="lumina-bento-ai-badge">AI</span>
+          <span class="lumina-bento-cat-pill">Music &amp; Lo-Fi</span>
+          <div class="lumina-bento-info">
+            <div class="lumina-bento-title">Silent Heart — Chill Lo-Fi Night</div>
+            <div class="lumina-bento-sub">song1minhcogivui · Giọng Thảo Vy + BGM Chill</div>
+          </div>
+        </div>
+
+        <!-- Cột 3 dưới: 16:9 -->
+        <div class="lumina-bento-card" data-bento-channel="ch_chuyen_hai_dua" data-bento-cat="voice51">
+          <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=900&q=80" alt="5.1 Surround Demucs" loading="lazy" />
+          <span class="lumina-bento-ai-badge">AI</span>
+          <span class="lumina-bento-cat-pill">5.1 Surround</span>
+          <div class="lumina-bento-info">
+            <div class="lumina-bento-title">Surround Center Remove &amp; Demucs AI</div>
+            <div class="lumina-bento-sub">Xóa lời gốc giữ tiếng cười &amp; hiệu ứng động</div>
+          </div>
+        </div>
+
+        <!-- Cột 4 dưới: 16:9 -->
+        <div class="lumina-bento-card" data-bento-channel="ch_review_black" data-bento-cat="video">
+          <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=900&q=80" alt="Auto Route Agent" loading="lazy" />
+          <span class="lumina-bento-ai-badge">AI</span>
+          <span class="lumina-bento-cat-pill">Auto-Route :443</span>
+          <div class="lumina-bento-info">
+            <div class="lumina-bento-title">Outbound Agent &amp; Auto-Route 8 Kênh</div>
+            <div class="lumina-bento-sub">Dán link Douyin tự động phân biệt tác giả</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- THANH PROMPT KÍNH MỜ NỔI Ở ĐÁY MÀN HÌNH (Giống hệt ảnh 3: [+] Describe the scene... [✦]) -->
+      <div class="lumina-floating-prompt-bar">
+        <button type="button" class="lumina-floating-plus-tile" id="btn-floating-upload-tile" title="Tải file Video MP4 từ máy tính lên Sân khấu">
+          +
+        </button>
+        <input type="text" class="lumina-floating-input" id="lumina-floating-url-input"
+          placeholder="Describe the scene or paste Douyin/TikTok link (Quby, 女钓手豆豆, Chuyện Hai Đứa)..." />
+        <button type="button" class="lumina-spark-btn" id="btn-floating-ingest" title="Tự nhận diện & Chuyển lên Sân khấu Render">✦</button>
+      </div>
     </div>
   `;
 
@@ -1551,12 +1965,15 @@ async function renderNewJob() {
     updateSummaryTextOnly();
   }
 
-  // Sự kiện chọn 1 trong 8 Kênh Fanpage trên thanh đầu trang
-  function activateChannelProfile(chId, extraReason = null) {
+  // Sự kiện chọn 1 trong 8 Kênh Fanpage trên thanh đầu trang / Template Card / Bento Card
+  function activateChannelProfile(chId, extraReason = null, scrollToStage = false) {
     state.selectedChannelId = chId;
     document.querySelectorAll('[data-channel-id]').forEach(b => b.classList.toggle('active', b.dataset.channelId === chId));
     const ch = CHANNELS_8.find(c => c.id === chId);
-    if ($('selected-channel-tag') && ch) $('selected-channel-tag').textContent = ch.name;
+    if ($('selected-channel-tag') && ch) $('selected-channel-tag').textContent = `Đang chọn: ${ch.name}`;
+    if ($('lumina-hero-bg') && ch?.hero_bg) {
+      $('lumina-hero-bg').style.backgroundImage = `url('${ch.hero_bg}')`;
+    }
     if (ch) {
       const targetRadio = document.querySelector(`input[name="preset"][value="${ch.preset_id}"]`);
       if (targetRadio && !targetRadio.disabled) {
@@ -1564,6 +1981,10 @@ async function renderNewJob() {
       }
       updateSummary(ch);
       toast(extraReason || `Đã nạp cấu hình & vùng Blur mẫu của ${ch.name}`, 'ok');
+      if (scrollToStage) {
+        $('lumina-workspace-section')?.classList.remove('hidden');
+        $('lumina-workspace-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   }
 
@@ -1571,22 +1992,125 @@ async function renderNewJob() {
     btn.addEventListener('click', () => activateChannelProfile(btn.dataset.channelId));
   });
 
+  // Sự kiện bấm vào 12 Template 16:9 hoặc Bento Masonry Cards (Ảnh 1 & Ảnh 3)
+  document.querySelectorAll('[data-tpl-id]').forEach(card => {
+    card.addEventListener('click', () => {
+      const chId = card.dataset.tplChannel || 'ch_chuyen_hai_dua';
+      const presetId = card.dataset.tplPreset;
+      activateChannelProfile(chId, `Đã nạp Template "${card.querySelector('.lumina-tpl-title')?.textContent || chId}" vào Sân khấu!`, true);
+      if (presetId) {
+        const r = document.querySelector(`input[name="preset"][value="${presetId}"]`);
+        if (r && !r.disabled) {
+          r.checked = true;
+          updateSummary(CHANNELS_8.find(c => c.id === chId));
+        }
+      }
+    });
+  });
+
+  document.querySelectorAll('[data-bento-channel]').forEach(card => {
+    card.addEventListener('click', () => {
+      const chId = card.dataset.bentoChannel;
+      activateChannelProfile(chId, `Đã nạp cấu hình từ Bento Showcase vào Sân khấu Blur 2D!`, true);
+    });
+  });
+
+  // Sự kiện chuyển Underline Tabs (Canvas & Studio | Workspace | Template Gallery)
+  document.querySelectorAll('[data-utab]').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const mode = tab.dataset.utab;
+      state.canvasSubTab = mode;
+      document.querySelectorAll('[data-utab]').forEach(t => t.classList.toggle('active', t.dataset.utab === mode));
+      if (mode === 'workspace') {
+        $('lumina-gallery-section')?.classList.add('hidden');
+        $('lumina-workspace-section')?.classList.remove('hidden');
+        $('lumina-workspace-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else if (mode === 'gallery') {
+        $('lumina-gallery-section')?.classList.remove('hidden');
+        $('lumina-workspace-section')?.classList.add('hidden');
+      } else {
+        $('lumina-gallery-section')?.classList.remove('hidden');
+        $('lumina-workspace-section')?.classList.remove('hidden');
+      }
+    });
+  });
+
+  // Lọc Template theo danh mục (All | Video | Voice 5.1 | Wuby AI | Lifestyle | Tool) & Search
+  const filterTemplates = (cat, query = '') => {
+    const q = query.trim().toLowerCase();
+    document.querySelectorAll('#lumina-template-grid [data-tpl-id]').forEach(card => {
+      const matchCat = cat === 'all' || card.dataset.tplCat === cat;
+      const text = card.textContent.toLowerCase();
+      const matchQ = !q || text.includes(q);
+      card.classList.toggle('hidden', !(matchCat && matchQ));
+    });
+  };
+
+  document.querySelectorAll('[data-tpl-filter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-tpl-filter]').forEach(b => b.classList.toggle('active', b === btn));
+      state.templateFilter = btn.dataset.tplFilter;
+      filterTemplates(state.templateFilter, $('lumina-tpl-search')?.value || '');
+    });
+  });
+
+  document.querySelectorAll('[data-hero-cat]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-hero-cat]').forEach(b => b.classList.toggle('active', b === btn));
+      const cat = btn.dataset.heroCat;
+      filterTemplates(cat, $('lumina-tpl-search')?.value || '');
+      const matchCh = CHANNELS_8.find(c => cat === 'all' || c.category === cat);
+      if (matchCh) activateChannelProfile(matchCh.id, `Đã chuyển danh mục: ${btn.textContent.trim()}`);
+    });
+  });
+
+  $('lumina-tpl-search')?.addEventListener('input', e => {
+    filterTemplates(state.templateFilter || 'all', e.target.value);
+  });
+
+  // Lọc Bento Showcase theo danh mục
+  document.querySelectorAll('[data-bento-filter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('[data-bento-filter]').forEach(b => b.classList.toggle('active', b === btn));
+      const cat = btn.dataset.bentoFilter;
+      document.querySelectorAll('#lumina-bento-showcase [data-bento-channel]').forEach(card => {
+        card.classList.toggle('hidden', !(cat === 'all' || card.dataset.bentoCat === cat));
+      });
+    });
+  });
+
+  // Nút + Create Project trắng trên góc phải & các nút nhảy nhanh tới Tab Inspector
+  $('btn-lumina-create-proj')?.addEventListener('click', openCreateProjectModal);
+  $('btn-hero-upload-tile')?.addEventListener('click', () => $('studio-file-input')?.click());
+  $('btn-floating-upload-tile')?.addEventListener('click', () => $('studio-file-input')?.click());
+
+  document.querySelectorAll('[data-quick-jump-tab]').forEach(pill => {
+    pill.addEventListener('click', () => {
+      const tabId = pill.dataset.quickJumpTab;
+      const tabBtn = document.querySelector(`.lumina-tab-btn[data-tab="${tabId}"]`);
+      tabBtn?.click();
+      $('lumina-workspace-section')?.classList.remove('hidden');
+      $('lumina-workspace-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
   // Sự kiện Tự động nhận diện Kênh đầu vào TikTok / Douyin (Auto-Route)
   async function handleIngestSource(rawText) {
-    const srcText = (rawText !== undefined ? rawText : ($('studio-source-url-input')?.value || '')).trim();
+    const srcText = (rawText !== undefined ? rawText : ($('studio-source-url-input')?.value || $('lumina-floating-url-input')?.value || '')).trim();
     if (!srcText) {
-      toast('Hãy dán link TikTok/Douyin hoặc chọn 1 nguồn Douyin mẫu bên dưới!', 'warn');
+      toast('Hãy dán link TikTok/Douyin hoặc chọn 1 nguồn mẫu tại Try An Idea!', 'warn');
       return;
     }
     if ($('studio-source-url-input')) $('studio-source-url-input').value = srcText;
+    if ($('lumina-floating-url-input')) $('lumina-floating-url-input').value = srcText;
     const projId = $('new-job-project')?.value;
     const banner = $('source-detect-banner');
     const btn = $('btn-ingest-source');
-    if (btn) { btn.disabled = true; btn.textContent = 'Đang phân tích…'; }
+    if (btn) { btn.disabled = true; btn.textContent = '…'; }
     try {
       const res = await window.CC_API.ingestSourceUrl(projId, srcText);
       const chId = res.detected_channel_id || 'ch_review_black';
-      activateChannelProfile(chId, `Tự động định tuyến: ${res.source_author} → ${res.detected_channel_name || chId}`);
+      activateChannelProfile(chId, `Tự động định tuyến: ${res.source_author} → ${res.detected_channel_name || chId}`, true);
       if (res.file?.id && $('new-job-input')) {
         $('new-job-input').value = res.file.id;
         await loadProjectVerifiedFiles(false);
@@ -1599,11 +2123,18 @@ async function renderNewJob() {
     } catch (err) {
       toast(err?.body?.error?.message || 'Không thể phân tích nguồn đầu vào.', 'err');
     } finally {
-      if (btn) { btn.disabled = false; btn.textContent = '⚡ Tự Nhận Diện & Nạp'; }
+      if (btn) { btn.disabled = false; btn.textContent = '✦'; }
     }
   }
 
   $('btn-ingest-source')?.addEventListener('click', () => handleIngestSource());
+  $('btn-floating-ingest')?.addEventListener('click', () => handleIngestSource($('lumina-floating-url-input')?.value));
+  $('lumina-floating-url-input')?.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleIngestSource(e.target.value);
+    }
+  });
   document.querySelectorAll('[data-quick-source]').forEach(btn => {
     btn.addEventListener('click', () => handleIngestSource(btn.dataset.quickSource));
   });
@@ -1782,22 +2313,30 @@ async function renderChannels() {
 
     <div class="channel-matrix-grid">
       ${CHANNELS_8.map(ch => `
-        <div class="channel-matrix-card">
-          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
-            <span style="font-size:14px;font-weight:700;color:var(--txt-1)">📺 ${ch.name}</span>
-            <span class="chip succeeded">${ch.preset_id}</span>
+        <div class="channel-matrix-card" style="overflow:hidden;padding:0">
+          <div style="position:relative;height:148px;width:100%;overflow:hidden;background:#090d16">
+            <img src="${ch.hero_bg || ch.thumb}" alt="${ch.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.78)" />
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(10,14,22,0.95) 100%)"></div>
+            <span class="lumina-bento-ai-badge">AI</span>
+            <span class="lumina-bento-cat-pill">${ch.badge || ch.preset_id}</span>
+            <div style="position:absolute;left:14px;right:14px;bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:8px">
+              <span style="font-size:14.5px;font-weight:800;color:#ffffff;text-shadow:0 2px 10px rgba(0,0,0,0.8)">📺 ${ch.name}</span>
+              <span class="chip succeeded">${ch.preset_id}</span>
+            </div>
           </div>
-          <div class="text-muted text-sm">${ch.niche} · Khung giờ đăng: <b>${ch.schedule}</b></div>
-          <div class="dl-grid" style="font-size:11px;padding-top:8px;border-top:1px solid var(--border)">
-            <span class="dl-label">Giọng đọc AI</span><span class="dl-value mono" style="color:var(--teal)">${ch.voice_id}</span>
-            <span class="dl-label">Banner Hook</span><span class="dl-value" style="color:#fde047;font-weight:700">${ch.banner_text || '—'}</span>
-            <span class="dl-label">Chữ chạy (Marquee)</span><span class="dl-value">${ch.marquee_text || '—'}</span>
-            <span class="dl-label">Tọa độ Blur mặc định</span><span class="dl-value mono">X:${ch.blur_box.x}% · Y:${ch.blur_box.y}% · W:${ch.blur_box.w}% · H:${ch.blur_box.h}%</span>
-          </div>
-          <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px">
-            <button type="button" class="btn btn-primary btn-sm" data-open-channel-studio="${ch.id}">
-              🎬 Mở Studio &amp; Chọn Vùng Blur cho kênh này →
-            </button>
+          <div style="padding:12px 14px 14px;display:flex;flex-direction:column;gap:8px">
+            <div class="text-muted text-sm">${ch.niche} · Khung giờ: <b>${ch.schedule}</b></div>
+            <div class="dl-grid" style="font-size:11px;padding-top:8px;border-top:1px solid var(--border)">
+              <span class="dl-label">Giọng đọc AI</span><span class="dl-value mono" style="color:var(--teal)">${ch.voice_id}</span>
+              <span class="dl-label">Banner Hook</span><span class="dl-value" style="color:#fde047;font-weight:700">${ch.banner_text || '—'}</span>
+              <span class="dl-label">Chữ chạy (Marquee)</span><span class="dl-value">${ch.marquee_text || '—'}</span>
+              <span class="dl-label">Tọa độ Blur 2D</span><span class="dl-value mono">X:${ch.blur_box.x}% · Y:${ch.blur_box.y}% · W:${ch.blur_box.w}% · H:${ch.blur_box.h}%</span>
+            </div>
+            <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px">
+              <button type="button" class="btn btn-primary btn-sm" data-open-channel-studio="${ch.id}">
+                🎬 Mở AI Canvas &amp; Chọn Vùng Blur →
+              </button>
+            </div>
           </div>
         </div>
       `).join('')}
@@ -2550,6 +3089,11 @@ document.addEventListener('DOMContentLoaded', () => {
     el.addEventListener('click', (e) => {
       e.preventDefault();
       const v = el.dataset.nav;
+      if (el.dataset.canvasMode) {
+        state.canvasSubTab = el.dataset.canvasMode;
+      } else if (v === 'new-job') {
+        state.canvasSubTab = 'all';
+      }
       state.jobFilterStatus = '';
       navigate(v);
     });

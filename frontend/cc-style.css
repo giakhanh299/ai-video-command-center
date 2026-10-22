@@ -1677,3 +1677,695 @@ hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
     grid-template-columns: 1fr;
   }
 }
+
+/* ── BytePlus Lumina VIP Sidebar, Hero Banner & Photo Cards ── */
+.lumina-logo-orb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: conic-gradient(from 140deg, #ffffff, #2dd4bf, #0ea5e9, #111827, #ffffff);
+  box-shadow: 0 0 14px rgba(45, 212, 191, 0.55);
+  display: inline-block;
+}
+
+.lumina-sidebar {
+  background: #050608 !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+.lumina-feature-card {
+  margin: 8px 6px 14px;
+  padding: 12px;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 85% 20%, rgba(45, 212, 191, 0.42), transparent 60%),
+    radial-gradient(circle at 15% 85%, rgba(14, 165, 233, 0.35), transparent 60%),
+    linear-gradient(145deg, #0b1926 0%, #071018 100%);
+  border: 1px solid rgba(45, 212, 191, 0.32);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+}
+.lumina-feature-head {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.65);
+  margin-bottom: 8px;
+  letter-spacing: 0.03em;
+}
+.lumina-feature-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  color: #f8fafc;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.16s ease;
+}
+.lumina-feature-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.lumina-badge-hot {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 99px;
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+.lumina-badge-new {
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 99px;
+  background: rgba(16, 185, 129, 0.2);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+/* Top Canvas Header + White Pill Create Button + Underline Tabs */
+.lumina-canvas-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+.lumina-canvas-big-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.lumina-btn-white-pill {
+  background: #f8fafc;
+  color: #090d16;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 99px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 18px rgba(255, 255, 255, 0.18);
+  transition: all 0.18s ease;
+}
+.lumina-btn-white-pill:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(45, 212, 191, 0.35);
+}
+
+.lumina-subnav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 18px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.lumina-underline-tabs {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.lumina-utab {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 10px 2px;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.lumina-utab:hover {
+  color: #ffffff;
+}
+.lumina-utab.active {
+  color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+
+/* ── Hero Banner ("Turn your ideas into videos" style) ───── */
+.lumina-hero-banner {
+  position: relative;
+  border-radius: 22px;
+  overflow: hidden;
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 34px 28px 18px;
+  margin-bottom: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
+  background-color: #070b14;
+}
+.lumina-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.6s ease, transform 8s ease;
+  transform: scale(1.04);
+  filter: brightness(0.68) saturate(1.18);
+  z-index: 0;
+}
+.lumina-hero-banner:hover .lumina-hero-bg {
+  transform: scale(1.09);
+}
+.lumina-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(8, 12, 22, 0.25), rgba(5, 7, 12, 0.88) 85%),
+    linear-gradient(180deg, rgba(5, 7, 12, 0.2) 0%, rgba(5, 7, 12, 0.92) 100%);
+  z-index: 1;
+}
+.lumina-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+.lumina-hero-title {
+  font-size: 34px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+  margin: 0 0 18px;
+  text-shadow: 0 6px 28px rgba(0, 0, 0, 0.7);
+}
+
+/* Frosted Glass Prompt & Upload Box */
+.lumina-glass-box {
+  background: rgba(38, 42, 52, 0.56);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  padding: 16px 18px 14px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.55);
+  text-align: left;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.lumina-glass-box:focus-within {
+  border-color: rgba(45, 212, 191, 0.6);
+  box-shadow: 0 18px 50px rgba(45, 212, 191, 0.18);
+}
+.lumina-glass-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+.lumina-img-tile {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px dashed rgba(255, 255, 255, 0.32);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #e2e8f0;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transform: rotate(-6deg);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+.lumina-img-tile:hover {
+  transform: rotate(0deg) scale(1.06);
+  background: rgba(45, 212, 191, 0.22);
+  border-color: var(--teal);
+  color: #ffffff;
+}
+.lumina-glass-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 14px;
+  line-height: 1.45;
+  resize: none;
+  outline: none;
+  min-height: 48px;
+  font-family: var(--font-sans);
+}
+.lumina-glass-input::placeholder {
+  color: rgba(255, 255, 255, 0.55);
+}
+.lumina-glass-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.lumina-glass-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.lumina-glass-pill {
+  background: rgba(15, 20, 30, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #f1f5f9;
+  border-radius: 99px;
+  padding: 5px 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+.lumina-glass-pill:hover {
+  background: rgba(45, 212, 191, 0.18);
+  border-color: var(--teal);
+}
+.lumina-spark-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+  color: #090d16;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  transition: all 0.18s ease;
+}
+.lumina-spark-btn:hover {
+  transform: scale(1.08);
+  background: var(--teal);
+  box-shadow: 0 0 24px rgba(45, 212, 191, 0.75);
+}
+
+/* Try An Idea Row */
+.lumina-try-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.lumina-try-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+}
+.lumina-idea-pill {
+  background: rgba(255, 255, 255, 0.13);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #f8fafc;
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 5px 13px;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+.lumina-idea-pill:hover {
+  background: rgba(45, 212, 191, 0.25);
+  border-color: var(--teal);
+  transform: translateY(-1px);
+}
+
+/* Hero Bottom Category Bar */
+.lumina-hero-tabs {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-top: 24px;
+  background: rgba(10, 14, 22, 0.55);
+  backdrop-filter: blur(14px);
+  padding: 6px;
+  border-radius: 99px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.lumina-hero-tab {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+  font-weight: 700;
+  padding: 9px 12px;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lumina-hero-tab:hover {
+  color: #ffffff;
+}
+.lumina-hero-tab.active {
+  background: rgba(30, 41, 59, 0.9);
+  color: #2dd4bf;
+  border: 1px solid rgba(45, 212, 191, 0.35);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+}
+
+/* Filter Pills + Search Row */
+.lumina-filter-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.lumina-filter-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.lumina-fpill {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 15px;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+.lumina-fpill:hover,
+.lumina-fpill.active {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.32);
+}
+.lumina-search-box {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 99px;
+  padding: 6px 14px;
+  color: #ffffff;
+  font-size: 12px;
+  min-width: 230px;
+  outline: none;
+}
+.lumina-search-box:focus {
+  border-color: var(--teal);
+}
+
+/* 16:9 Visual Template Grid (giống hệt ảnh 1: ai-canvas Template) */
+.lumina-template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
+  gap: 18px;
+  margin-bottom: 30px;
+}
+.lumina-tpl-card {
+  cursor: pointer;
+  group: 1;
+  transition: transform 0.2s ease;
+}
+.lumina-tpl-card:hover {
+  transform: translateY(-4px);
+}
+.lumina-tpl-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #111827;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.5);
+}
+.lumina-tpl-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s ease, filter 0.3s ease;
+}
+.lumina-tpl-card:hover .lumina-tpl-thumb img {
+  transform: scale(1.08);
+  filter: brightness(1.08);
+}
+.lumina-tpl-thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.18) 0%, transparent 45%, rgba(0,0,0,0.78) 100%);
+  pointer-events: none;
+}
+.lumina-tpl-badge-left {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(8px);
+  color: #f8fafc;
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+.lumina-tpl-badge-right {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  background: rgba(45, 212, 191, 0.22);
+  backdrop-filter: blur(8px);
+  color: #2dd4bf;
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+  border: 1px solid rgba(45, 212, 191, 0.4);
+}
+.lumina-tpl-bottom-overlay {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 8px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 600;
+}
+.lumina-tpl-title {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin-top: 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lumina-tpl-sub {
+  font-size: 10.5px;
+  color: rgba(255, 255, 255, 0.45);
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 9:16 & 16:9 Asymmetric Bento Masonry Grid ("Made with AI Agents" y hệt ảnh 3) */
+.lumina-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: 175px;
+  grid-auto-flow: dense;
+  gap: 14px;
+  margin-bottom: 60px;
+}
+.lumina-bento-card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65);
+  transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
+}
+.lumina-bento-card.tall {
+  grid-row: span 2;
+}
+.lumina-bento-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(45, 212, 191, 0.65);
+  box-shadow: 0 18px 42px rgba(45, 212, 191, 0.22);
+}
+.lumina-bento-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.55s ease, filter 0.3s ease;
+}
+.lumina-bento-card:hover img {
+  transform: scale(1.06);
+  filter: brightness(1.07);
+}
+.lumina-bento-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.28) 0%, transparent 38%, rgba(0,0,0,0.88) 100%);
+  pointer-events: none;
+}
+.lumina-bento-ai-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  background: rgba(15, 18, 25, 0.62);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 7px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+.lumina-bento-cat-pill {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  background: rgba(20, 24, 34, 0.68);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #f8fafc;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 4px 11px;
+  border-radius: 99px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+.lumina-bento-info {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  z-index: 2;
+}
+.lumina-bento-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.25;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.85);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lumina-bento-sub {
+  font-size: 11px;
+  color: #2dd4bf;
+  font-weight: 600;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Floating Frosted-Glass Bottom Bar ("Describe the scene you want to generate" y hệt ảnh 3) */
+.lumina-floating-prompt-bar {
+  position: sticky;
+  bottom: 16px;
+  z-index: 40;
+  max-width: 680px;
+  margin: 0 auto;
+  background: rgba(34, 38, 48, 0.72);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 18px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+}
+.lumina-floating-plus-tile {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transform: rotate(-6deg);
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+.lumina-floating-plus-tile:hover {
+  transform: rotate(0deg) scale(1.06);
+  background: rgba(45, 212, 191, 0.25);
+  border-color: var(--teal);
+}
+.lumina-floating-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 13px;
+  outline: none;
+}
+.lumina-floating-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 1280px) {
+  .lumina-bento-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 780px) {
+  .lumina-bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .lumina-hero-tabs {
+    grid-template-columns: repeat(2, 1fr);
+    border-radius: 16px;
+  }
+  .lumina-hero-title {
+    font-size: 24px;
+  }
+}
